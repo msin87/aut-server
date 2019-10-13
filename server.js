@@ -4,7 +4,7 @@ const app = express();
 const responses = {};
 responses.android32 = require('./responses/android32.json');
 responses.android64 = require('./responses/android64.json');
-responses.apk=require('./responses/android64.json');
+responses.apk = require('./responses/android64.json');
 app.use(bodyParser.text({type: 'text/html'}));
 app.use(bodyParser.urlencoded(({extended: true})));
 app.use(function (req, res, next) {
@@ -18,27 +18,27 @@ app.get('/', function (req, res) {
 app.post('/32', (req, res) => {
     const date = new Date();
     const dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-    if (req.headers["user-agent"].indexOf('Win64')>=0 && req.headers["user-agent"].indexOf('Chrome')>=0 )
-    {
+    if (!req.body) {
+        console.log(Date() + ': Неправильный запрос (не могу распарсить body)');
+        return res.sendStatus(400);
+    }
+    if (req.headers["user-agent"].indexOf('Win64') >= 0 && req.headers["user-agent"].indexOf('Chrome') >= 0) {
         if (req.body.indexOf('=nrJ') >= 0) {
             res.send(text);
             text.data.result.curDate = dateString;
             console.log(Date() + ': Правильный запрос');
-        }
-        else {
+        } else {
             res.sendStatus(400);
             console.log(Date() + ': Неправильный запрос');
         }
 
-    }
-    else
-    {
+    } else {
         res.sendStatus(400);
         console.log(Date() + ': Неправильный запрос. Другая система');
     }
 
 });
-app.listen(8082, function (req, res) {
+app.listen(8082, () => {
         console.log('Server started');
     }
 );
