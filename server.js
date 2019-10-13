@@ -36,6 +36,11 @@ app.post('/AutelStore.fcgi', (req, res) => {
     }
     if (reqString.indexOf(REQ_PATTERNS.req64) >= 0) {
         responses.android64.data.result.curDate = dateString;
+        responses.android64.data.result.minSaleUnit = responses.android64.data.result.minSaleUnit.map((val)=>{
+            val.sn = SN;
+            val.validDate = VALID_DATE;
+            return val;
+        });
         res.send(responses.android64);
         console.log(Date() + `: ip ${remoteIp} Запрос от Android64`);
     } else if (reqString.indexOf(REQ_PATTERNS.req32) >= 0) {
