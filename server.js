@@ -21,18 +21,24 @@ app.post('/AutelStore.fcgi', (req, res) => {
     const date = new Date();
     const dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     const remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    if (typeof (req.body) != 'string') {
+    let reqString = '';
+    if (typeof (req.body) === 'string')
+        reqString = req.body;
+    else if (typeof (req.body) !== 'string' && typeof (req.body['rqbody']) === 'string') {
+        reqString = req.body['rqbody'];
+    } else {
         console.log(Date() + `: ip ${remoteIp} Неправильный запрос.Не могу распознать BODY`);
         return res.sendStatus(400);
     }
-    responses.android64.data.result.curDate = dateString;
-    if (req.body.indexOf(REQ_PATTERNS.req64) >= 0) {
+    if (reqString.indexOf(REQ_PATTERNS.req64) >= 0) {
+        responses.android64.data.result.curDate = dateString;
         res.send(responses.android64);
         console.log(Date() + `: ip ${remoteIp} Запрос от Android64`);
-    } else if (req.body.indexOf(REQ_PATTERNS.req32) >= 0) {
+    } else if (reqString.indexOf(REQ_PATTERNS.req32) >= 0) {
+        responses.android32.data.result.curDate = dateString;
         res.send(responses.android32);
         console.log(Date() + `: ip ${remoteIp} Запрос от Android32`);
-    } else if (req.body.indexOf(REQ_PATTERNS.apk) >= 0) {
+    } else if (reqString.indexOf(REQ_PATTERNS.apk) >= 0) {
     } else {
         res.sendStatus(400);
         console.log(Date() + `ip ${remoteIp} Неправильный запрос`);
