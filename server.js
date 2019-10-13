@@ -19,7 +19,7 @@ app.post('/32', (req, res) => {
     const date = new Date();
     const dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     if (!req.body) {
-        console.log(Date() + ': Неправильный запрос (не могу распарсить body)');
+        console.log(Date() + ': Неправильный запрос.Не могу распознать BODY');
         return res.sendStatus(400);
     }
     if (req.headers["user-agent"].indexOf('Win64') >= 0 && req.headers["user-agent"].indexOf('Chrome') >= 0) {
