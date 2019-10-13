@@ -1,7 +1,7 @@
 const REQ_PATTERNS = {
     req64: '=nrJ',
     req32: '=nrR',
-    apk: 'apk'
+    apk: '9v.ioZNpn'
 };
 const express = require('express');
 const bodyParser = require('body-parser');
