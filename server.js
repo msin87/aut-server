@@ -24,7 +24,7 @@ app.post('/32', (req, res) => {
     }
     if (req.headers["user-agent"].indexOf('Win64') >= 0 && req.headers["user-agent"].indexOf('Chrome') >= 0) {
         if (req.body.indexOf('=nrJ') >= 0) {
-            res.send(text);
+            res.send(responses.android32);
             text.data.result.curDate = dateString;
             console.log(Date() + ': Правильный запрос');
         } else {
