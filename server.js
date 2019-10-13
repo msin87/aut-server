@@ -1,3 +1,8 @@
+const REQ_PATTERNS = {
+    req64: '=nrJ',
+    req32: '=nrR',
+    apk: 'apk'
+};
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -12,31 +17,26 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-app.get('/', function (req, res) {
-    res.send('Hello');
-});
-app.post('/32', (req, res) => {
+app.post('/AutelStore.fcgi', (req, res) => {
     const date = new Date();
     const dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-    if (!req.body) {
-        console.log(Date() + ': Неправильный запрос (не могу распарсить body)');
+    const remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    if (typeof (req.body) != 'string') {
+        console.log(Date() + `: ip ${remoteIp} Неправильный запрос.Не могу распознать BODY`);
         return res.sendStatus(400);
     }
-    if (req.headers["user-agent"].indexOf('Win64') >= 0 && req.headers["user-agent"].indexOf('Chrome') >= 0) {
-        if (req.body.indexOf('=nrJ') >= 0) {
-            res.send(responses.android32);
-            text.data.result.curDate = dateString;
-            console.log(Date() + ': Правильный запрос');
-        } else {
-            res.sendStatus(400);
-            console.log(Date() + ': Неправильный запрос');
-        }
-
+    responses.android64.data.result.curDate = dateString;
+    if (req.body.indexOf(REQ_PATTERNS.req64) >= 0) {
+        res.send(responses.android64);
+        console.log(Date() + `: ip ${remoteIp} Запрос от Android64`);
+    } else if (req.body.indexOf(REQ_PATTERNS.req32) >= 0) {
+        res.send(responses.android32);
+        console.log(Date() + `: ip ${remoteIp} Запрос от Android32`);
+    } else if (req.body.indexOf(REQ_PATTERNS.apk) >= 0) {
     } else {
         res.sendStatus(400);
-        console.log(Date() + ': Неправильный запрос. Другая система');
+        console.log(Date() + `ip ${remoteIp} Неправильный запрос`);
     }
-
 });
 app.listen(8082, () => {
         console.log('Server started');
