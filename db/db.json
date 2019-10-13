@@ -1,0 +1,36 @@
+[
+  {
+    "login": "mexannik",
+    "serialnumbers": [
+      {
+        "sn": "CD02302302",
+        "validDate": "2020-10-10",
+        "lastConnectDate": "2019-10-13T21:54:20",
+        "ip": "23.12.23.67",
+        "swapToSystem": 64,
+        "loginString": "xCt.8Np6m6vBZRQBfofox9vlwNfl3Kvsaofs3hwFaNQsvJpKcoa5x.Qgcoi9flUgZhw64hfoaNwKZhfsZMwlw.fs3yw6tMf6mnflflvKcPf9fNiFryfK3JvKwyQrZNw5W3QgGNUnWoUFBoU2H.i.CrQ5xPi5sKQ-GoAmj,EZBPwrw.inGNpmsXwngPiF"
+      },
+      {
+        "sn": "CD02302202",
+        "validDate": "2020-10-10",
+        "lastConnectDate": "2019-11-13T23:54:20",
+        "ip": "33.12.23.27",
+        "swapToSystem": 0,
+        "loginString": "xCt.8Np6ASdasdadSADASDddNfl3Kvsaofs3hwFaNQsvJpKcoa5x.Qgcoi9flUgZhw64hfoaNwKZhfsZMwlw.fs3yw6tMf6mnflflvKcPf9fNiFryfK3JvKwyQrZNw5W3QgGNUnWoUFBoU2H.i.CrQ5xPi5sKQ-GoAmj,EZBPwrw.inGNpmsXwngPiF"
+      }
+    ]
+  },
+  {
+    "login": "msin87",
+    "serialnumbers": [
+      {
+        "sn": "CD0223232302",
+        "validDate": "2020-11-10",
+        "lastConnectDate": "2019-10-13T21:54:20",
+        "ip": "223.112.23.67",
+        "swapToSystem": 32,
+        "loginString": "xCt.8Np6m6v2332323213123123asdhwFaNQsvJpKcoa5x.Qgcoi9flUgZhw64hfoaNwKZhfsZMwlw.fs3yw6tMf6mnflflvKcPf9fNiFryfK3JvKwyQrZNw5W3QgGNUnWoUFBoU2H.i.CrQ5xPi5sKQ-GoAmj,EZBPwrw.inGNpmsXwngPiF"
+      }
+    ]
+  }
+]
