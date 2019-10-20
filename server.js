@@ -9,7 +9,6 @@ const VALID_DATE = '2020-10-10';
 const express = require('express');
 const bodyParser = require('body-parser');
 const mainServer = express();
-const loginAddServer = express();
 const responses = {};
 responses.android32 = require('./responses/android32.json');
 responses.android64 = require('./responses/android64.json');
