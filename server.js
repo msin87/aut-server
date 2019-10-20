@@ -8,20 +8,22 @@ const SN = 'CAP2K3C01609';
 const VALID_DATE = '2020-10-10';
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
+const mainServer = express();
+const loginAddServer = express();
 const responses = {};
 responses.android32 = require('./responses/android32.json');
 responses.android64 = require('./responses/android64.json');
 responses.logon = require('./responses/logon.json');
 responses.apk = require('./responses/android64.json');
-app.use(bodyParser.text({type: 'text/html'}));
-app.use(bodyParser.urlencoded(({extended: true})));
-app.use(function (req, res, next) {
+mainServer.use(bodyParser.text({type: 'text/html'}));
+mainServer.use(bodyParser.urlencoded(({extended: true})));
+mainServer.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-app.post('/AutelStore.fcgi', (req, res) => {
+
+mainServer.post('/AutelStore.fcgi', (req, res) => {
     const date = new Date();
     const dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     const remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -59,7 +61,7 @@ app.post('/AutelStore.fcgi', (req, res) => {
         }
     }
 });
-app.listen(8082, () => {
+mainServer.listen(8082, () => {
         console.log('Server started');
     }
 );
