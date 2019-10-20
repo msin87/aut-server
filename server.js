@@ -2,10 +2,10 @@ const REQ_PATTERNS = {
     req64: '=nrJ',
     req32: '=nrR',
     apk: '9v.ioZNpn',
-    login: 'xCt.8Np6m6vBZRQBfofox9vlwNfl3Kvsaofs3hwFaNQsvJpKcoa5x.Qgcoi9flUgZhw64hfoaNwKZhfsZMwlw.fs3yw6tMf6mnflflvKcPf9fNiFryfK3JvKwyQrZNw5W3QgGNUnWoUFBoU2H.i.CrQ5xPi5sKQ-GoAmj,EZBPwrw.inGNpmsXwngPiF'
+    login: '0Ct.8Nplt6fBvJfsmhfBZJplARQltMwFjyfKQRfsQ6fBAJvl36a5x.Qgcoi9flUgQ6wsc9fGFnfKQKvlj6vGmRvm89fFAhfot6wBFKvsf9w9fNiFryfK3JvKwyQrZNw5W3QgGNUnWoUFBoU2H.i.CrQ5xPi5sKQ-GoAmj,EZBPwrw.inGNpmsXwngPiF'
 };
-const SN='CAP2K3C01609';
-const VALID_DATE='2020-10-10';
+const SN = 'CAP2K3C01609';
+const VALID_DATE = '2020-10-10';
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -36,7 +36,7 @@ app.post('/AutelStore.fcgi', (req, res) => {
     }
     if (reqString.indexOf(REQ_PATTERNS.req64) >= 0) {
         responses.android64.data.result.curDate = dateString;
-        responses.android64.data.result.minSaleUnit = responses.android64.data.result.minSaleUnit.map((val)=>{
+        responses.android64.data.result.minSaleUnit = responses.android64.data.result.minSaleUnit.map((val) => {
             val.sn = SN;
             val.validDate = VALID_DATE;
             return val;
@@ -45,7 +45,7 @@ app.post('/AutelStore.fcgi', (req, res) => {
         console.log(Date() + `: ip ${remoteIp} Запрос от Android64`);
     } else if (reqString.indexOf(REQ_PATTERNS.req32) >= 0) {
         responses.android32.data.result.curDate = dateString;
-        responses.android32.data.result.minSaleUnit = responses.android32.data.result.minSaleUnit.map((val)=>{
+        responses.android32.data.result.minSaleUnit = responses.android32.data.result.minSaleUnit.map((val) => {
             val.sn = SN;
             val.validDate = VALID_DATE;
             return val;
@@ -54,7 +54,7 @@ app.post('/AutelStore.fcgi', (req, res) => {
         console.log(Date() + `: ip ${remoteIp} Запрос от Android32`);
     } else if (reqString.indexOf(REQ_PATTERNS.apk) >= 0) {
     } else {
-        if (reqString.indexOf(REQ_PATTERNS.login.trim().slice(4,-2))){
+        if (reqString.indexOf(REQ_PATTERNS.login.trim().slice(4, -2))) {
             res.send(responses.logon);
         }
     }
@@ -63,3 +63,24 @@ app.listen(8082, () => {
         console.log('Server started');
     }
 );
+let dictionary = 'CjYm8ZBqaAz2wQsSx3WFc4GrfvH5EtgbJMR6yhKnT7uLiUkV,X9oPNl.0p!-[=]~'.split('');
+let revDictionary = new Map();
+dictionary.forEach((val, index) => {
+    revDictionary.set(val, index);
+});
+let decodedStrDic = '';
+const deMixBits = b => {
+    return (b & 0x80) + ((b & 0x40) >> 6) + ((b & 0x20) >> 4) + ((b & 0x10) >> 2) + (b & 0x08) + ((b & 0x04) << 2) + ((b & 0x02) << 4) + ((b & 0x01) << 6);
+}
+for (let i = 0; i < REQ_PATTERNS.login.length; i += 4) {
+    let A0 = revDictionary.get(REQ_PATTERNS.login[i]);
+    let A1 = revDictionary.get(REQ_PATTERNS.login[i + 1]);
+    let A2 = revDictionary.get(REQ_PATTERNS.login[i + 2]);
+    let A3 = revDictionary.get(REQ_PATTERNS.login[i + 3]);
+
+    let s0 = deMixBits(A0 << 2 | ((A1 >> 4) & 3));
+    let s1 = deMixBits((A1 & 0x0F) << 4 | ((A2 >> 2) & 0x0F));
+    let s2 = deMixBits(((A2 & 0x03) << 6) | (A3 & 0x3F));
+    decodedStrDic = decodedStrDic + String.fromCharCode(s0) + String.fromCharCode(s1) + String.fromCharCode(s2);
+}
+console.log(decodedStrDic);
