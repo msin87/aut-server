@@ -9,7 +9,14 @@ const VALID_DATE = '2020-10-10';
 const express = require('express');
 const bodyParser = require('body-parser');
 const mainServer = express();
+const ReqDecoder = require('./ReqDecoder');
 const responses = {};
+const decoder = (req, res, next) => {
+    let decoded = ReqDecoder(req.body['rqbody']);
+    req.url = req.url + '?' + decoded;
+    req.query = null;
+    next();
+};
 responses.android32 = require('./responses/android32.json');
 responses.android64 = require('./responses/android64.json');
 responses.logon = require('./responses/logon.json');
@@ -21,8 +28,7 @@ mainServer.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
-mainServer.post('/AutelStore.fcgi', (req, res) => {
+mainServer.post('/AutelStore.fcgi', decoder, express.query(), (req, res) => {
     const date = new Date();
     const dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     const remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -60,28 +66,7 @@ mainServer.post('/AutelStore.fcgi', (req, res) => {
         }
     }
 });
-mainServer.listen(8082, () => {
+mainServer.listen(8082, '192.168.4.134', () => {
         console.log('Server started');
     }
 );
-let dictionary = 'CjYm8ZBqaAz2wQsSx3WFc4GrfvH5EtgbJMR6yhKnT7uLiUkV,X9oPNl.0p!-[=]~'.split('');
-let revDictionary = new Map();
-dictionary.forEach((val, index) => {
-    revDictionary.set(val, index);
-});
-let decodedStrDic = '';
-const deMixBits = b => {
-    return (b & 0x80) + ((b & 0x40) >> 6) + ((b & 0x20) >> 4) + ((b & 0x10) >> 2) + (b & 0x08) + ((b & 0x04) << 2) + ((b & 0x02) << 4) + ((b & 0x01) << 6);
-}
-for (let i = 0; i < REQ_PATTERNS.login.length; i += 4) {
-    let A0 = revDictionary.get(REQ_PATTERNS.login[i]);
-    let A1 = revDictionary.get(REQ_PATTERNS.login[i + 1]);
-    let A2 = revDictionary.get(REQ_PATTERNS.login[i + 2]);
-    let A3 = revDictionary.get(REQ_PATTERNS.login[i + 3]);
-
-    let s0 = deMixBits(A0 << 2 | ((A1 >> 4) & 3));
-    let s1 = deMixBits((A1 & 0x0F) << 4 | ((A2 >> 2) & 0x0F));
-    let s2 = deMixBits(((A2 & 0x03) << 6) | (A3 & 0x3F));
-    decodedStrDic = decodedStrDic + String.fromCharCode(s0) + String.fromCharCode(s1) + String.fromCharCode(s2);
-}
-console.log(decodedStrDic);
