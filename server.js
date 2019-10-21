@@ -66,7 +66,7 @@ mainServer.post('/AutelStore.fcgi', decoder, express.query(), (req, res) => {
         }
     }
 });
-mainServer.listen(8082, '192.168.4.134', () => {
+mainServer.listen(8082, () => {
         console.log('Server started');
     }
 );
