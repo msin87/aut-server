@@ -1,31 +1,17 @@
-const Datastore = require('nedb');
-const db = new Datastore({filename: 'db/database.db'});
-db.loadDatabase(err => {
-    console.log(err);
-});
-db.asyncFindOne = query => new Promise((resolve, reject) => {
-    db.findOne(query, (err, docs) => {
-        if (err) {
-            reject(err)
-        } else if (!docs) {
-            reject('Wrong autelId or password')
-        }
-        else {
-            resolve(docs);
-        }
-
-    })
-});
-
+const users = require('../models/users');
 const Commands = {
-    cmd12103: async req => {
+    cmd12101: async (req,res) => {
+        try {
+            await users.create()
+        }
+    },
+    cmd12103: async (req,res) => {
         const date = new Date();
         try {
-            const user = await db.asyncFindOne({autelId: req.query['autelId'], pwd: req.query['pwd']});
+            const user = await users.findByAutelId(req.query.autelId);
             console.log(user);
-        }
-        catch (e) {
-            console.log(e);
+        } catch (e) {
+            res.send(e);
         }
 
     },
@@ -40,7 +26,7 @@ const CmdSwitch = async (req, res) => {
     logConnection(req);
     switch (+req.query['cmd']) {
         case 12103:
-            await Commands.cmd12103(req);
+            await Commands.cmd12103(req,res);
             break;
         case 2504:
 
