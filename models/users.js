@@ -1,7 +1,16 @@
+const ERROR_NO = 'S0000';
+const ERROR_EMAIL = 'S0002';
+const SUCCESS = 1;
 const DataStore = require('nedb');
 const db = new DataStore({filename: 'db/users.db'});
 db.loadDatabase(err => {
-    console.log(err);
+    if (err) console.log(err);
+});
+
+const makeResponse = (data, errcode, success) => ({
+    data: data,
+    errcode: errcode,
+    success: success,
 });
 const dbCb = (resolve, reject, err, docs, msgNotFound) => {
     if (err) {
@@ -9,7 +18,7 @@ const dbCb = (resolve, reject, err, docs, msgNotFound) => {
     } else if (!docs) {
         reject(msgNotFound)
     } else
-        resolve(docs);
+        resolve(makeResponse({result:docs},ERROR_NO, SUCCESS));
 };
 
 module.exports.all = () => new Promise((resolve, reject) =>
@@ -23,8 +32,6 @@ module.exports.findByAutelId = autelId => new Promise((resolve, reject) =>
         dbCb(resolve, reject, err, doc, {data: null, errcode: 'S0002', success: 0})));
 module.exports.create = user => new Promise((resolve, reject) =>
     db.insert(user, (err, docs) =>
-        dbCb(resolve, reject, err, docs,`user creating error: ${user}`)));
-module.exports.sendVerifyCode = email => new Promise ((resolve,reject) => {
-
-})
+        dbCb(resolve, reject, err, docs, `user creating error: ${user}`)));
+module.exports.validation = () => makeResponse(null, ERROR_NO, SUCCESS);
 
