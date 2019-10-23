@@ -44,9 +44,9 @@ module.exports.findById = id => new Promise((resolve, reject) =>
         dbCb(resolve, reject, err, doc, `_id: ${id} not found!`)));
 module.exports.findByAutelId = autelId => new Promise((resolve, reject) =>
     db.findOne({autelId: autelId}, (err, doc) =>
-        dbCb(resolve, reject, err, doc, {data: null, errcode: 'S0002', success: 0})));
+        dbCb(resolve, reject, err, doc, {data: null, errcode: Errors.emailDoesNotExist, success: NOT_SUCCESS})));
 module.exports.create = user => new Promise((resolve, reject) =>
     db.insert(user, (err, docs) =>
         dbCb(resolve, reject, err, docs, `user creating error: ${user}`)));
-module.exports.validation = () => makeResponse({data: null, errcode: ERROR_NO, success: SUCCESS});
+module.exports.validation = () => makeResponse({data: null, errcode: Errors.noError, success: SUCCESS});
 module.exports.loginCheck = async user => await loginCheck(user);

@@ -82,11 +82,8 @@ const Commands = {
 
     }
 };
-const logConnection = req => console.log(`${Date()}\r\nIP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}, cmd: ${req.query.cmd}`);
-
 
 const CmdSwitch = async (req, res) => {
-    logConnection(req);
     switch (+req.query['cmd']) {
         case 12101:
             Commands.cmd12101(req, res);
