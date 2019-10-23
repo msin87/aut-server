@@ -1,5 +1,5 @@
 const users = require('../models/users');
-const userTemplate=' {\n' +
+const userTemplate = ' {\n' +
     '             "actCode" : "",\n' +
     '             "actState" : 1,\n' +
     '             "address" : "",\n' +
@@ -50,38 +50,35 @@ const userTemplate=' {\n' +
 const user = JSON.parse(userTemplate);
 const getCurrentDateTime = () => {
     const date = new Date();
-    return date.toLocaleDateString() + ' ' + ('0'+date.toLocaleTimeString()).slice(-8);
+    return date.toLocaleDateString() + ' ' + ('0' + date.toLocaleTimeString()).slice(-8);
 }
 const Commands = {
-    cmd12102: async (req, res) => {
-
+    cmd12101: async (req, res) => { //request validation code
+        res.send(users.validation());
+    },
+    cmd12102: async (req, res) => { //validation confirmation and new user create
         try {
-            user.autelId=req.query.autelId;
-            user.pwd=req.query.pwd;
+            user.autelId = req.query.autelId;
+            user.pwd = req.query.pwd;
             user.lastLoginTime = getCurrentDateTime();
             user.regTime = getCurrentDateTime();
-            user.tokenCreateTime_maxiap=getCurrentDateTime();
+            user.tokenCreateTime_maxiap = getCurrentDateTime();
             const newUser = await users.create(user);
             res.send(newUser);
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e);
         }
     },
-    cmd12101: async (req, res) => {
-        res.send(users.validation());
-    },
-    cmd12103: async (req, res) => {
-        const date = new Date();
+    cmd12103: async (req, res) => { //check password, login.
         try {
-            const user = await users.findByAutelId(req.query.autelId);
-            console.log(user);
-        } catch (e) {
-            res.send(e);
+            const result = await users.loginCheck(req.query);
+            res.send(result)
+        } catch (error) {
+            res.send(error);
         }
 
     },
-    cmd2504: async (req,res) => {
+    cmd2504: async (req, res) => {
 
     }
 };
@@ -95,7 +92,7 @@ const CmdSwitch = async (req, res) => {
             Commands.cmd12101(req, res);
             break;
         case 12102:
-            Commands.cmd12102(req,res);
+            Commands.cmd12102(req, res);
             break;
         case 12103:
             await Commands.cmd12103(req, res);
