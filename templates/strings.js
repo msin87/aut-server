@@ -19,9 +19,8 @@ module.exports = {
         success: '1',
         notSuccess: '0'
     },
-    makeResponse: ({data, errcode, success}) => ({
-        data: data,
-        errcode: errcode,
-        success: success,
-    })
+    AppPlatform: {
+        android64: 'android',
+        android32: ''
+    }
 };

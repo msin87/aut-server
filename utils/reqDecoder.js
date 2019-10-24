@@ -32,4 +32,11 @@ const ReqDecoder = input => {
     }
     return output;
 };
-module.exports = ReqDecoder;
+const decoderMiddleWare = (req, res, next) => {
+    const decoded = ReqDecoder(req.body['rqbody']);
+    req.url = req.url + '?' + decoded;
+    req.query = null;
+    console.log(`[MaxiAP request]\r\n${Date()}\r\nIP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]}\r\n${decoded}\r\n[End]`);
+    next();
+};
+module.exports = decoderMiddleWare;

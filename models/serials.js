@@ -1,4 +1,5 @@
 const DataStore = require('nedb');
+const Response = require('../utils/responseBuilder');
 const Strings = require('../templates/strings');
 const db = new DataStore({filename: 'db/serials.db'});
 db.loadDatabase(err => {
@@ -10,7 +11,7 @@ const dbCb = (resolve, reject, err, docs, msgNotFound) => {
     } else if (!docs || docs.length === 0) {
         reject(msgNotFound)
     } else
-        resolve(Strings.makeResponse({
+        resolve(Response({
             result: docs,
             errcode: Strings.Errors.noError,
             Success: Strings.Success.success
