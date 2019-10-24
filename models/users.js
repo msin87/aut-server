@@ -13,7 +13,7 @@ const dbCb = (resolve, reject, err, docs, msgNotFound) => {
     } else if (!docs) {
         reject(msgNotFound)
     } else
-        resolve(Strings.makeResponse({data: {result: docs}, errcode: Strings.Errors.noError, success: Strings.Success.success}));
+        resolve(Strings.makeResponse({result: docs, errcode: Strings.Errors.noError, success: Strings.Success.success}));
 };
 const loginCheck = user => new Promise((resolve, reject) => {
     db.findOne({autelId: user.autelId}, (err, doc) => {

@@ -65,8 +65,8 @@ const Commands = {
             user.pwd = req.query.pwd;
             user.lastLoginTime = getCurrentDateTime();
             user.regTime = getCurrentDateTime();
-            //user.tokenCreateTime_maxiap = getCurrentDateTime();
-            //user.token_maxiap = req.query.autelId;
+            user.tokenCreateTime_maxiap = getCurrentDateTime();
+            user.token_maxiap = req.query.autelId;
             const newUser = await users.create(user);
             res.send(newUser);
         } catch (e) {
@@ -89,7 +89,7 @@ const Commands = {
         }
         catch (e) {
             await serials.create({sn:req.query.sn,token:req.query.token,regPwd:req.query.regPwd, validDate: null});
-            res.send(Strings.makeResponse({data: null, errcode: Strings.Errors.noError, success: Strings.Success.success}));
+            res.send(Strings.makeResponse({data: {result: {proTypeName:'',proRegTime:getCurrentDateTime(),proSerialNo:req.query.sn}}, errcode: Strings.Errors.noError, success: Strings.Success.success}));
         }
     },
     cmd2504: async (req, res) => {
