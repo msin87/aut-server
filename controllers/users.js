@@ -1,5 +1,4 @@
 const users = require('../models/users');
-const serials = require('../models/serials');
 const Strings = require('../templates/strings');
 const DateTime = require('../utils/dateTime');
 const ResponseBuilder = require('../utils/responseBuilder');
@@ -13,47 +12,55 @@ module.exports = async (req, res) => {
             try {
                 await users.findById(req.query.autelId);
 
-            } catch (e) {
-                res.send(await users.create(req.query));
+            } catch (err) {
+                const result = await users.create(req.query);
+                res.send(result);
             }
             break;
         case 12103:     //login
             try {
                 const result = await users.loginCheck(req.query);
                 res.send(result)
-            } catch (error) {
-                res.send(error);
+            } catch (err) {
+                console.log(err.err)
+                res.send(err);
             }
             break;
         case 12203:     //bind serial number
-            try {
-                await serials.findBySerialNumber(req.query.sn);
-                res.send(ResponseBuilder({
-                    data: null,
-                    errcode: Strings.Errors.serialHasBinded,
-                    Success: Strings.Success.notSuccess
-                }));
-            }
-            catch (e) {
-                await serials.create({
-                    sn: req.query.sn,
-                    token: req.query.token,
-                    regPwd: req.query.regPwd,
-                    validDate: null
-                });
-                res.send(ResponseBuilder({
-                    data: {
-                        result: {
-                            proTypeName: '',
-                            proRegTime: DateTime.getCurrentDateTime(),
-                            proSerialNo: req.query.sn
-                        }
-                    }, errcode: Strings.Errors.noError, success: Strings.Success.success
-                }));
-            }
+            // try {
+            //     await serials.findBySerialNumber(req.query.sn);
+            //     res.send(ResponseBuilder({
+            //         data: null,
+            //         errcode: Strings.Errors.serialHasBinded,
+            //         Success: Strings.Success.notSuccess
+            //     }));
+            // }
+            // catch (e) {
+            //     await serials.create({
+            //         sn: req.query.sn,
+            //         token: req.query.token,
+            //         regPwd: req.query.regPwd,
+            //         validDate: null
+            //     });
+            //     res.send(ResponseBuilder({
+            //         data: {
+            //             result: {
+            //                 proTypeName: '',
+            //                 proRegTime: DateTime.getCurrentDateTime(),
+            //                 proSerialNo: req.query.sn
+            //             }
+            //         }, errcode: Strings.Errors.noError, success: Strings.Success.success
+            //     }));
+            // }
             break;
         case 2504:
-               //request marks
+               try{
+                   res.send(await users.getAllCars(req.query))
+               }
+               catch (err) {
+                   console.log(err.err);
+                   res.send(err);
+               }
             break;
 
     }

@@ -1,41 +1,54 @@
 const DataStore = require('nedb');
 const Strings = require('../templates/strings');
 const ResponseBuilder = require('../utils/responseBuilder');
-const UserConstructor = require('../utils/userConstructor');
+const UserBuilder = require('../utils/userBuilder');
 const db = new DataStore({filename: 'db/users.db'});
-const carsBuilder = require('../utils/carsBuilder');
+const CarsBuilder = require('../utils/carsBuilder');
 db.loadDatabase(err => {
     if (err) console.log(err);
 });
 const dbCb = (resolve, reject, err, docs, msgNotFound) => {
     if (err) {
-        reject(err)
+        reject({error: err})
     } else if (!docs) {
-        reject(msgNotFound)
+        reject({error: msgNotFound})
     } else
-        resolve(ResponseBuilder({result: docs, errcode: Strings.Errors.noError, success: Strings.Success.success}));
+        resolve(ResponseBuilder({
+            data: {result: docs},
+            errcode: Strings.Errors.noError,
+            success: Strings.Success.success
+        }));
 };
 const loginCheck = user => new Promise((resolve, reject) => {
     db.findOne({autelId: user.autelId}, (err, doc) => {
         if (err) {
             console.log(err);
-            reject(ResponseBuilder({
-                data: null,
-                errcode: Strings.Errors.communicationFailed,
-                success: Strings.Success.notSuccess
-            }));
+            reject({
+                err,
+                ...ResponseBuilder({
+                    data: null,
+                    errcode: Strings.Errors.communicationFailed,
+                    success: Strings.Success.notSuccess
+                })
+            });
         } else if (!doc) {
-            reject(ResponseBuilder({
-                data: null,
-                errcode: Strings.Errors.emailDoesNotExist,
-                success: Strings.Success.notSuccess
-            }));
+            reject({
+                err: `User ${user.autelId} does not exist!`,
+                ...ResponseBuilder({
+                    data: null,
+                    errcode: Strings.Errors.emailDoesNotExist,
+                    success: Strings.Success.notSuccess
+                })
+            });
         } else if (doc.pwd !== user.pwd) {
-            reject(ResponseBuilder({
-                data: null,
-                errcode: Strings.Errors.wrongPassword,
-                Success: Strings.Success.notSuccess
-            }));
+            reject({
+                err: `User ${user.autelId}. Wrong password`,
+                ...ResponseBuilder({
+                    data: null,
+                    errcode: Strings.Errors.wrongPassword,
+                    Success: Strings.Success.notSuccess
+                })
+            });
         } else {
             resolve(ResponseBuilder({
                 data: {result: doc},
@@ -58,14 +71,15 @@ module.exports.findById = id => new Promise((resolve, reject) =>
 module.exports.findByAutelId = autelId => new Promise((resolve, reject) =>
     db.findOne({autelId: autelId}, (err, doc) =>
         dbCb(resolve, reject, err, doc, ResponseBuilder({
+            err: `User ${autelId} does not exist!`,
             data: null,
             errcode: Strings.Errors.emailDoesNotExist,
             success: Strings.Success.notSuccess
         }))));
 
 module.exports.create = query => new Promise((resolve, reject) =>
-    db.insert(UserConstructor.newUser(query), (err, docs) =>
-        dbCb(resolve, reject, err, docs, `user creating error: ${query}`)));
+    db.insert(UserBuilder.newUser(query), (err, docs) =>
+        dbCb(resolve, reject, err, docs, `User creating error: ${query}`)));
 
 module.exports.updateUser = (userToUpdate, newUser) => new Promise((resolve, reject) =>
     db.update({autelId: userToUpdate}, newUser, {}, (err, docs) =>
@@ -82,27 +96,54 @@ module.exports.validation = () => ResponseBuilder({
 });
 
 module.exports.getAllCars = query => new Promise((resolve, reject) => {
-    db.findOne({serialNo: query.sn}, (err, user) => {
-        if (err) {
-            reject({
-                err: err, ...ResponseBuilder({
-                    data: null,
-                    errcode: Strings.Errors.dataError,
-                    success: Strings.Success.notSuccess,
-                })
-            })
-        } else if (!user) {
-            reject(ResponseBuilder({
+    if (!query.sn) {
+        reject({
+            err: `Missing serial number in request`,
+            ...ResponseBuilder({
                 data: null,
-                errcode: Strings.Errors.serialDoesNotExist,
+                errcode: Strings.Errors.dataError,
                 success: Strings.Success.notSuccess
-            }))
-        } else {
-            carsBuilder(user).then(resolve)
+            })
+        });
+        return;
+    }
+    db.findOne({serialNo: query.sn}, (err, user) => {
+            if (err) {
+                reject({
+                    err, ...ResponseBuilder({
+                        data: null,
+                        errcode: Strings.Errors.dataError,
+                        success: Strings.Success.notSuccess,
+                    })
+                });
+                return;
+            } else if (!user) {
+                reject({
+                    err: `User ${query.sn} does not exist!`,
+                    ...ResponseBuilder({
+                        data: null,
+                        errcode: Strings.Errors.serialDoesNotExist,
+                        success: Strings.Success.notSuccess
+                    })
+                });
+                return;
+            } else {
+                CarsBuilder(user).then(Cars => resolve(ResponseBuilder({
+                    data: {result: Cars},
+                    errcode: Strings.Errors.noError,
+                    success: Strings.Success.success
+                }))).catch(err => reject({
+                        err,
+                        ...ResponseBuilder({
+                            data: null,
+                            errcode: Strings.Errors.dataError,
+                            success: Strings.Success.notSuccess
+                        })
+                    })
+                )
 
             }
-
         }
     )
-})
+});
 module.exports.loginCheck = async user => await loginCheck(user);

@@ -12,7 +12,7 @@ module.exports = {
         tokenCreateTime_maxiap: currentDateTime,
         token_maxiap: query.autelId,
         serialNo: query.autelId.split('@')[0],
-        appPlatform: query.appPlatform,
+        appPlatform: query.appPlatform||'',
         validDate: DateTime.getDemoDateTime(DEMO_PERIOD_HOURS),
     }))(DateTime.getCurrentDateTime())
 };
