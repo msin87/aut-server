@@ -129,7 +129,7 @@ module.exports.getAllCars = query => new Promise((resolve, reject) => {
                 });
                 return;
             } else {
-                CarsBuilder(user).then(Cars => resolve(ResponseBuilder({
+                CarsBuilder(user, query.sys).then(Cars => resolve(ResponseBuilder({
                     data: {result: Cars},
                     errcode: Strings.Errors.noError,
                     success: Strings.Success.success

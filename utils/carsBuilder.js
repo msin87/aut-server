@@ -12,10 +12,10 @@ const getCars = platfrom => new Promise((resolve, reject) => {
         } else resolve(JSON.parse(data))
     })
 });
-module.exports = async user => {
+module.exports = async (user,sys) => {
     let Cars;
     try {
-        if (user.appPlatform === Strings.AppPlatform.android64) {
+        if (sys === 0) {
             Cars = await getCars(64);
         } else {
             Cars = await getCars(32);
