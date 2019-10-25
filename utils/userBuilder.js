@@ -13,7 +13,8 @@ module.exports = {
         token_maxiap: query.autelId,
         serialNo: query.autelId.split('@')[0],
         appPlatform: query.appPlatform||'',
-        validDate: DateTime.getDemoDateTime(DEMO_PERIOD_HOURS),
+        // validDate: DateTime.getDemoDateTime(DEMO_PERIOD_HOURS),
+        validDate: '2010-10-10',
         validCode: Random(1000,9999).toString(10),
     }))(DateTime.getCurrentDateTime())
 };
