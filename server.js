@@ -13,7 +13,7 @@ mainServer.use(function (req, res, next) {
     next();
 });
 fileServer.use((req,res,next)=>{
-   console.log(`[File server request]\r\n${Date()}\r\nIP:${req.connection.remoteAddress.split(':')[3]}\r\nURL:${req.url}`);
+   console.log(`[File server request]\r\n${Date()}\r\nIP:${req.connection.remoteAddress.split(':')[3]}\r\nURL:${req.url}\r\n[End]`);
    next();
 });
 fileServer.use('/',express.static(__dirname + '/fileServer'));
