@@ -16,5 +16,4 @@ fileServer.use('/',express.static(__dirname + '/fileServer'));
 
 mainServer.post('/AutelStore.fcgi', DecoderMiddleWare, express.query(), controller);
 mainServer.listen(8082, () => console.log('MaxiAP server started'));
-
 fileServer.listen(12345,() => console.log('File server started'));
