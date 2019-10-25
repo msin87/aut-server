@@ -15,11 +15,21 @@ const getCars = platfrom => new Promise((resolve, reject) => {
 module.exports = async (user,sys) => {
     let Cars;
     try {
-        if (+sys === 0 || +sys === 2) {
-            Cars = await getCars(32);
-        } else {
-            Cars = await getCars(64);
+        switch (+sys) {
+            case 0:
+                Cars = await getCars(64);
+                break;
+            case 1:
+                break;
+            case 2:
+                Cars = await getCars(32);
+                break;
         }
+        // if (+sys === 0 || +sys === 2) {
+        //     Cars = await getCars(32);
+        // } else {
+        //     Cars = await getCars(64);
+        // }
         Cars.curDate = DateTime.getCurrentDateTime();
         Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
             car.sn = user.serialNo;

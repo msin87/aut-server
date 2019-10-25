@@ -12,6 +12,10 @@ mainServer.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+fileServer.use((req,res,next)=>{
+   console.log(req);
+   next();
+});
 fileServer.use('/',express.static(__dirname + '/fileServer'));
 
 mainServer.post('/AutelStore.fcgi', DecoderMiddleWare, express.query(), controller);
