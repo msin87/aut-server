@@ -15,15 +15,16 @@ const getCars = platfrom => new Promise((resolve, reject) => {
 module.exports = async (user,sys) => {
     let Cars;
     try {
-        if (sys === 0) {
-            Cars = await getCars(64);
-        } else {
+        if (+sys === 0 || +sys === 2) {
             Cars = await getCars(32);
+        } else {
+            Cars = await getCars(64);
         }
         Cars.curDate = DateTime.getCurrentDateTime();
         Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
             car.sn = user.serialNo;
-            car.validDate = Date.parse(user.validDate) < Date.now() ? user.validDate : user.validDate.split(' ')[0];
+            // car.validDate = Date.parse(user.validDate) < Date.now() ? user.validDate : user.validDate.split(' ')[0];
+            car.validDate = user.validDate.split(' ')[0];
             car.soft = car.soft.map(soft => {
                 if (PATTERN_IP.test(soft['logo'])) {
                     soft['logo'] = soft['logo'].replace(PATTERN_IP, 'http://'+FILE_SERVER_IPPORT);
