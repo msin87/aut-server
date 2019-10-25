@@ -1,3 +1,4 @@
+const Colors = require('../templates/colors');
 const dictionary = 'CjYm8ZBqaAz2wQsSx3WFc4GrfvH5EtgbJMR6yhKnT7uLiUkV,X9oPNl.0p!-[=]~'.split('');
 const revDictionary = new Map();
 dictionary.forEach((val, index) => {
@@ -36,7 +37,7 @@ const decoderMiddleWare = (req, res, next) => {
     const decoded = ReqDecoder(req.body['rqbody']);
     req.url = req.url + '?' + decoded;
     req.query = null;
-    console.log(`[MaxiAP request]\r\n${Date()}\r\nIP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]}\r\n${decoded}\r\n[End]`);
+    console.log(`${Colors.FgGreen}%s${Colors.reset}`,`[MaxiAP request]\r\n${Date()}\r\nIP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]}\r\n${decoded}\r\n[End]`);
     next();
 };
 module.exports = decoderMiddleWare;

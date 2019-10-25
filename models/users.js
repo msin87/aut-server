@@ -129,7 +129,13 @@ module.exports.getAllCars = query => new Promise((resolve, reject) => {
                 });
                 return;
             } else {
-                CarsBuilder(user, query.sys).then(Cars => resolve(ResponseBuilder({
+                let sys=0;
+                // noinspection LoopStatementThatDoesntLoopJS
+                for (let s in query){   //force select 32/64 bit by request
+                    if (s==='sn') sys=2; //system = 32 bit if first field is 'sn'
+                    break;
+                }
+                CarsBuilder(user, sys).then(Cars => resolve(ResponseBuilder({
                     data: {result: Cars},
                     errcode: Strings.Errors.noError,
                     success: Strings.Success.success
