@@ -5,7 +5,7 @@ module.exports = {
         emailDoesNotExist: 'S0002',
         wrongPassword: 'S0003',
         accountHasExist: 'S0004',
-        confirmCode: 'S0005',
+        wrongConfirmCode: 'S0005',
         serialHasBinded: 'S0006',
         serialProductPassword: 'S0007',
         serialDoesNotExist: 'S0008',

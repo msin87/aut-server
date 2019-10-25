@@ -3,11 +3,11 @@ const Strings = require('../templates/strings');
 const ResponseBuilder = require('./responseBuilder');
 const DateTime = require('./dateTime');
 const getCars = platfrom => new Promise((resolve, reject) => {
-    fs.readFile(`../responses/android${platfrom === 64 ? '64' : '32'}.json`, 'UTF8', (err, data) => {
+    fs.readFile(`responses/android${platfrom === 64 ? '64' : '32'}.json`, 'UTF8', (err, data) => {
         if (err) {
             reject(err)
         }
-        else resolve(data)
+        else resolve(JSON.parse(data))
     })
 });
 module.exports = async user => {
@@ -22,7 +22,7 @@ module.exports = async user => {
         Cars.curDate = DateTime.getCurrentDateTime();
         Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
             car.sn = user.serialNo;
-            car.validDate = user.validDate;
+            car.validDate = Date.parse(user.validDate)<Date.now()?user.validDate:user.validDate.split(' ');
             return car;
         });
         return Cars;

@@ -1,7 +1,4 @@
 const users = require('../models/users');
-const Strings = require('../templates/strings');
-const DateTime = require('../utils/dateTime');
-const ResponseBuilder = require('../utils/responseBuilder');
 
 module.exports = async (req, res) => {
     switch (+req.query['cmd']) {
@@ -11,7 +8,6 @@ module.exports = async (req, res) => {
         case 12102:     //confirm validation code. register new user
             try {
                 await users.findById(req.query.autelId);
-
             } catch (err) {
                 const result = await users.create(req.query);
                 res.send(result);
@@ -22,10 +18,21 @@ module.exports = async (req, res) => {
                 const result = await users.loginCheck(req.query);
                 res.send(result)
             } catch (err) {
-                console.log(err.err)
+                console.log(err.err);
                 res.send(err);
             }
             break;
+        case 12106:
+            try{
+                const result = await users.resetPassword(req.query);
+                res.send(result);
+            }
+            catch (err) {
+                console.log(err.err);
+                res.send(err);
+            }
+            break;
+
         case 12203:     //bind serial number
             // try {
             //     await serials.findBySerialNumber(req.query.sn);
@@ -62,6 +69,8 @@ module.exports = async (req, res) => {
                    res.send(err);
                }
             break;
+        case 2502:
+            res.send({data:null,errcode:'24',success:'0'});
 
     }
 };
