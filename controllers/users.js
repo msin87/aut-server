@@ -62,7 +62,8 @@ module.exports = async (req, res) => {
             break;
         case 2504:
                try{
-                   res.send(await users.getAllCars(req.query))
+                   const result=await users.getAllCars(req.query)
+                   res.send(result);
                }
                catch (err) {
                    console.log(err.err);
