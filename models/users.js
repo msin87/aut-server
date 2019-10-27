@@ -129,11 +129,22 @@ module.exports.getAllCars = query => new Promise((resolve, reject) => {
                 });
                 return;
             } else {
-                let sys=0;
+                let sys = 0;
                 // noinspection LoopStatementThatDoesntLoopJS
-                for (let s in query){   //force select 32/64 bit by request
-                    if (s==='sn') sys=2; //system = 32 bit if first field is 'sn'
+                for (let s in query) {   //force select 32/64 bit by request
+                    if (s === 'sn') sys = 2; //system = 32 bit if first field is 'sn'
                     break;
+                }
+                if (!user['allowed']) {
+                    reject({
+                        err: `User ${query.sn} is now allowed!`,
+                        ...ResponseBuilder({
+                            data: null,
+                            errcode: Strings.Errors.dataError,
+                            success: Strings.Success.notSuccess,
+                        })
+                    });
+                    return
                 }
                 CarsBuilder(user, sys).then(Cars => resolve(ResponseBuilder({
                     data: {result: Cars},
@@ -188,7 +199,7 @@ module.exports.resetPassword = userReq => new Promise((resolve, reject) => {
             return;
         } else {
             user.pwd = userReq['newPwd'];
-            user.validCode = Random(1000,9999).toString(10);
+            user.validCode = Random(1000, 9999).toString(10);
             db.update({autelId: userReq.autelId}, user, {}, (err, doc) => {
                 if (err) {
                     reject({
