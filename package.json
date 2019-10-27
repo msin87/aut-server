@@ -1,15 +1,17 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "server for autel",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
+  "repository": "https://github.com/msin87/aut-server.git",
   "dependencies": {
+    "body-parser": "latest",
     "express": "^4.17.1",
-    "body-parser": "latest"
+    "nedb": "^1.8.0"
   }
 }
