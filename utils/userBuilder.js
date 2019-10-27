@@ -10,7 +10,7 @@ module.exports = {
         lastLoginTime: currentDateTime,
         regTime: currentDateTime,
         tokenCreateTime_maxiap: currentDateTime,
-        token_maxiap: query.autelId,
+        token_maxiap: 'token',
         serialNo: query.autelId.split('@')[0],
         appPlatform: query.appPlatform||'',
         // validDate: DateTime.getDemoDateTime(DEMO_PERIOD_HOURS),

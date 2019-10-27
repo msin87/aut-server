@@ -2,6 +2,7 @@ module.exports = {
     actCode: "",
     actState: 1,
     address: "",
+    allowed: false,
     answer: "",
     appPlatform: "",
     autelId: "",
@@ -44,5 +45,6 @@ module.exports = {
     tokenCreateTime_maxiap: "",
     token_maxiap: "",
     userPwd: "",
-    zipCode: ""
+    zipCode: "",
+
 };
