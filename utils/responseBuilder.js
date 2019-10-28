@@ -1,5 +1,5 @@
-module.exports = ({data, errcode, success}) => ({
-    data: data,
+module.exports = (result, errcode, success) => ({
+    data: result?{result}:null,
     errcode: errcode,
     success: success,
 });
