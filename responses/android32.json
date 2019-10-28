@@ -439,7 +439,7 @@
       "soft": [
         {
           "code": "add201903220231540321ba6520",
-          "lg": "en",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Holden/V1.00/en_z5640603_z15399770.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/holden.png",
           "memo": "FIRST RELEASE:\n1. Diagnostic support for all 1996-2018 Holden models, the basic functions include DTCs, ECU Information, and Live Data\n2. Diagnostic support for all 1996-2018 Holden models, the common service functions include TPMS, SAS, DPF, Injector, EPB, BMS, etc.",
@@ -539,7 +539,7 @@
       "soft": [
         {
           "code": "add201903220231540430aea439",
-          "lg": "en,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/en_z1725811_z4430280.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/es_z2111257_z5205379.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/ford.png",
           "memo": "NEW:\n1. Diagnostic support for all systems on all 1996-2018 Falcon and Territory models, the functions include Read Codes, Clear Codes, Live Data, etc.\n2. More functions available, including SAS, THROTTLE, ABS, IMMO Keys, INJECTOR, ODOMETER, etc.",
@@ -564,7 +564,7 @@
       "soft": [
         {
           "code": "add201903220231540446c60937",
-          "lg": "en,jp,es,pt,de,fr,nl,pl,ru,se,kr,it",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/en_z1725811_z4430280.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/jp_z1711941_z4363193.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/es_z2111257_z5205379.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/pt_z1727637_z4430885.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/de_z1974207_z4684623.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/fr_z2085302_z5045383.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/nl_z1973657_z4670367.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/pl_z2166019_z5023537.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/ru_z2288913_z5290886.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/se_z1774655_z4390145.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/kr_z1727367_z4426381.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/it_z2064517_z4944571.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/ford.png",
           "memo": "NEW:\n1.Diagnostic support for all systems on all 1996-2018 Ford models, the functions include Read Code, Clear Code and Live Data\n2. More service functions available, including Oil Rest, EPB, TPMS, BMS, BRAKE BLEED, DPF, IMMO KEYS,  INJECTOR, SAS, SUSPENSION, WIN DR ROOF, SEATS, ODOMETER,  THROTTLE, HEADLAMP, CHG TIRE SIZE, etc.",
@@ -764,7 +764,7 @@
       "soft": [
         {
           "code": "add20190322023154041546ba43",
-          "lg": "en,jp,es,pt,de,fr,nl,pl,ru,se,kr,it",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/en_z2153572_z3017510.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/jp_z1906211_z2741539.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/es_z2343482_z3298449.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/pt_z2307793_z3239535.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/de_z2349882_z3213286.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/fr_z2296249_z3257961.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/nl_z2365050_z3424738.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/pl_z2360152_z3228398.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/ru_z2505239_z3406589.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/se_z2144384_z2978088.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/kr_z1915031_z2668711.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Renault/V1.00/it_z2340172_z3279903.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/dacia.png",
           "memo": "NEW:\n1. Diagnostic support for all Dacia models before 2016 and main functions include ECU Information, DTCs, and Live Data for all systems\n2. More special functions available, including Oil Reset, TPMS, Brake bleed, DPF, Immokeys, Injector, SAS, Throttle, and Windrroof",
@@ -1114,7 +1114,7 @@
       "soft": [
         {
           "code": "add20190322023154044674f180",
-          "lg": "en,hk,es,pt,de,fr,nl,pl,ru,se,it",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/en_z23935824_z45004462.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/hk_z17150394_z33188387.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/es_z28998622_z55171344.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/pt_z26873956_z49952810.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/de_z26344445_z50995282.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/fr_z27405912_z51134238.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/nl_z25421878_z47052429.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/pl_z26951364_z49187442.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/ru_z26901247_z49777051.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/se_z23726761_z44156207.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/it_z28589115_z54434915.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/lt3.png",
           "memo": "NEW:\n1. Diagnostic support for LT3 models to 2015 and the functions available for Engine, Gearbox, Airbag, Instrument Cluster, IMMO, ABS, and other systems\n2. More functions available, including ECU Information, Read Code, Clear Code, Live Data",
@@ -1514,7 +1514,7 @@
       "soft": [
         {
           "code": "add2019032202315403995a8282",
-          "lg": "zh,en,jp,hk,es,it",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Daihatsu/V1.00/cn_z120011_z324431.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Daihatsu/V1.00/en_z147494_z403565.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Daihatsu/V1.00/jp_z122257_z307879.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Daihatsu/V1.00/hk_z120091_z324609.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Daihatsu/V1.00/es_z177255_z481628.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Daihatsu/V1.00/it_z164191_z456588.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/daihatsu.png",
           "memo": "FIRST RELEASE:\n1. Support Read Code, Clear Code and Live Data functions of 61 systems before 2014",
@@ -1589,7 +1589,7 @@
       "soft": [
         {
           "code": "add20190322023154036869d448",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/UAZ/V1.00/ru_z2332685_z5428467.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/zaz.png",
           "memo": "",
@@ -1614,7 +1614,7 @@
       "soft": [
         {
           "code": "add201903220231540352b5c320",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/UAZ/V1.00/ru_z2332685_z5428467.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/izh.png",
           "memo": "",
@@ -1639,7 +1639,7 @@
       "soft": [
         {
           "code": "add201903220231540368e77b63",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/UAZ/V1.00/ru_z2332685_z5428467.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/seaz.png",
           "memo": "",
@@ -1664,7 +1664,7 @@
       "soft": [
         {
           "code": "add201903220231540430fd4e96",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/UAZ/V1.00/ru_z2332685_z5428467.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/paz.png",
           "memo": "",
@@ -1689,7 +1689,7 @@
       "soft": [
         {
           "code": "add201903220231540368146b96",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/UAZ/V1.00/ru_z2332685_z5428467.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/maz.png",
           "memo": "",
@@ -1714,7 +1714,7 @@
       "soft": [
         {
           "code": "add2019032202315403522bad52",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/UAZ/V1.00/ru_z2332685_z5428467.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/kamaz.png",
           "memo": "",
@@ -1739,7 +1739,7 @@
       "soft": [
         {
           "code": "add2019032202315403680a3865",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/UAZ/V1.00/ru_z2332685_z5428467.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/uaz.png",
           "memo": "",
@@ -1764,7 +1764,7 @@
       "soft": [
         {
           "code": "add20190322023154036867d880",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Vaz/V1.00/ru_z745019_z2101492.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/vaz.png",
           "memo": "",
@@ -1789,7 +1789,7 @@
       "soft": [
         {
           "code": "add20190322023154033750f667",
-          "lg": "ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Gaz/V1.00/ru_z1672886_z3815211.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/gaz.png",
           "memo": "",
@@ -1814,7 +1814,7 @@
       "soft": [
         {
           "code": "add2019032202315403217cfd77",
-          "lg": "en,es,pt,fr",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/BrazilGM/V1.00/en_z6582955_z15152554.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BrazilGM/V1.00/es_z7473661_z16842521.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BrazilGM/V1.00/pt_z7269754_z16351819.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BrazilGM/V1.00/fr_z7477207_z16747467.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/gmbrazil.png",
           "memo": "FIRST RELEASE:\n1. More basic functions and service functions available for 1998-2016 Agile, Astra-G, Celt,  Corsa-B, Corsa-C, E-Lux, Meriva, Omega, S-10 Truck / Blazer, Silverado / Grand Blazer, Tigra, Tracker, Vectra-B, Zafira, Montana, Matiz, Spark, Tracker, Aveo, Cruze, Onix, Prisma, S10, Sonic, Sail, Silverado, and Spin models",
@@ -1839,7 +1839,7 @@
       "soft": [
         {
           "code": "add2019032202315403994f7c04",
-          "lg": "es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/FiatBrazil/V1.00/es_z404152_z1060335.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/FiatBrazil/V1.00/pt_z386481_z1048613.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/fiatbrazil.png",
           "memo": "",
@@ -1864,7 +1864,7 @@
       "soft": [
         {
           "code": "add201903220231540462039685",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Hyundai/V1.00/cn_z3503239_z7131300.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/bjhyundai.png",
           "memo": "",
@@ -1889,7 +1889,7 @@
       "soft": [
         {
           "code": "add2019032202315404625a3780",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Hyundai/V1.00/cn_z3503239_z7131300.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/dfkia.png",
           "memo": "",
@@ -1914,7 +1914,7 @@
       "soft": [
         {
           "code": "add201903220231540337a96675",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/cn_z2825732_z8562803.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/en_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/hk_z2801067_z8564113.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/es_z3779525_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/pt_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/ru_z3779525_z10648247.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/chery.png",
           "memo": "DEBUT:\n1.Support for A series, Cowin series, QQ series, Fulwin series, Tiggo, and Ariza models with Read Code, Clear Code, ECU information, Live Data and other common special functions",
@@ -1939,7 +1939,7 @@
       "soft": [
         {
           "code": "add201903220231540337a50d89",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/cn_z2825732_z8562803.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/en_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/hk_z2801067_z8564113.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/es_z3779525_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/pt_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/ru_z3779525_z10648247.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/chery_ne.png",
           "memo": "DEBUT:\n1. Support for QQ3(BEV), S18(BEV), eQ, eQ1, and Ariza 5e models with Read Code, Clear Code, ECU information, Live Data and other common special functions",
@@ -1964,7 +1964,7 @@
       "soft": [
         {
           "code": "add201903220231540368c3fa45",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/cn_z2825732_z8562803.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/en_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/hk_z2801067_z8564113.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/es_z3779525_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/pt_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/ru_z3779525_z10648247.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/riich.png",
           "memo": "Debut:\n1. Support for M1, M2, M5, X1, G3, G2, G5, G6, and M3 vehicle models with Read Code, Clear Code, ECU information, Live Data and other common special functions",
@@ -1989,7 +1989,7 @@
       "soft": [
         {
           "code": "add201903220231540368427689",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/cn_z2825732_z8562803.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/en_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/hk_z2801067_z8564113.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/es_z3779525_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/pt_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/ru_z3779525_z10648247.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/rely.png",
           "memo": "DEBUT:\n1.Support for V5, H5, X5, H3, and V8 vehicle models with Read Code, Clear Code, ECU information, Live Data and other common special functions",
@@ -2014,7 +2014,7 @@
       "soft": [
         {
           "code": "add201903220231540352194b38",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/cn_z2825732_z8562803.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/en_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/hk_z2801067_z8564113.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/es_z3779525_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/pt_z3779527_z10648247.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Chery/V1.00/ru_z3779525_z10648247.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/karry.png",
           "memo": "DEBUT:\n1. Support for Karry Sedan and Karry Pickup with Read Code, Clear Code, ECU information, Live Data and other common special functions",
@@ -2039,7 +2039,7 @@
       "soft": [
         {
           "code": "add20190322023154046203e323",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Ford/V1.00/cn_z1316667_z3600469.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/ford.png",
           "memo": "",
@@ -2064,7 +2064,7 @@
       "soft": [
         {
           "code": "add20190322023154046252fe45",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Mazda/V1.00/cn_z1316671_z3600469.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/mazdachina.png",
           "memo": "",
@@ -2089,7 +2089,7 @@
       "soft": [
         {
           "code": "add201903220231540446b15177",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Nissan/V1.10/cn_z1185319_z2475967.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/dfnissan.png",
           "memo": "",
@@ -2114,7 +2114,7 @@
       "soft": [
         {
           "code": "add2019032202315404460a9295",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Nissan/V1.10/cn_z1185319_z2475967.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/dfvenucia.png",
           "memo": "",
@@ -2139,7 +2139,7 @@
       "soft": [
         {
           "code": "add201903220231540321695369",
-          "lg": "zh,en,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/cn_z1227395_z3049983.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/en_z1697751_z4072037.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/es_z1697751_z4072037.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/baicmotor.png",
           "memo": "DEBUT:\n1. Support for BJ20, BJ40, BJ80, and E series models with Read Codes, Clear Codes, ECU information, Live Data and other common special functions",
@@ -2164,7 +2164,7 @@
       "soft": [
         {
           "code": "add201903220231540477126518",
-          "lg": "zh,en,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/cn_z1227395_z3049983.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/en_z1697751_z4072037.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/es_z1697751_z4072037.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/baichuansu.png",
           "memo": "DEBUT:\n1. Support for S2, S3, S5, S6, H2, H3, and H6 models with Read Codes, Clear Codes, ECU information, Live Data and other common special functions",
@@ -2189,7 +2189,7 @@
       "soft": [
         {
           "code": "add20190322023154047753f685",
-          "lg": "zh,en,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/cn_z1227395_z3049983.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/en_z1697751_z4072037.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/es_z1697751_z4072037.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/baicsenova.png",
           "memo": "DEBUT:\n1. Support for D20, D50, D60, D70, X25, X35, X55, X65, and CC models with Read Codes, Clear Codes, ECU information, Live Data and other common special functions",
@@ -2214,7 +2214,7 @@
       "soft": [
         {
           "code": "add201903220231540477a7f105",
-          "lg": "zh,en,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/cn_z1227395_z3049983.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/en_z1697751_z4072037.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/es_z1697751_z4072037.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/bjev.png",
           "memo": "DEBUT:\n1. Support for Wei wang, EV, EX, ES, EC, EU, EH, Wagon R, and ARCFOX series models with Read Codes, Clear Codes, ECU information, Live Data and other common special functions",
@@ -2239,7 +2239,7 @@
       "soft": [
         {
           "code": "add201903220231540462cd5e64",
-          "lg": "zh,en,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/cn_z1227395_z3049983.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/en_z1697751_z4072037.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BAICMotor/V1.00/es_z1697751_z4072037.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/baicweiwang.png",
           "memo": "DEBUT:\n1. Support for Wei Wang 007, M20, T205, 205, 206, 306, 307 and other models with Read Codes, Clear Codes, ECU information, Live Data and other common special functions",
@@ -2264,7 +2264,7 @@
       "soft": [
         {
           "code": "add201903220231540352246117",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Haima/V1.00/cn_z466152_z1108160.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Haima/V1.00/en_z687493_z1541272.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Haima/V1.00/es_z687493_z1541272.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Haima/V1.00/pt_z687493_z1541272.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/haima.png",
           "memo": "DEBUT:\n1. Support for S5, S7, M3, M5, M6, M8, Preema, V70, Family,  Haydo, Cupid, Firth Sterlling, Prince and other models with ECU Information, Read Code, Clear Code, Live Data and other common special functions ",
@@ -2289,7 +2289,7 @@
       "soft": [
         {
           "code": "add2019032202315403377d9417",
-          "lg": "zh,en,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/ChangheAuto/V1.00/cn_z438590_z1072682.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/ChangheAuto/V1.00/en_z597855_z1420972.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/ChangheAuto/V1.00/es_z597857_z1420972.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/changheauto.png",
           "memo": "DEBUT:\n1. Support for Ideal, Frieda, Wagon R, Q25, Q35 and other models with Read Code, Clear Code, ECU information, Live Data and other common special functions",
@@ -2314,7 +2314,7 @@
       "soft": [
         {
           "code": "add2019032202315404770cb168",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/ChangheAuto/V1.00/cn_z438590_z1072682.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/changhesuzuki.png",
           "memo": "",
@@ -2339,7 +2339,7 @@
       "soft": [
         {
           "code": "add201903220231540352f4c008",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/LandWind/V1.00/cn_z783692_z3077563.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/LandWind/V1.00/en_z898000_z3287189.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/LandWind/V1.00/es_z898000_z3287189.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/LandWind/V1.00/pt_z898000_z3287189.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/landwind.png",
           "memo": "DEBUT:\n1. Support for Fashion, X5, X6, X7, X8, and X9 models with Read Code, Clear Code, Live Data, ECU Information and other common special functions ",
@@ -2364,7 +2364,7 @@
       "soft": [
         {
           "code": "add2019032202315404775bd260",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Isuzu/V1.00/cn_z2766569_z6019294.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/qingling.png",
           "memo": "",
@@ -2389,7 +2389,7 @@
       "soft": [
         {
           "code": "add2019032202315403682f1219",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/TJFAW/V1.00/cn_z1730983_z4894666.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/TJFAW/V1.00/en_z2169030_z6024323.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/TJFAW/V1.00/es_z2169031_z6024323.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/TJFAW/V1.00/pt_z2169031_z6024323.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/tjfaw.png",
           "memo": "NEW:\n1. Diagnostic support for Vizhi CA7150AUE4 series (4GA5/MT), Vizhi CA7150BUE4 series (4GA5/MT), Vizhi CA7150BUE4 series (4GA5/AMT), Vizhi CA7150BUE4 series (4GA5/MT DENSO 2nd), Vizhi CA7150BUE4 series (4GA5/MT DENSO 2nd ISS), Vizhi CA7150BUE5 series (4GA5/MT DENSO 2nd), Vizhi CA7150BUE4 series (4GA5/MT DENSO 2nd)QH, Vizhi CA7150BUE5 series (4GA5/MT DENSO 2nd)QH, Vizhi CA7150BUE5S series (4GA5/MT DENSO 2nd)QH, and Vizhi CA7150BUE4 series (4GA5/MT DENSO 2nd ISS)QH models",
@@ -2414,7 +2414,7 @@
       "soft": [
         {
           "code": "add201903220231540352756234",
-          "lg": "zh,hk",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Luxgen/V1.00/cn_z310353_z745999.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Luxgen/V1.00/hk_z310287_z746465.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/luxgen.png",
           "memo": "",
@@ -2439,7 +2439,7 @@
       "soft": [
         {
           "code": "add2019032202315404463d6330",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Honda/V1.00/cn_z3154735_z5817231.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/dfhonda.png",
           "memo": "",
@@ -2464,7 +2464,7 @@
       "soft": [
         {
           "code": "add201903220231540462f6cc52",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Honda/V1.00/cn_z3154735_z5817231.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/gzhonda.png",
           "memo": "",
@@ -2489,7 +2489,7 @@
       "soft": [
         {
           "code": "add2019032202315403374b9679",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/ChangAn/V1.00/cn_z1524649_z4392794.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/ChangAn/V1.00/en_z2306693_z6062212.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/ChangAn/V1.00/es_z2306693_z6062212.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/ChangAn/V1.00/pt_z2306693_z6062212.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/changan.png",
           "memo": "DEBUT:\n1. Support for Reaton, EADO, BenBen, CS15, CS35, CS75, CS95, Changan Commercial Vehicle and other models with Read Code, Clear Code, ECU information, Live Data and other common special functions",
@@ -2514,7 +2514,7 @@
       "soft": [
         {
           "code": "add20190322023154033750fb42",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/BYD/V1.00/cn_z2051090_z7929458.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BYD/V1.00/en_z2653623_z10343129.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BYD/V1.00/hk_z2030299_z7942839.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BYD/V1.00/es_z2653623_z10343129.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BYD/V1.00/pt_z2653623_z10343129.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/BYD/V1.00/ru_z2653623_z10343129.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/byd.png",
           "memo": "DEBUT:\n1. Support for F0, F6, G3, L3, M6, S6, S7, S8, G5, G6, E5, E6, T3, M3, F3, K9, Surui, Sirui, Qin, Song, Yuan, Tang and other models with Read Code, Clear Code, ECU information, Live Data and other common special functions",
@@ -2539,7 +2539,7 @@
       "soft": [
         {
           "code": "add2019032202315403521f7d70",
-          "lg": "zh,en,es,pt,kr",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Foton/V1.00/cn_z1826721_z4956854.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Foton/V1.00/en_z2606983_z6769978.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Foton/V1.00/es_z2606983_z6769978.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Foton/V1.00/pt_z2606983_z6769978.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Foton/V1.00/kr_z2606794_z6767183.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/foton.png",
           "memo": "DEBUT:\n1. Support for Sedan, Pickup, SUV, Light passenger, Light truck and other models with ECU Information, Read Code, Clear Code, Live Data and other common special functions ",
@@ -2564,7 +2564,7 @@
       "soft": [
         {
           "code": "add201903220231540352c6b033",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/cn_z2826906_z8804004.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/en_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/hk_z2824618_z8806516.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/es_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/pt_z3805448_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/ru_z3805448_z11046259.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/geely.png",
           "memo": "FIRST RELEASE:\n1. ECU Information, Read Code, Clear Code, Live Data and common special functions support for Haoqing, Kingkong, Golden?eagle, Beauty?leopard, Merrie, Uliou, Vision, Chinese?dragon, Free?ship and other models",
@@ -2589,7 +2589,7 @@
       "soft": [
         {
           "code": "add201903220231540337fbef01",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/cn_z2826906_z8804004.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/en_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/hk_z2824618_z8806516.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/es_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/pt_z3805448_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/ru_z3805448_z11046259.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/emgrand.png",
           "memo": "FIRST RELEASE:\n1. ECU Information, Read Code, Clear Code, Live Data and common special functions support for EC7 series, EC8 series, EV8 series, Borui, Boyue, Maple EV series(EV300, EV450), Maple GL, Maple GS, Maple HEV, Maple PHEV, New?vision, New?vision (18year), New?kingkong?seden, Vision S1, Vision X1, Vision X3, Vision X6, and Vision X6 (18year) models",
@@ -2614,7 +2614,7 @@
       "soft": [
         {
           "code": "add20190322023154035289c713",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/cn_z2826906_z8804004.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/en_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/hk_z2824618_z8806516.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/es_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/pt_z3805448_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/ru_z3805448_z11046259.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/gleagle.png",
           "memo": "FIRST RELEASE:\n1. ECU Information, Read Code, Clear Code, Live Data and common special functions support for GC7 series, GX2 series, GX7 series, GX9 series, Vision, New Vision, Free ship, New Free ship, Panda and other models",
@@ -2639,7 +2639,7 @@
       "soft": [
         {
           "code": "add201903220231540368fa5372",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/cn_z2826906_z8804004.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/en_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/hk_z2824618_z8806516.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/es_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/pt_z3805448_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/ru_z3805448_z11046259.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/maple.png",
           "memo": "FIRST RELEASE:\n1. ECU Information, Read Code, Clear Code, Live Data and common special functions support for Shanghai Maple models",
@@ -2664,7 +2664,7 @@
       "soft": [
         {
           "code": "add201903220231540352b98170",
-          "lg": "zh,en,hk,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/cn_z2826906_z8804004.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/en_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/hk_z2824618_z8806516.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/es_z3805449_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/pt_z3805448_z11046259.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Geely/V1.00/ru_z3805448_z11046259.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/englon.png",
           "memo": "FIRST RELEASE:\n1. ECU Information, Read Code, Clear Code, Live Data and common special functions support for SC3 series, SC5 series, SC6 and?KingKong?Fortune, SC7 series, SX7series, TX4 series, Haijing, Kingkong, Golden?eagle, New haijing, New?kingkong?cross, New?kingkong?hatchback, and New?kingkong?seden models",
@@ -2689,7 +2689,7 @@
       "soft": [
         {
           "code": "add201903220231540337463c76",
-          "lg": "zh,en,es,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/GreatWall/V1.00/cn_z2305541_z5591016.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/GreatWall/V1.00/en_z3411316_z7855678.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/GreatWall/V1.00/es_z3411316_z7855678.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/GreatWall/V1.00/ru_z3411317_z7855678.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/greatwall.png",
           "memo": "NEW:\n1. Diagnostic support for GreatWall series(GWPERI, Cool bear, FLORID M4, Lingao C20R, C30, C50, Wingle 5, Wingle 6, Pickup, Sailor, Deer, Socool, Pegasus, Sing, COWRY V80, C30EV, CH041E), Haval series (H1, H2, H2s, H3(CUV), H4, H5, H5 classic, H6, H7/H7L, H8, H9, M6) , and WEY series (VV5, VV7, P8)\n2. Diagnostic functions include ECU Information, Read Code, Clear Code, Live Data, Freeze Frame, Active Test, Oil Reset, EPB, TPMS, ABS, DPF, Immo keys, SAS, Suspension, BMS, Brake bleed, WIN DR ROOF, Seats, Headlamp, Throttle, Injector, etc.",
@@ -2714,7 +2714,7 @@
       "soft": [
         {
           "code": "add201903220231540477c4a924",
-          "lg": "zh,hk",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Fiat/V1.00/cn_z3792634_z7390212.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Fiat/V1.00/hk_z3933841_z7643375.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/fiat.png",
           "memo": "",
@@ -2739,7 +2739,7 @@
       "soft": [
         {
           "code": "add2019032202315404464f9410",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Peugeot/V1.00/cn_z15631673_z28150685.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/peugeot_china.png",
           "memo": "",
@@ -2764,7 +2764,7 @@
       "soft": [
         {
           "code": "add2019032202315404623c2d00",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Peugeot/V1.00/cn_z15631673_z28150685.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/citroen_china.png",
           "memo": "",
@@ -2789,7 +2789,7 @@
       "soft": [
         {
           "code": "add2019032202315404464eeb50",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Mitsubishi/V1.00/cn_z2036894_z6597187.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/guangqimit.png",
           "memo": "",
@@ -2814,7 +2814,7 @@
       "soft": [
         {
           "code": "add2019032202315403684cdf82",
-          "lg": "zh,en",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Saicmaxus/V1.00/cn_z362235_z815611.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Saicmaxus/V1.00/en_z518281_z1162603.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/saicmaxus.png",
           "memo": "DEBUT:\n1. Diagnostic support for G10, V80 and A80 models\n2. More functions available, including ECU Information, Read Code, Clear Code, Live Data and some common special functions",
@@ -2839,7 +2839,7 @@
       "soft": [
         {
           "code": "add2019032202315404626f7a24",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Toyota/V1.00/cn_z1730777_z3490266.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/toyotachina.png",
           "memo": "",
@@ -2864,7 +2864,7 @@
       "soft": [
         {
           "code": "add201903220231540368117f37",
-          "lg": "zh,hk",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Soueast/V1.00/cn_z875546_z3286799.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Soueast/V1.00/hk_z855818_z3299539.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/soueast.png",
           "memo": "",
@@ -2889,7 +2889,7 @@
       "soft": [
         {
           "code": "add20190322023154046265c359",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/cn_z18131357_z33718046.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/sh_vw.png",
           "memo": "",
@@ -2914,7 +2914,7 @@
       "soft": [
         {
           "code": "add20190322023154046206ef41",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/cn_z18131357_z33718046.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/yq_vw.png",
           "memo": "",
@@ -2939,7 +2939,7 @@
       "soft": [
         {
           "code": "add2019032202315404620d9680",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/cn_z18131357_z33718046.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/sh_skoda.png",
           "memo": "",
@@ -2964,7 +2964,7 @@
       "soft": [
         {
           "code": "add20190322023154046292dc26",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/VW/V1.00/cn_z18131357_z33718046.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/yq_audi.png",
           "memo": "",
@@ -2989,7 +2989,7 @@
       "soft": [
         {
           "code": "add201903220231540352c8ed86",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/JAC/V1.00/cn_z1414835_z4768588.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/JAC/V1.00/en_z1825950_z5691692.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/JAC/V1.00/es_z1825950_z5691692.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/JAC/V1.00/pt_z1825950_z5691692.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/jac.png",
           "memo": "FIRST RELEASE:\n1. ECU Information, Read Code, Clear Code, Live Data and common special functions support for IEV 5 generations (EV), iEV6E, iEV6S, Binyue, HeyueA13(Tongyue), Heyue A30 (MT), Heyue A30 (AT), Heyue RS, Heyue sedan, JAC Pick-Up truck, Refine A60, Refine M3, Refine M4, Refine M5, Refine S5 2.0T, Refine S7, Refine S2 mini, Refine S2 2generations, Refine S2 1 generation, Refine S3 3 generations, Refine S3 1,2 generations, Refine S5, Refine S5 1.5T, Refine S5 2.0 T, Refine S7, Rein, Shuailing, Xingrui, Xingrui 1.9?Diesel?Model(M437), Xingyue 2.0 Gasoline?Model(M516), Xingrui?2.7?Diesel?Model(M511), J2 and other models",
@@ -3014,7 +3014,7 @@
       "soft": [
         {
           "code": "add201903220231540415080e97",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/BMW/V1.00/cn_z1945811_z3951707.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/brilbmw.png",
           "memo": "",
@@ -3039,7 +3039,7 @@
       "soft": [
         {
           "code": "add201903220231540352125a23",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Lifan/V1.00/cn_z1331853_z3683438.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Lifan/V1.00/en_z1836502_z4878710.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Lifan/V1.00/es_z1836502_z4878710.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Lifan/V1.00/pt_z1836501_z4878710.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/lifan.png",
           "memo": "DEBUT:\n1. Diagnostic support for 19 models, such as  320, 330, 520, 530, 620, 630, 720, X50, X60, X80, Fengshun, Fushun, etc.\n2. More functions available, including ECU Information, Read Code, Clear Code, Live Data and some common special functions",
@@ -3064,7 +3064,7 @@
       "soft": [
         {
           "code": "add2019032202315403523ee213",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/JiangLing/V1.00/cn_z2652042_z8150706.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/JiangLing/V1.00/en_z3602263_z10301048.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/JiangLing/V1.00/es_z3602263_z10301048.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/JiangLing/V1.00/pt_z3602263_z10301048.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/jiangling.png",
           "memo": "DEBUT:\n1. Diagnostic support for Yusheng series, Pickup series, Light Passenger series, Light Truck series and Wolff  series models\n2. More functions available, including ECU Information, Read Code, Clear Code, Live Data and some common special functions",
@@ -3089,7 +3089,7 @@
       "soft": [
         {
           "code": "add201903220231540337077697",
-          "lg": "zh,en,hk,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/SGMW/V1.00/cn_z696722_z1754578.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/SGMW/V1.00/en_z563720_z1414733.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/SGMW/V1.00/hk_z598835_z1567452.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/SGMW/V1.00/es_z563719_z1414733.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/sgmw.png",
           "memo": "DEBUT:\n1. Diagnostic support for Wuling Hongtu, Wuling Hongguang, Wuling Rongguang, Wuling Xingwang, Wuling Sunshine, Wuling Journey and other models\n2. More functions available, including ECU Information, Read Code, Clear Code, Live Data and some common special functions",
@@ -3114,7 +3114,7 @@
       "soft": [
         {
           "code": "add201903220231540477090784",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/SGMW/V1.00/cn_z696722_z1754578.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/baojunauto.png",
           "memo": "",
@@ -3139,7 +3139,7 @@
       "soft": [
         {
           "code": "add201903220231540337533c76",
-          "lg": "zh,en,es,pt,ru",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Brilliance/V1.00/cn_z2887737_z8655964.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Brilliance/V1.00/en_z3654843_z10376411.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Brilliance/V1.00/es_z3654843_z10376411.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Brilliance/V1.00/pt_z3654843_z10376411.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Brilliance/V1.00/ru_z3654843_z10376411.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/brilliance.png",
           "memo": "DEBUT:\n1. Diagnostic support for 22 models, such as  Zhonghua(Old), Galena, Cross, Cross FSV, V3, Jinbei Haise, H230, H3, etc.\n2. More functions available, including ECU Information, Read Code, Clear Code, Live Data and some common special functions",
@@ -3164,7 +3164,7 @@
       "soft": [
         {
           "code": "add201903220231540337465b69",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/DFXK/V1.00/cn_z1266116_z3553683.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/DFXK/V1.00/en_z1761772_z4698899.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/DFXK/V1.00/es_z1761772_z4698899.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/DFXK/V1.00/pt_z1761772_z4698899.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/dfxk.png",
           "memo": "DEBUT:\n1. Diagnostic support for 11 models, such as  Dongfeng Xiaokang C37, C36, C32, C31, EC36, EC35, K07S, K07, K02, K01 and V series\n2. More functions available, including ECU Information, Read Code, Clear Code, Live Data and some common special functions",
@@ -3189,7 +3189,7 @@
       "soft": [
         {
           "code": "add201903220231540477347519",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/DFXK/V1.00/cn_z1266116_z3553683.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/DFXK/V1.00/en_z1761772_z4698899.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/DFXK/V1.00/es_z1761772_z4698899.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/DFXK/V1.00/pt_z1761772_z4698899.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/dffg.png",
           "memo": "DEBUT:\n1. Diagnostic support for 6 models, such as  Dongfeng Fengguang 580, 370(Smart), 370(Normal), 360EV, 360 and 330\n2. More functions available, including ECU Information, Read Code, Clear Code, Live Data and some common special functions",
@@ -3214,7 +3214,7 @@
       "soft": [
         {
           "code": "add201903220231540368a3c832",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Saicmg/V1.00/cn_z4892882_z12296898.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/roewe.png",
           "memo": "",
@@ -3239,7 +3239,7 @@
       "soft": [
         {
           "code": "add201903220231540368c1f495",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Saicmg/V1.00/cn_z4892882_z12296898.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Saicmg/V1.00/en_z2628684_z6517123.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Saicmg/V1.00/es_z2628683_z6517123.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Saicmg/V1.00/pt_z2628684_z6517123.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/saicmg.png",
           "memo": "NEW:\n1. Basic functions and common special functions support for MG3, MG5, MG6, MG7, MG GT, MG GS, and MG ZS models",
@@ -3264,7 +3264,7 @@
       "soft": [
         {
           "code": "add2019032202315403377a5f25",
-          "lg": "zh,en,es",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/ZOTYE/V1.00/cn_z1482372_z4166642.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/ZOTYE/V1.00/en_z2013720_z5485657.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/ZOTYE/V1.00/es_z2013720_z5485657.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/zotye.png",
           "memo": "FIRST RELEASE:\n1. Diagnostic support for SR9, SR7(2017), SR7, Zema E30, E200, T300, T700, T600, Z500, Domy X6, Domy X5, Z700, Z100 Z300, and T200 models, the basic functions include ECU Information, Read Code, Clear Code, Live Data and common special functions",
@@ -3289,7 +3289,7 @@
       "soft": [
         {
           "code": "add201903220231540352feba52",
-          "lg": "zh,en,es,pt",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Hafei/V1.00/cn_z782010_z3126723.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Hafei/V1.00/en_z899996_z3344661.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Hafei/V1.00/es_z899996_z3344661.zip|http://download1.auteltech.net/Download/MaxiAp/AND_32/Hafei/V1.00/pt_z899997_z3344661.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/hafei.png",
           "memo": "Ap200 1.00 Version\n1. Diagnostic support for Saima, Rover, Minyi, Pricip, Haifee 8, Haifee 9, Haifee 10, H16 models\n2. More functions available, including ECU information, Read Code, Clear Code, Live Data, and common special functions",
@@ -3314,7 +3314,7 @@
       "soft": [
         {
           "code": "add201903220231540383a30314",
-          "lg": "zh",
+          "lg" :"zh,en,jp,hk,es,pt,de,fr,nl,pl,ru,se,kr,it",
           "lgPackPath": "http://download1.auteltech.net/Download/MaxiAp/AND_32/Suzuki/V1.00/cn_z1092877_z2060657.zip",
           "logo": "http://download1.auteltech.net/Download/carlogo_new/AP200/changansuzuki.png",
           "memo": "",
