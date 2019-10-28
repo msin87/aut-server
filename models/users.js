@@ -46,12 +46,12 @@ const loginCheck = user => new Promise((resolve, reject) => {
 });
 
 const getAppPlatform = query => {
-    switch (JSON.stringify(query).indexOf('{"sn"')) {
-        case 0:
-            return Strings.AppPlatform.android32;
+    switch (JSON.stringify(query).indexOf('"sn"')) {
         case 1:
+            return Strings.AppPlatform.android32;
+        case 10:
             return Strings.AppPlatform.iOS;
-        case 2:
+        case 75:
             return Strings.AppPlatform.android64;
     }
 };
