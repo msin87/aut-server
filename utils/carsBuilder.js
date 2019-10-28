@@ -16,7 +16,8 @@ module.exports = async (user, sys) => {
         Cars.curDate = DateTime.getCurrentDateTime();
         Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
             car['sn'] = user.serialNo;
-            car['validDate'] = user.validDate.split(' ')[0];
+            let validDate = Date.parse(user.validDate.split(' ')[0]);
+            car['validDate'] = validDate<Date.now()?'':user.validDate.split(' ')[0];
             car['soft'] = car.soft.map(soft => {
                 if (PATTERN_IP.test(soft['logo'])) {
                     soft['logo'] = soft['logo'].replace(PATTERN_IP, 'http://' + SETTINGS.ip.logos);
