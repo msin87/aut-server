@@ -20,7 +20,8 @@ module.exports = {
         notSuccess: '0'
     },
     AppPlatform: {
-        android64: 'android',
-        android32: ''
+        android64: 64,
+        android32: 32,
+        iOS: 0
     }
 };

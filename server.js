@@ -2,9 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mainServer = express();
 const fileServer = express();
-const DecoderMiddleWare = require('./utils/reqDecoder');
 const controller = require('./controllers/users');
 const PATHS = require('./settings');
+const AutelStoreRouter = require('./routes/AutelStore');
+// const Updater = require('./updater/updater');
 mainServer.use(bodyParser.text({type: 'text/html'}));
 mainServer.use(bodyParser.urlencoded(({extended: true})));
 mainServer.use(function (req, res, next) {
@@ -17,7 +18,7 @@ fileServer.use((req,res,next)=>{
    next();
 });
 fileServer.use('/',express.static(PATHS.cars));
+mainServer.use(AutelStoreRouter);
 
-mainServer.post('/AutelStore.fcgi', DecoderMiddleWare, express.query(), controller);
-mainServer.listen(8082,() => console.log('MaxiAP server started'));
+mainServer.listen(8082, () => console.log('MaxiAP server started'));
 fileServer.listen(8080,() => console.log('File server started'));
