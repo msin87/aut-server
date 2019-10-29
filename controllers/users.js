@@ -4,10 +4,12 @@ module.exports = {
     reqValidCode: (req, res) => res.send(users.validation()),
     registerNewUser: async (req, res) => {
         try {
-            await users.findById(req.query.autelId);
-        } catch (err) {
             const result = await users.create(req.query);
+            console.log(result.err);
             res.send(result);
+        } catch (err) {
+            console.log(err.err);
+            res.send({data:null, errcode: 'S0001', success: 0});
         }
     },
     login: async (req, res) => {
