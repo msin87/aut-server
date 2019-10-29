@@ -23,5 +23,12 @@ module.exports = {
         android64: 64,
         android32: 32,
         iOS: 0
+    },
+    UserState:{
+        ok: 'ok',
+        notAllowed: 'notAllowed',
+        expired: 'expired',
+        notExist: 'noteExist',
+        wrongPassword: 'wrongPassword',
     }
 };

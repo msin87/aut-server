@@ -3,6 +3,7 @@ const PATTERN_IP = /(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9
 const PATTERN_DNS = /http:\/\/(\w*\.\w*\.\w*)\b/g;
 const fs = require('fs');
 const DateTime = require('./dateTime');
+const Strings =  require('../templates/strings');
 const getCars = platform => new Promise((resolve, reject) => {
     fs.readFile(`responses/android${platform}.json`, 'UTF8', (err, data) => {
         if (err) {
@@ -10,14 +11,19 @@ const getCars = platform => new Promise((resolve, reject) => {
         } else resolve(JSON.parse(data))
     })
 });
+
 module.exports = async (user, sys) => {
     try {
         const Cars = await getCars(sys);
+        let validDate = user.data?user.data.validDate.split(' ')[0]:'';
+        if (user.state===Strings.UserState.notAllowed||user.state===Strings.UserState.notExist)
+        {
+            validDate='';
+        }
         Cars.curDate = DateTime.getCurrentDateTime();
         Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
-            car['sn'] = user.serialNo;
-            let validDate = Date.parse(user.validDate.split(' ')[0]);
-            car['validDate'] = validDate<Date.now()?'':user.validDate.split(' ')[0];
+            car['sn'] = user.data?user.data.serialNo:'';
+            car['validDate'] = validDate;
             car['soft'] = car.soft.map(soft => {
                 if (PATTERN_IP.test(soft['logo'])) {
                     soft['logo'] = soft['logo'].replace(PATTERN_IP, 'http://' + SETTINGS.ip.logos);

@@ -1,13 +1,9 @@
-const DataStore = require('nedb');
 const Strings = require('../templates/strings');
 const ResponseBuilder = require('../utils/responseBuilder');
 const UserBuilder = require('../utils/userBuilder');
-const db = new DataStore({filename: 'db/users.db'});
-const CarsBuilder = require('../utils/carsBuilder');
+const db = require('../db/db.js');
 const Random = require('../utils/random');
-db.loadDatabase(err => {
-    if (err) console.log(err);
-});
+
 const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
     if (err) {
         reject({error: err})
@@ -16,50 +12,53 @@ const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
     } else
         resolve(ResponseBuilder(doCleanData ? null : {result: docs}, Strings.Errors.noError, Strings.Success.success));
 };
-const loginCheck = user => new Promise((resolve, reject) => {
+
+const getUser = user => new Promise((resolve,reject)=>{
     db.findOne({autelId: user.autelId}, (err, doc) => {
         if (err) {
-            console.log(err);
-            reject({
-                err,
-                ...ResponseBuilder(null, Strings.Errors.communicationFailed, Strings.Success.notSuccess)
-            });
-        } else if (!doc) {
-            reject({
-                err: `User ${user.autelId} does not exist!`,
-                ...ResponseBuilder(null, Strings.Errors.emailDoesNotExist, Strings.Success.notSuccess)
-            });
-        } else if (doc.pwd !== user.pwd) {
-            reject({
-                err: `User ${user.autelId}. Wrong password!`,
-                ...ResponseBuilder(null, Strings.Errors.wrongPassword, Strings.Success.notSuccess)
-            });
-        } else if (Date.parse(doc['validDate']) < Date.now()) {
-            reject({
-                err: `User ${user.autelId}. Expired date! `,
-                ...ResponseBuilder(null,Strings.Errors.dataError,Strings.Success.notSuccess)
-            })
-        } else {
-            resolve(ResponseBuilder(doc, Strings.Errors.noError, Strings.Success.success));
+            reject(err);
+            return
         }
+        if (!doc) {
+            resolve ({data: null, state: Strings.UserState.notExist});
+            return;
+        }
+        if (!doc['validDate'] || !doc['allowed']) {
+            resolve ({data: doc, state: Strings.UserState.notAllowed});
+            return;
+        }
+        if (user.pwd && (doc.pwd !== user.pwd)) {
+            resolve ({data: doc, state: Strings.UserState.wrongPassword});
+            return;
+        }
+        if (Date.parse(doc['validDate']) < Date.now()) {
+            resolve ({data: doc, state: Strings.UserState.expired});
+            return;
+        }
+        resolve ({data: doc, state: Strings.UserState.ok});
     })
 });
-
-const getAppPlatform = query => {
-    switch (JSON.stringify(query).indexOf('"sn"')) {
-        case 1:
-            return Strings.AppPlatform.android32;
-        case 10:
-            return Strings.AppPlatform.iOS;
-        case 75:
-            return Strings.AppPlatform.android64;
+const loginCheck = async user => {
+    const foundUser = await getUser(user);
+    switch (foundUser.state) {
+        case Strings.UserState.ok:
+            return {err: `User ${user.autelId} logged in!`, ...ResponseBuilder(foundUser.data, Strings.Errors.noError, Strings.Success.success)};
+        case Strings.UserState.notAllowed:
+            return {err: `User ${user.autelId} does not allowed!`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)};
+        case Strings.UserState.expired:
+            return {err: `User ${user.autelId}. Expired date! `, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)};
+        case Strings.UserState.notExist:
+            return {err: `User ${user.autelId} does not exist!`, ...ResponseBuilder(null, Strings.Errors.emailDoesNotExist, Strings.Success.notSuccess)};
+        case Strings.UserState.wrongPassword:
+            return {err: `User ${user.autelId}. Wrong password!`, ...ResponseBuilder(null, Strings.Errors.wrongPassword, Strings.Success.notSuccess)};
     }
 };
-
 
 module.exports.all = () => new Promise((resolve, reject) =>
     db.find({}, (err, docs) =>
         dbCb(resolve, reject, err, docs, 'user.db is empty!')));
+
+module.exports.getUser = getUser;
 
 module.exports.findById = id => new Promise((resolve, reject) =>
     db.findOne({_id: id}, (err, doc) =>
@@ -86,36 +85,7 @@ module.exports.deleteUser = user => new Promise((resolve, reject) =>
 
 module.exports.validation = () => ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success);
 
-module.exports.getAllCars = query => new Promise((resolve, reject) => {
-    if (!query.sn) {
-        reject({
-            err: `Missing serial number in request`,
-            ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)
-        });
-        return;
-    }
-    db.findOne({serialNo: query.sn}, (err, user) => {
-            if (err || !user["allowed"]) {
-                reject({
-                    err: err || `User ${query.sn} is now allowed!`,
-                    ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)
-                });
-                return;
-            }
-            if (!user) {
-                reject({
-                    err: `User ${query.sn} does not exist!`,
-                    ...ResponseBuilder(null, Strings.Errors.serialDoesNotExist, Strings.Success.notSuccess)
-                });
-                return;
-            } else {
-                CarsBuilder(user, getAppPlatform(query))
-                    .then(Cars => resolve(ResponseBuilder(Cars, Strings.Errors.noError, Strings.Success.success)))
-                    .catch(err => reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)}))
-            }
-        }
-    )
-});
+
 module.exports.resetPassword = userReq => new Promise((resolve, reject) => {
     db.findOne({autelId: userReq.autelId}, (err, user) => {
         if (err) {
@@ -147,4 +117,4 @@ module.exports.resetPassword = userReq => new Promise((resolve, reject) => {
         }
     })
 });
-module.exports.loginCheck = async user => await loginCheck(user);
+module.exports.loginCheck = loginCheck;
