@@ -28,7 +28,7 @@ module.exports = {
         ok: 'ok',
         notAllowed: 'notAllowed',
         expired: 'expired',
-        notExist: 'noteExist',
+        notExist: 'notExist',
         wrongPassword: 'wrongPassword',
     }
 };

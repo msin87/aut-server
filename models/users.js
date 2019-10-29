@@ -1,7 +1,8 @@
 const Strings = require('../templates/strings');
+const Settings = require('../settings');
 const ResponseBuilder = require('../utils/responseBuilder');
 const UserBuilder = require('../utils/userBuilder');
-const db = require('../db/db.js');
+const db = require('../db.js');
 const Random = require('../utils/random');
 
 const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
@@ -12,30 +13,39 @@ const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
     } else
         resolve(ResponseBuilder(doCleanData ? null : {result: docs}, Strings.Errors.noError, Strings.Success.success));
 };
+const insertUser = query => new Promise((resolve, reject) => {
+    db.insert(UserBuilder.newUser(query), (err, docs) => {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve({data: null, errcode: Strings.Errors.noError, success: Strings.Success.success})
+    })
+});
 
-const getUser = user => new Promise((resolve,reject)=>{
+const getUser = user => new Promise((resolve, reject) => {
     db.findOne({autelId: user.autelId}, (err, doc) => {
         if (err) {
             reject(err);
             return
         }
         if (!doc) {
-            resolve ({data: null, state: Strings.UserState.notExist});
+            resolve({data: null, state: Strings.UserState.notExist});
             return;
         }
         if (!doc['validDate'] || !doc['allowed']) {
-            resolve ({data: doc, state: Strings.UserState.notAllowed});
+            resolve({data: doc, state: Strings.UserState.notAllowed});
             return;
         }
         if (user.pwd && (doc.pwd !== user.pwd)) {
-            resolve ({data: doc, state: Strings.UserState.wrongPassword});
+            resolve({data: doc, state: Strings.UserState.wrongPassword});
             return;
         }
         if (Date.parse(doc['validDate']) < Date.now()) {
-            resolve ({data: doc, state: Strings.UserState.expired});
+            resolve({data: doc, state: Strings.UserState.expired});
             return;
         }
-        resolve ({data: doc, state: Strings.UserState.ok});
+        resolve({data: doc, state: Strings.UserState.ok});
     })
 });
 const loginCheck = async user => {
@@ -71,9 +81,22 @@ module.exports.findByAutelId = autelId => new Promise((resolve, reject) =>
             ...ResponseBuilder(null, Strings.Errors.emailDoesNotExist, Strings.Success.notSuccess)
         })));
 
-module.exports.create = query => new Promise((resolve, reject) =>
-    db.insert(UserBuilder.newUser(query), (err, docs) =>
-        dbCb(resolve, reject, err, docs, `User creating error: ${query}`, true)));
+module.exports.create = async query => {
+    const foundUser = await getUser(query);
+    if (foundUser.state === Strings.UserState.notExist) {
+        if (+query.validCode === +Settings.passwords.registerUser) {
+            return await insertUser(query);
+        } else {
+            return {err: `User ${query.autelId} registration failed. Wrong verification code ${query.validCode}! Expected: ${Settings.passwords.registerUser}`, data: null, errcode: Strings.Errors.wrongConfirmCode, success: Strings.Success.notSuccess}
+        }
+    }
+    else{
+        return {err: `User ${query.autelId} registration failed. User already exists!`,data: null, errcode: Strings.Errors.accountHasExist, success: Strings.Success.notSuccess}
+    }
+    // db.insert(UserBuilder.newUser(query), (err, docs) =>
+    //     dbCb(resolve, reject, err, docs, `User creating error: ${query}`, true))
+};
+
 
 module.exports.updateUser = (userToUpdate, newUser) => new Promise((resolve, reject) =>
     db.update({autelId: userToUpdate}, newUser, {}, (err, docs) =>

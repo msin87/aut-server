@@ -2,10 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mainServer = express();
 const fileServer = express();
-const controller = require('./controllers/users');
 const PATHS = require('./settings');
 const AutelStoreRouter = require('./routes/AutelStore');
-// const Updater = require('./updater/updater');
 mainServer.use(bodyParser.text({type: 'text/html'}));
 mainServer.use(bodyParser.urlencoded(({extended: true})));
 mainServer.use(function (req, res, next) {
