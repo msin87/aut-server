@@ -5,9 +5,9 @@ const Users = require('./users');
 const getAppPlatform = query => {
     if (JSON.stringify(query).indexOf('"sn"') === 1)
         return Strings.AppPlatform.android32;
-    if (JSON.stringify(query).indexOf('"sn"') > 1 && JSON.stringify(query).indexOf('"sn"') < 30)
-        return Strings.AppPlatform.iOS;
-    if (JSON.stringify(query).indexOf('"sn"') > 30)
+    // if (JSON.stringify(query).indexOf('"sn"') > 1 && JSON.stringify(query).indexOf('"sn"') < 30)
+    //     return Strings.AppPlatform.iOS;
+    if (+query.sys===2)
         return Strings.AppPlatform.android64;
 };
 module.exports.all = async query => {
