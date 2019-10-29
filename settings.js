@@ -1,4 +1,4 @@
-module.exports.cars = 'C:\\Coding\\aut-server\\Cars';
+module.exports.cars = 'C:\\Users\\Administrator\\Desktop\\nginx-1.17.0\\html';
 module.exports.passwords = {registerUser: '456321'};
 module.exports.ip = {
     soft: 'download1.auteltech.net',
