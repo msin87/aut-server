@@ -3,7 +3,7 @@ const Strings = require('../templates/strings');
 const CarsBuilder = require('../utils/carsBuilder');
 const Users = require('./users');
 const getAppPlatform = query => {
-    if (((+query.sys===2)||(JSON.stringify(query).indexOf('"sn"') === 1)))
+    if (+query.sys===2)
         return Strings.AppPlatform.android32;
     // if (JSON.stringify(query).indexOf('"sn"') > 1 && JSON.stringify(query).indexOf('"sn"') < 30)
     //     return Strings.AppPlatform.iOS;
