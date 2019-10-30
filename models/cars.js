@@ -7,7 +7,8 @@ const getAppPlatform = query => {
         return Strings.AppPlatform.android32;
     // if (JSON.stringify(query).indexOf('"sn"') > 1 && JSON.stringify(query).indexOf('"sn"') < 30)
     //     return Strings.AppPlatform.iOS;
-    if (+query.sys===0 || ((JSON.stringify(query).indexOf('"sn"') !== 1)&&+query.sys===0))
+    // if (+query.sys===0 || ((JSON.stringify(query).indexOf('"sn"') !== 1)&&+query.sys===0))
+    if (+query.sys===0)
         return Strings.AppPlatform.android64;
 };
 module.exports.all = async query => {
