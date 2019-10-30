@@ -52,15 +52,15 @@ const loginCheck = async user => {
     const foundUser = await getUser(user);
     switch (foundUser.state) {
         case Strings.UserState.ok:
-            return {err: `User ${user.autelId} logged in!`, ...ResponseBuilder(foundUser.data, Strings.Errors.noError, Strings.Success.success)};
+            return {err: `User ${user.autelId} logged in!, firstName: ${foundUser.data.firstName} `, ...ResponseBuilder(foundUser.data, Strings.Errors.noError, Strings.Success.success)};
         case Strings.UserState.notAllowed:
-            return {err: `User ${user.autelId} does not allowed!`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)};
+            return {err: `User ${user.autelId} does not allowed! firstName: ${foundUser.data.firstName}`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)};
         case Strings.UserState.expired:
-            return {err: `User ${user.autelId}. Expired date! `, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)};
+            return {err: `User ${user.autelId}. Expired date! firstName: ${foundUser.data.firstName}`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)};
         case Strings.UserState.notExist:
             return {err: `User ${user.autelId} does not exist!`, ...ResponseBuilder(null, Strings.Errors.emailDoesNotExist, Strings.Success.notSuccess)};
         case Strings.UserState.wrongPassword:
-            return {err: `User ${user.autelId}. Wrong password!`, ...ResponseBuilder(null, Strings.Errors.wrongPassword, Strings.Success.notSuccess)};
+            return {err: `User ${user.autelId}. Wrong password! firstName: ${foundUser.data.firstName}`, ...ResponseBuilder(null, Strings.Errors.wrongPassword, Strings.Success.notSuccess)};
     }
 };
 
