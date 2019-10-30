@@ -1,5 +1,5 @@
 const users = require('../models/users');
-
+// const logger =require('../logger/logger');
 module.exports = {
     reqValidCode: (req, res) => res.send(users.validation()),
     registerNewUser: async (req, res) => {
