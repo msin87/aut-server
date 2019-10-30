@@ -14,10 +14,11 @@ module.exports.all = async query => {
     if (!query.sn) return ({err: `Missing serial number in request`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
     const regExp = new RegExp(`${query.sn}@.*`);
     const user = await Users.getUser({autelId: {$regex: regExp}});
-    const Cars = await CarsBuilder(user, getAppPlatform(query));
+    const appPlatfrom = getAppPlatform(query);
+    const Cars = await CarsBuilder(user,appPlatfrom);
     switch (user.state) {
         case Strings.UserState.ok:
-            return {err:`Sending cars to user ${user.data.autelId}`,...ResponseBuilder(Cars, Strings.Errors.noError, Strings.Success.success)};
+            return {err:`Sending ${appPlatfrom}bit cars to user ${user.data.autelId}`,...ResponseBuilder(Cars, Strings.Errors.noError, Strings.Success.success)};
         case Strings.UserState.notAllowed:
             return {err:`Sending empty cars to not allowed user ${user.data.autelId}`,...ResponseBuilder(Cars, Strings.Errors.noError, Strings.Success.success)};
         case Strings.UserState.notExist:
