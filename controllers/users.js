@@ -1,21 +1,21 @@
 const users = require('../models/users');
-// const logger =require('../logger/logger');
+const logger =require('../logger/logger');
 module.exports = {
     reqValidCode: (req, res) => res.send(users.validation()),
     registerNewUser: async (req, res) => {
         try {
             const result = await users.create(req.query);
-            console.log(result.err);
+            logger.INFO(result.err);
             res.send(result);
         } catch (err) {
-            console.log(err.err);
+            logger.ERROR(err.err);
             res.send({data:null, errcode: 'S0001', success: 0});
         }
     },
     login: async (req, res) => {
         try {
             const result = await users.loginCheck(req.query);
-            console.log(result.err);
+            logger.INFO(result.err);
             res.send(result);
         } catch (err) {
             console.log(err.err);
@@ -25,9 +25,10 @@ module.exports = {
     resetPassword: async (req, res) => {
         try {
             const result = await users.resetPassword(req.query);
+            logger.INFO(result.err);
             res.send(result);
         } catch (err) {
-            console.log(err.err);
+            logger.ERROR(err.err);
             res.send(err);
         }
     },

@@ -1,7 +1,7 @@
-const Colors = require('../templates/colors');
 const MD5 = require('md5');
 const dictionary = 'CjYm8ZBqaAz2wQsSx3WFc4GrfvH5EtgbJMR6yhKnT7uLiUkV,X9oPNl.0p!-[=]~'.split('');
 const simpleRandom = require('../utils/random');
+const logger =require('../logger/logger');
 const revDictionary = new Map();
 dictionary.forEach((val, index) => {
     revDictionary.set(val, index);
@@ -76,7 +76,7 @@ const decoderMiddleWare = (req, res, next) => {
     const decoded = EncryptDecrypt(req.body['rqbody']);
     req.url = req.url + '?' + decoded;
     req.query = null;
-    console.log(`${Colors.FgGreen}%s${Colors.reset}`, `[MaxiAP request]\r\n${Date()}\r\nIP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]}\r\n${decoded}\r\n[End]`);
+    logger.COMMAND(`IP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]}\r\n${decoded}`);
     next();
 };
 module.exports = {

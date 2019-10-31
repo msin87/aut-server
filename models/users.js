@@ -135,7 +135,7 @@ module.exports.resetPassword = userReq => new Promise((resolve, reject) => {
                     return;
                 }
                 db.persistence.compactDatafile();
-                resolve(ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success))
+                resolve({err:`User ${userReq.autelId} password reset successful`,...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
             })
         }
     })
