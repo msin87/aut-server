@@ -2,7 +2,8 @@ const Strings = require('../templates/strings');
 const Settings = require('../settings');
 const ResponseBuilder = require('../utils/responseBuilder');
 const UserBuilder = require('../utils/userBuilder');
-const db = require('../db.js');
+const db = (require('../db.js')).db;
+const backupDb = (require('../db.js')).backupDb;
 const Random = require('../utils/random');
 
 const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
@@ -14,7 +15,7 @@ const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
         resolve(ResponseBuilder(doCleanData ? null : {result: docs}, Strings.Errors.noError, Strings.Success.success));
 };
 const insertUser = query => new Promise((resolve, reject) => {
-    db.insert(UserBuilder.newUser(query), (err, docs) => {
+    db.insert(UserBuilder.newUser(query), (err) => {
         if (err) {
             reject(err);
             return;
@@ -23,8 +24,8 @@ const insertUser = query => new Promise((resolve, reject) => {
     })
 });
 
-const getUser = user => new Promise((resolve, reject) => {
-    db.findOne({autelId: user.autelId}, (err, doc) => {
+const getUser = (user, dataBase = db) => new Promise((resolve, reject) => {
+    dataBase.findOne({autelId: user.autelId}, (err, doc) => {
         if (err) {
             reject(err);
             return
@@ -83,6 +84,10 @@ module.exports.findByAutelId = autelId => new Promise((resolve, reject) =>
 
 module.exports.create = async query => {
     const foundUser = await getUser(query);
+    const oldUser = await getUser(query,backupDb);
+    if (oldUser.state !== Strings.UserState.notExist){
+        return {err: `User ${query.autelId} registration failed. User already exists in the old_users.db!`, data: null, errcode: Strings.Errors.accountHasExist, success: Strings.Success.notSuccess}
+    }
     if (foundUser.state === Strings.UserState.notExist) {
         if (+query.validCode === +Settings.passwords.registerUser) {
             return await insertUser(query);

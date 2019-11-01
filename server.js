@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mainServer = express();
 const fileServer = express();
 const PATHS = require('./settings');
+const dbCleaner = require('./utils/dbcleaner');
 const AutelStoreRouter = require('./routes/AutelStore');
 const logger =require('./logger/logger');
 mainServer.use(bodyParser.text({type: 'text/html'}));
@@ -21,3 +22,5 @@ mainServer.use(AutelStoreRouter);
 
 mainServer.listen(8082, () => logger.INFO('MaxiAP server started'));
 fileServer.listen(8080,() => logger.INFO('File server started'));
+
+dbCleaner.start();

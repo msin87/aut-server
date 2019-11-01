@@ -1,5 +1,5 @@
-const DEMO_PERIOD_HOURS = 24;
 const DateTime = require('./dateTime');
+const Settings = require('../settings');
 const User = require('../templates/user');
 const Random = require('../utils/random');
 module.exports = {
@@ -13,8 +13,8 @@ module.exports = {
         token_maxiap: 'token',
         serialNo: query.autelId.split('@')[0],
         appPlatform: query.appPlatform||'',
-        // validDate: DateTime.getDemoDateTime(DEMO_PERIOD_HOURS),
-        validDate: '2010-10-10',
+        validDate: DateTime.getDemoDate(Settings.demo.hours),
         validCode: Random(1000,9999).toString(10),
+        demoMsu: ''
     }))(DateTime.getCurrentDateTime())
 };

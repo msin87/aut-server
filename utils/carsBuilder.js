@@ -3,7 +3,7 @@ const PATTERN_IP = /(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9
 const PATTERN_DNS = /http:\/\/(\w*\.\w*\.\w*)\b/g;
 const fs = require('fs');
 const DateTime = require('./dateTime');
-const Strings =  require('../templates/strings');
+const Strings = require('../templates/strings');
 const getCars = platform => new Promise((resolve, reject) => {
     fs.readFile(`responses/android${platform}.json`, 'UTF8', (err, data) => {
         if (err) {
@@ -14,16 +14,25 @@ const getCars = platform => new Promise((resolve, reject) => {
 
 module.exports = async (user, sys) => {
     try {
-        const Cars = await getCars(sys);
-        let validDate = user.data?user.data.validDate.split(' ')[0]:'';
-        if (user.state===Strings.UserState.notAllowed||user.state===Strings.UserState.notExist)
-        {
-            validDate='';
+        let Cars = await getCars(sys);
+        let validDate = user.data ? user.data.validDate.split(' ')[0] : '';
+        if (user.state === Strings.UserState.notAllowed || user.state === Strings.UserState.notExist) {
+            validDate = '';
         }
+        // if (user.data.demoMsu)
+        // {
+        //     Cars.minSaleUnit = Cars.minSaleUnit.filter(msu=>{
+        //         if (msu['code']===user.data.demoMsu) return true;
+        //     })
+        // }
         Cars.curDate = DateTime.getCurrentDateTime();
         Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
-            car['sn'] = user.data?user.data.serialNo:'';
-            car['validDate'] = validDate;
+            car['sn'] = user.data ? user.data.serialNo : '';
+            if (!user.data.demoMsu) {
+                car['validDate'] = validDate;
+            } else {
+                car['validDate'] = user.data.demoMsu===car.code?validDate:'';
+            }
             car['soft'] = car.soft.map(soft => {
                 if (PATTERN_IP.test(soft['logo'])) {
                     soft['logo'] = soft['logo'].replace(PATTERN_IP, 'http://' + SETTINGS.ip.logos);
