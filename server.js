@@ -17,13 +17,14 @@ fileServer.use((req,res,next)=>{
     logger.FILE_REQUEST(`IP:${req.connection.remoteAddress.split(':')[3]}\r\nURL:${req.url}`);
    next();
 });
-fileServer.use('/',express.static(PATHS.cars));
 fileServer.all('/',(req,res,next)=>{
-    res.sendStatus(403)
+    res.sendStatus(403);
 });
+fileServer.use('/',express.static(PATHS.cars));
+
 mainServer.use(AutelStoreRouter);
 
 mainServer.listen(8082, () => logger.INFO('MaxiAP server started'));
-fileServer.listen(8080,() => logger.INFO('File server started'));
+fileServer.listen(8080, () => logger.INFO('File server started'));
 
 dbCleaner.start();
