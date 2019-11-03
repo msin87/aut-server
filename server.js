@@ -19,7 +19,7 @@ fileServer.use((req,res,next)=>{
 });
 fileServer.use('/',express.static(PATHS.cars));
 fileServer.all('/',(req,res,next)=>{
-    res.status(403).send('Access Forbidden')
+    res.sendStatus(403)
 });
 mainServer.use(AutelStoreRouter);
 
