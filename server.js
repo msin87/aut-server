@@ -18,6 +18,9 @@ fileServer.use((req,res,next)=>{
    next();
 });
 fileServer.use('/',express.static(PATHS.cars));
+fileServer.all('/',(req,res,next)=>{
+    res.status(403).send('Access Forbidden')
+});
 mainServer.use(AutelStoreRouter);
 
 mainServer.listen(8082, () => logger.INFO('MaxiAP server started'));
