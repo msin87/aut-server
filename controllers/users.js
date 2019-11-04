@@ -34,5 +34,9 @@ module.exports = {
     },
     // bindSerialNumber: async (req, res) => {
     // },
-    softwareCheck: async (req, res) => res.send({data: null, errcode: '24', success: '0'})
+    softwareCheck: async (req, res) => res.send({data: null, errcode: '24', success: '0'}),
+    getAll: async (req,res) => {
+        const users = await users.all(req.query);
+
+    }
 };

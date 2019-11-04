@@ -65,38 +65,79 @@ const loginCheck = async user => {
     }
 };
 
-module.exports.all = () => new Promise((resolve, reject) =>
-    db.find({}, (err, docs) =>
-        dbCb(resolve, reject, err, docs, 'user.db is empty!')));
+module.exports.all = query => new Promise((resolve, reject) =>
+    db.find({}, (err, docs) => {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve({err: `Telegram request: get all users. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
+    }));
 
 module.exports.getUser = getUser;
 
-module.exports.findById = id => new Promise((resolve, reject) =>
-    db.findOne({_id: id}, (err, doc) =>
-        dbCb(resolve, reject, err, doc, `_id: ${id} not found!`)));
+module.exports.findById = query => new Promise((resolve, reject) =>
+    db.findOne({_id: query.id}, (err, docs) => {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve({err: `Telegram request: find user by _id. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
+    }));
 
-module.exports.findByAutelId = autelId => new Promise((resolve, reject) =>
-    db.findOne({autelId: autelId}, (err, doc) =>
-        dbCb(resolve, reject, err, doc, {
-            err: `User ${autelId} does not exist!`,
-            ...ResponseBuilder(null, Strings.Errors.emailDoesNotExist, Strings.Success.notSuccess)
-        })));
-
+module.exports.findByAutelId = query => new Promise((resolve, reject) =>
+    db.findOne({_id: query.autelId}, (err, docs) => {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
+    }));
+module.exports.findExpired = query => new Promise((resolve, reject) =>
+    db.find({}, (err, docs) => {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user=>Date.parse(user.validDate + ' 23:59:59')<Date.now()), Strings.Errors.noError, Strings.Success.success)});
+    }));
+module.exports.findNotAllowed = query => new Promise((resolve, reject) =>
+    db.find({}, (err, docs) => {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user=>!user.allowed), Strings.Errors.noError, Strings.Success.success)});
+    }));
 module.exports.create = async query => {
     const foundUser = await getUser(query);
-    const oldUser = await getUser(query,backupDb);
-    if (oldUser.state !== Strings.UserState.notExist){
-        return {err: `User ${query.autelId} registration failed. User already exists in the old_users.db!`, data: null, errcode: Strings.Errors.accountHasExist, success: Strings.Success.notSuccess}
+    const oldUser = await getUser(query, backupDb);
+    if (oldUser.state !== Strings.UserState.notExist) {
+        return {
+            err: `User ${query.autelId} registration failed. User already exists in the old_users.db!`,
+            data: null,
+            errcode: Strings.Errors.accountHasExist,
+            success: Strings.Success.notSuccess
+        }
     }
     if (foundUser.state === Strings.UserState.notExist) {
         if (+query.validCode === +Settings.passwords.registerUser) {
             return await insertUser(query);
         } else {
-            return {err: `User ${query.autelId} registration failed. Wrong verification code ${query.validCode}! Expected: ${Settings.passwords.registerUser}`, data: null, errcode: Strings.Errors.wrongConfirmCode, success: Strings.Success.notSuccess}
+            return {
+                err: `User ${query.autelId} registration failed. Wrong verification code ${query.validCode}! Expected: ${Settings.passwords.registerUser}`,
+                data: null,
+                errcode: Strings.Errors.wrongConfirmCode,
+                success: Strings.Success.notSuccess
+            }
         }
-    }
-    else{
-        return {err: `User ${query.autelId} registration failed. User already exists!`,data: null, errcode: Strings.Errors.accountHasExist, success: Strings.Success.notSuccess}
+    } else {
+        return {
+            err: `User ${query.autelId} registration failed. User already exists!`,
+            data: null,
+            errcode: Strings.Errors.accountHasExist,
+            success: Strings.Success.notSuccess
+        }
     }
     // db.insert(UserBuilder.newUser(query), (err, docs) =>
     //     dbCb(resolve, reject, err, docs, `User creating error: ${query}`, true))
@@ -140,7 +181,7 @@ module.exports.resetPassword = userReq => new Promise((resolve, reject) => {
                     return;
                 }
                 db.persistence.compactDatafile();
-                resolve({err:`User ${userReq.autelId} password reset successful`,...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
+                resolve({err: `User ${userReq.autelId} password reset successful`, ...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
             })
         }
     })
