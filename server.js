@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const mainServer = express();
 const dbCleaner = require('./utils/dbcleaner');
 const AutelStoreRouter = require('./routes/AutelStore');
-const logger =require('./logger/logger');
+const logger = require('./logger/logger');
+const firewall = require('./utils/firewall');
 mainServer.use(bodyParser.text({type: 'text/html'}));
 mainServer.use(bodyParser.urlencoded(({extended: true})));
 mainServer.use(function (req, res, next) {
