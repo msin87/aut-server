@@ -1,5 +1,6 @@
 const child_process = require('child_process');
 const codePage = require('legacy-encoding');
+const assert = require('assert');
 const asyncExec = (cmd, encoding) => new Promise((resolve, reject) => {
     child_process.exec(cmd, {shell: true, encoding: 'byte'}, (error, stdout, stderr) => {
         if (error) {
@@ -26,6 +27,14 @@ const FireWall = ({ruleName, filterWidth, toleranceTime, banTime, outDateTime}) 
     } catch (e) {
         child_process.execSync(`netsh advfirewall firewall add rule name='${ruleName}' dir=in action=block`)
     }
+    const getMedian = values => {
+        if (values.length === 0) return 0;
+        values.sort((a, b) => a - b);
+        const half = Math.floor(values.length / 2);
+        if (values.length % 2)
+            return values[half];
+        return (values[half - 1] + values[half]) / 2.0;
+    };
     const flushOutdated = () => {
         for (let [key, val] of ipTable.entries()) {
             if ((Date.now() - val.lastVisitTime) > outDateTime) ipTable.delete(key);
@@ -71,8 +80,7 @@ const FireWall = ({ruleName, filterWidth, toleranceTime, banTime, outDateTime}) 
                     isBanned: false
                 })
             } else {                                     //Filter is full
-                foundIp.intervals.sort((a, b) => a - b);
-                if (foundIp.intervals[Math.floor(foundIp.intervals.length / 2 + 0.5)] > toleranceTime) { //acceptable median value
+                if (getMedian(foundIp.intervals) > toleranceTime) { //acceptable median value
                     ipTable.set(ip, {
                         lastVisitTime: Date.now(),
                         intervals: [],

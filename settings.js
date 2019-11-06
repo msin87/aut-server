@@ -15,7 +15,7 @@ module.exports.cleaner = {
 module.exports.firewall = {
     banTime: 1 * 60 * 60 * 1000,
     toleranceTime: 10 * 1000,
-    filterWidth: 3,
+    filterWidth: 5,
     ruleName: 'AutelBan',
     outDateTime: 1 * 60 * 60 * 1000
 };
