@@ -1,8 +1,5 @@
-const Settings = require('../settings');
 const child_process = require('child_process');
 const codePage = require('legacy-encoding');
-const ipTable = new Map();
-const currentCodePage = child_process.execSync('chcp').toString('binary').match(/\d+/gi)[0];
 const asyncExec = (cmd, encoding) => new Promise((resolve, reject) => {
     child_process.exec(cmd, {shell: true, encoding: 'byte'}, (error, stdout, stderr) => {
         if (error) {
@@ -16,67 +13,110 @@ const asyncExec = (cmd, encoding) => new Promise((resolve, reject) => {
         resolve(codePage.decode(stdout.toString('binary'), encoding));
     });
 });
-try {
-    child_process.execSync(`netsh advfirewall firewall show rule name='${Settings.firewall.ruleName}'`)
-} catch (e) {
-    child_process.execSync(`netsh advfirewall firewall add rule name='${Settings.firewall.ruleName}' dir=in action=block`)
-}
-const updateFirewallRule = async (ipTable, rule) => {
-    let ipString = '';
-    for (let [key, val] of ipTable.entries()) {
-        if (!val.attemptsLeft) ipString += key + ',';
-    }
-    const command = `netsh advfirewall firewall set rule name='${rule}' new remoteip=${ipString.slice(0, -1)}`;
+const FireWall = ({ruleName, filterWidth, toleranceTime, banTime, outDateTime}) => {
+    assert(ruleName);
+    assert(filterWidth);
+    assert(toleranceTime);
+    assert(banTime);
+    assert(outDateTime);
+    const ipTable = new Map();
+    const currentCodePage = child_process.execSync('chcp').toString('binary').match(/\d+/gi)[0];
     try {
-        await asyncExec(command, currentCodePage);
-    } catch (error) {
-        throw error;
+        child_process.execSync(`netsh advfirewall firewall show rule name='${ruleName}'`)
+    } catch (e) {
+        child_process.execSync(`netsh advfirewall firewall add rule name='${ruleName}' dir=in action=block`)
     }
-};
-const FireWall = async ip => {
-    const foundIp = ipTable.get(ip);
-    if (!foundIp) {
-        ipTable.set(ip, {
-            attemptsLeft: Settings.firewall.attempts,
-            lastVisitTime: Date.now(),
-            isBanned: false
-        });
-    } else if (foundIp.attemptsLeft) {
-        if ((Date.now() - foundIp.lastVisitTime) <= Settings.firewall.toleranceTime) {
-            ipTable.set(ip, {
-                attemptsLeft: foundIp.attemptsLeft--,
-                lastVisitTime: Date.now(),
-                isBanned: false
-            })
-        } else {
-            ipTable.set(ip, {
-                attemptsLeft: foundIp.attemptsLeft,
-                lastVisitTime: Date.now(),
-                isBanned: false
-            })
+    const flushOutdated = () => {
+        for (let [key, val] of ipTable.entries()) {
+            if ((Date.now() - val.lastVisitTime) > outDateTime) ipTable.delete(key);
         }
-    } else {
-        if ((Date.now() - foundIp.lastVisitTime) <= Settings.firewall.banTime) {
-            if (!foundIp.isBanned) {
+    };
+    const updateFirewallRule = async (ipTable, rule) => {
+        let ipString = '';
+        for (let [key, val] of ipTable.entries()) {
+            if (val.isBanned) ipString += key + ',';
+        }
+        const command = `netsh advfirewall firewall set rule name='${rule}' new remoteip=${ipString.slice(0, -1)}`;
+        try {
+            await asyncExec(command, currentCodePage);
+        } catch (error) {
+            throw error;
+        }
+    };
+    let flushInterval = setInterval(flushOutdated, outDateTime);         //Clear ipTable of outdated records every outDateTime
+    const core = async ip => {
+        const foundIp = ipTable.get(ip);
+        if (!foundIp) {
+            ipTable.set(ip, {
+                lastVisitTime: Date.now(),
+                intervals: [],
+                isBanned: false
+            });
+        } else if (foundIp.isBanned) {
+            if ((Date.now() - foundIp.lastVisitTime) > banTime) {
+                ipTable.delete(ip);
                 try {
-                    await updateFirewallRule(ipTable, Settings.firewall.ruleName);
-                    ipTable.set(ip, {
-                        attemptsLeft: 0,
-                        lastVisitTime: foundIp.lastVisitTime,
-                        isBanned: true
-                    })
+                    await updateFirewallRule(ipTable, ruleName);
                 } catch (error) {
                     throw error;
                 }
             }
+            return;
         } else {
-            ipTable.delete(ip);
-            try {
-                await updateFirewallRule(ipTable, Settings.firewall.ruleName);
-            } catch (error) {
-                throw error;
+            if (foundIp.intervals.length < filterWidth) { //Filter is not full
+                foundIp.intervals.push(Date.now() - foundIp.lastVisitTime);
+                ipTable.set(ip, {
+                    lastVisitTime: Date.now(),
+                    intervals: foundIp.intervals,
+                    isBanned: false
+                })
+            } else {                                     //Filter is full
+                foundIp.intervals.sort((a, b) => a - b);
+                if (foundIp.intervals[Math.floor(foundIp.intervals.length / 2 + 0.5)] > toleranceTime) { //acceptable median value
+                    ipTable.set(ip, {
+                        lastVisitTime: Date.now(),
+                        intervals: [],
+                        isBanned: false
+                    })
+                } else {
+                    ipTable.set(ip, {
+                        lastVisitTime: Date.now(),
+                        intervals: [],
+                        isBanned: true
+                    });
+                    try {
+                        await updateFirewallRule(ipTable, ruleName);
+                    } catch (error) {
+                        throw error;
+                    }
+                }
             }
         }
+    };
+    return {
+        setRuleName: newRuleName => ruleName = newRuleName,
+        setFilterWidth: newFilterWidth => filterWidth = newFilterWidth,
+        setToleranceTime: newToleranceTime => toleranceTime = newToleranceTime,
+        setBanTime: newBanTime => banTime = newBanTime,
+        startPeriodicFlush: interval => {
+            interval = interval || outDateTime;
+            if (flushInterval) clearInterval(flushInterval);
+            flushInterval = setInterval(flushOutdated, interval);
+        },
+        stopPeriodicFlush: () => {
+            clearInterval(flushInterval);
+            flushInterval = null;
+        },
+        setFlushInterval: interval => flushInterval = interval,
+        getFlushInterval: () => flushInterval,
+        setParams: ({newRuleName, newFilterWidth, newToleranceTime, newBanTime}) => {
+            ruleName = newRuleName;
+            filterWidth = newFilterWidth;
+            toleranceTime = newToleranceTime;
+            banTime = newBanTime;
+        },
+        getParams: () => ({ruleName, filterWidth, toleranceTime, banTime}),
+        core
     }
 };
 module.exports = FireWall;

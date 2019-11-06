@@ -11,9 +11,11 @@ module.exports.demo = {
 module.exports.cleaner = {
     hours: 24
 };
+// noinspection PointlessArithmeticExpressionJS
 module.exports.firewall = {
     banTime: 1 * 60 * 60 * 1000,
     toleranceTime: 10 * 1000,
-    attempts: 3,
+    filterWidth: 3,
     ruleName: 'AutelBan',
+    outDateTime: 1 * 60 * 60 * 1000
 };
