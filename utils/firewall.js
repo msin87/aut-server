@@ -23,9 +23,9 @@ const FireWall = ({ruleName, filterWidth, toleranceTime, banTime, outDateTime}) 
     const ipTable = new Map();
     const currentCodePage = child_process.execSync('chcp').toString('binary').match(/\d+/gi)[0];
     try {
-        child_process.execSync(`netsh advfirewall firewall show rule name='${ruleName}'`)
+        child_process.execSync(`netsh advfirewall firewall show rule name=${ruleName}`)
     } catch (e) {
-        child_process.execSync(`netsh advfirewall firewall add rule name='${ruleName}' dir=in action=block`)
+        child_process.execSync(`netsh advfirewall firewall add rule name=${ruleName} dir=in action=block remoteip=197.233.12.76`)
     }
     const getMedian = values => {
         if (values.length === 0) return 0;
@@ -45,7 +45,7 @@ const FireWall = ({ruleName, filterWidth, toleranceTime, banTime, outDateTime}) 
         for (let [key, val] of ipTable.entries()) {
             if (val.isBanned) ipString += key + ',';
         }
-        const command = `netsh advfirewall firewall set rule name='${rule}' new remoteip=${ipString.slice(0, -1)}`;
+        const command = `netsh advfirewall firewall set rule name=${rule} new remoteip=${ipString.slice(0, -1)}`;
         try {
             await asyncExec(command, currentCodePage);
         } catch (error) {
