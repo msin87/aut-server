@@ -24,5 +24,6 @@ module.exports = async (req, res) => {
         case 2504:
             await carsController.all(req, res);
             break;
+        default: res.sendStatus(444);
     }
 };
