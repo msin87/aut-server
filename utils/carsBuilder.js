@@ -19,19 +19,17 @@ module.exports = async (user, sys) => {
         if (user.state === Strings.UserState.notAllowed || user.state === Strings.UserState.notExist) {
             validDate = '';
         }
-        // if (user.data.demoMsu)
-        // {
-        //     Cars.minSaleUnit = Cars.minSaleUnit.filter(msu=>{
-        //         if (msu['code']===user.data.demoMsu) return true;
-        //     })
-        // }
         Cars.curDate = DateTime.getCurrentDateTime();
         Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
             car['sn'] = user.data ? user.data.serialNo : '';
-            if (!user.data.demoMsu) {
-                car['validDate'] = validDate;
+            if (!user.data) {
+                car['validDate'] = '';
             } else {
-                car['validDate'] = user.data.demoMsu===car.code?validDate:'';
+                if (!user.data.demoMsu) {
+                    car['validDate'] = validDate;
+                } else {
+                    car['validDate'] = user.data.demoMsu === car.code ? validDate : '';
+                }
             }
             car['soft'] = car.soft.map(soft => {
                 if (PATTERN_IP.test(soft['logo'])) {
