@@ -25,14 +25,24 @@ const insertUser = query => new Promise((resolve, reject) => {
 });
 
 const getUser = (user, dataBase = db) => new Promise((resolve, reject) => {
+    if (!user.hasOwnProperty('autelId')) {
+        resolve({data: null, state: Strings.UserState.notExist});
+        return;
+    }
     dataBase.findOne({autelId: user.autelId}, (err, doc) => {
         if (err) {
             reject(err);
-            return
+            return;
         }
         if (!doc) {
             resolve({data: null, state: Strings.UserState.notExist});
             return;
+        }
+        if (doc.hasOwnProperty('banned')) {
+            if (doc['banned']) {
+                resolve({data: doc, state: Strings.UserState.banned});
+                return;
+            }
         }
         if (!doc['validDate'] || !doc['allowed']) {
             resolve({data: doc, state: Strings.UserState.notAllowed});
@@ -62,6 +72,11 @@ const loginCheck = async user => {
             return {err: `User ${user.autelId} does not exist!`, ...ResponseBuilder(null, Strings.Errors.emailDoesNotExist, Strings.Success.notSuccess)};
         case Strings.UserState.wrongPassword:
             return {err: `User ${user.autelId}. Wrong password! firstName: ${foundUser.data.firstName}`, ...ResponseBuilder(null, Strings.Errors.wrongPassword, Strings.Success.notSuccess)};
+        case Strings.UserState.banned:
+            return {
+                err: `User ${user.autelId} is blacklisted and will be banned!`,
+                banned: true, ...ResponseBuilder(null, Strings.Errors.communicationFailed, Strings.Success.notSuccess)
+            }
     }
 };
 
@@ -99,7 +114,7 @@ module.exports.findExpired = query => new Promise((resolve, reject) =>
             reject(err);
             return;
         }
-        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user=>Date.parse(user.validDate + ' 23:59:59')<Date.now()), Strings.Errors.noError, Strings.Success.success)});
+        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user => Date.parse(user.validDate + ' 23:59:59') < Date.now()), Strings.Errors.noError, Strings.Success.success)});
     }));
 module.exports.findNotAllowed = query => new Promise((resolve, reject) =>
     db.find({}, (err, docs) => {
@@ -107,7 +122,7 @@ module.exports.findNotAllowed = query => new Promise((resolve, reject) =>
             reject(err);
             return;
         }
-        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user=>!user.allowed), Strings.Errors.noError, Strings.Success.success)});
+        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user => !user.allowed), Strings.Errors.noError, Strings.Success.success)});
     }));
 module.exports.create = async query => {
     const foundUser = await getUser(query);

@@ -16,6 +16,10 @@ module.exports = {
         try {
             const result = await users.loginCheck(req.query);
             logger.INFO(result.err);
+            if (result.banned)
+            {
+                res.setHeader('banned',req.query.autelId);
+            }
             res.send(result);
         } catch (err) {
             console.log(err.err);

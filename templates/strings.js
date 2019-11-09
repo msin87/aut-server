@@ -24,11 +24,12 @@ module.exports = {
         android32: 32,
         iOS: 0
     },
-    UserState:{
+    UserState: {
         ok: 'ok',
         notAllowed: 'notAllowed',
         expired: 'expired',
         notExist: 'notExist',
         wrongPassword: 'wrongPassword',
+        banned: 'banned',
     }
 };
