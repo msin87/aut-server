@@ -5,7 +5,7 @@ const UserBuilder = require('../utils/userBuilder');
 const db = (require('../db.js')).db;
 const backupDb = (require('../db.js')).backupDb;
 const Random = require('../utils/random');
-
+const logger = require('../logger/logger');
 const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
     if (err) {
         reject({error: err})
@@ -25,42 +25,53 @@ const insertUser = query => new Promise((resolve, reject) => {
 });
 
 const getUser = (user, dataBase = db) => new Promise((resolve, reject) => {
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. getUser: enter. User: ${JSON.stringify(user)}`);
     if (!user.hasOwnProperty('autelId')) {
         resolve({data: null, state: Strings.UserState.notExist});
         return;
     }
     dataBase.findOne({autelId: user.autelId}, (err, doc) => {
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback enter. User: ${JSON.stringify(user)}`);
         if (err) {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback error. User: ${JSON.stringify(user)}`);
             reject(err);
             return;
         }
         if (!doc) {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback. Not found. User: ${JSON.stringify(user)}`);
             resolve({data: null, state: Strings.UserState.notExist});
             return;
         }
         if (doc.hasOwnProperty('banned')) {
             if (doc['banned']) {
+                if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User banned. User: ${JSON.stringify(user)}`);
                 resolve({data: doc, state: Strings.UserState.banned});
                 return;
             }
         }
         if (!doc['validDate'] || !doc['allowed']) {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User not allowed or wrong validDate. User: ${JSON.stringify(user)}`);
             resolve({data: doc, state: Strings.UserState.notAllowed});
             return;
         }
         if (user.pwd && (doc.pwd !== user.pwd)) {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User wrong password. User: ${JSON.stringify(user)}`);
             resolve({data: doc, state: Strings.UserState.wrongPassword});
             return;
         }
         if (Date.parse(doc['validDate']) < Date.now()) {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User expired. User: ${JSON.stringify(user)}`);
             resolve({data: doc, state: Strings.UserState.expired});
             return;
         }
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User ok. User: ${JSON.stringify(user)}`);
         resolve({data: doc, state: Strings.UserState.ok});
     })
 });
 const loginCheck = async user => {
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. loginCheck enter. User: ${JSON.stringify(user)}`);
     const foundUser = await getUser(user);
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. loginCheck. User found. User: ${JSON.stringify(user)}`);
     switch (foundUser.state) {
         case Strings.UserState.ok:
             return {err: `User ${user.autelId} logged in!, firstName: ${foundUser.data.firstName} `, ...ResponseBuilder(foundUser.data, Strings.Errors.noError, Strings.Success.success)};
@@ -125,8 +136,11 @@ module.exports.findNotAllowed = query => new Promise((resolve, reject) =>
         resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user => !user.allowed), Strings.Errors.noError, Strings.Success.success)});
     }));
 module.exports.create = async query => {
+    if (logger.settings.level === 'DEBUG') if (logger.settings.level === 'DEBUG') logger.DEBUG;
     const foundUser = await getUser(query);
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. User found. Query: ${JSON.stringify(query)}`);
     const oldUser = await getUser(query, backupDb);
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. Old user found. Query: ${JSON.stringify(query)}`);
     if (oldUser.state !== Strings.UserState.notExist) {
         return {
             err: `User ${query.autelId} registration failed. User already exists in the old_users.db!`,
@@ -136,15 +150,28 @@ module.exports.create = async query => {
         }
     }
     if (foundUser.state === Strings.UserState.notExist) {
-        if (+query.validCode === +Settings.passwords.registerUser) {
-            return await insertUser(query);
-        } else {
-            return {
-                err: `User ${query.autelId} registration failed. Wrong verification code ${query.validCode}! Expected: ${Settings.passwords.registerUser}`,
-                data: null,
-                errcode: Strings.Errors.wrongConfirmCode,
-                success: Strings.Success.notSuccess
-            }
+        switch (+query.validCode) {
+            case +Settings.passwords.registerUser:
+                if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. Inserting user. Query: ${JSON.stringify(query)}`);
+                return await insertUser(query);
+            case +Settings.passwords.banUser:
+                if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. Inserting banned user. Query: ${JSON.stringify(query)}`);
+                await insertUser({
+                    ...query,
+                    data: null,
+                    banned: true,
+                    err: `User ${query.autelId} registered as BANNED!`,
+                    errcode: Strings.Errors.dataError,
+                    success: Strings.Success.notSuccess
+                });
+                throw {err: `User ${query.autelId} registered as BANNED!`};
+            default:
+                return {
+                    err: `User ${query.autelId} registration failed. Wrong verification code ${query.validCode}! Expected: ${Settings.passwords.registerUser}`,
+                    data: null,
+                    errcode: Strings.Errors.wrongConfirmCode,
+                    success: Strings.Success.notSuccess
+                }
         }
     } else {
         return {
@@ -167,7 +194,10 @@ module.exports.deleteUser = user => new Promise((resolve, reject) =>
     db.remove({autelId: user}, {}, (err, docs) =>
         dbCb(resolve, reject, err, docs, `SerialNumber delete error: ${user}`)));
 
-module.exports.validation = () => ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success);
+module.exports.validation = () => {
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. validation.`);
+    return ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)
+};
 
 
 module.exports.resetPassword = userReq => new Promise((resolve, reject) => {

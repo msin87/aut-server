@@ -4,6 +4,10 @@ const mainServer = express();
 const dbCleaner = require('./utils/dbcleaner');
 const AutelStoreRouter = require('./routes/AutelStore');
 const logger = require('./logger/logger');
+mainServer.use((req,res,next)=>{
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`mainServer new request. IP: ${ req.connection.remoteAddress.split(':')[3]}`);
+    next();
+});
 mainServer.use(bodyParser.urlencoded(({extended: true})));
 mainServer.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

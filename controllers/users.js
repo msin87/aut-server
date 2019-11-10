@@ -1,5 +1,5 @@
 const users = require('../models/users');
-const logger =require('../logger/logger');
+const logger = require('../logger/logger');
 module.exports = {
     reqValidCode: (req, res) => res.send(users.validation()),
     registerNewUser: async (req, res) => {
@@ -8,22 +8,30 @@ module.exports = {
             logger.INFO(result.err);
             res.send(result);
         } catch (err) {
-            logger.ERROR(err.err);
-            res.send({data:null, errcode: 'S0001', success: 0});
+            if (err.err.indexOf('BANNED') >= 0) {
+                logger.INFO(err.err);
+            } else {
+                logger.ERROR(err.err);
+            }
+            res.send({data: null, errcode: 'S0001', success: 0});
         }
     },
     login: async (req, res) => {
         try {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. Start login check. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
             const result = await users.loginCheck(req.query);
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. End login check. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
             logger.INFO(result.err);
-            if (result.banned)
-            {
-                res.setHeader('banned',req.query.autelId);
+            if (result.banned) {
+                res.setHeader('banned', req.query.autelId);
             }
             res.send(result);
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. Login check result is sent. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
         } catch (err) {
-            console.log(err.err);
-            res.send({data:null, errcode: 'S0001', success: 0});
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. User check error. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
+            logger.ERROR(err.err || err);
+            res.send({data: null, errcode: 'S0001', success: 0});
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. User error is sent. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
         }
     },
     resetPassword: async (req, res) => {
@@ -38,8 +46,12 @@ module.exports = {
     },
     // bindSerialNumber: async (req, res) => {
     // },
-    softwareCheck: async (req, res) => res.send({data: null, errcode: '24', success: '0'}),
-    getAll: async (req,res) => {
+    softwareCheck: (req, res) => {
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. Before send softwareCheck response. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
+        res.send({data: null, errcode: '24', success: '0'});
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. After send softwareCheck response. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
+    },
+    getAll: async (req, res) => {
         const users = await users.all(req.query);
 
     }

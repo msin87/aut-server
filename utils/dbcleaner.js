@@ -36,9 +36,12 @@ const deleteUser = (dataBase, autelId) => new Promise((resolve, reject) =>
 
 
 const Cleaner = () => {
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`DataBase cleaner. Enter`);
     const watcher = () => {
         logger.INFO('Cleaner started!');
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`DataBase cleaner. Watcher started`);
         getAllUsers(db).then(async (users) => {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`DataBase caner. getAllUsers callback`);
             let changed = false;
             for (let user of users) {
                 if (Date.parse(user.validDate + 'T23:59:59') < Date.now()) {
@@ -49,11 +52,14 @@ const Cleaner = () => {
                     changed = true;
                 }
             }
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`DataBase cleaner. Users cleaning complete`);
             if (changed) {
                 db.persistence.compactDatafile();
                 backupDb.persistence.compactDatafile();
+                if (logger.settings.level === 'DEBUG') logger.DEBUG(`DataBase cleaner. Compact database`);
             }
             logger.INFO('Cleaner finished!');
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`DataBase cleaner. Finished`);
         })
     };
     return {

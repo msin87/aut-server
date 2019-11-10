@@ -15,6 +15,7 @@ module.exports = {
         appPlatform: query.appPlatform||'',
         validDate: DateTime.getDemoDate(Settings.demo.hours),
         validCode: Random(1000,9999).toString(10),
-        demoMsu: ''
+        demoMsu: '',
+        banned: query.banned
     }))(DateTime.getCurrentDateTime())
 };

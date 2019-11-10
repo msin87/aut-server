@@ -1,13 +1,15 @@
 const winston = require('winston');
 const LEVEL = Symbol.for('level');
+const Settings = require('../settings');
 const config = {
     levels: {
         ERROR: 0,
-        DEBUG: 1,
-        WARNING: 2,
-        INFO: 3,
-        COMMAND: 4,
-        FILE_REQUEST: 5
+        WARNING: 1,
+        INFO: 2,
+        COMMAND: 3,
+        FILE_REQUEST: 4,
+        DEBUG: 5,
+
     },
     colors: {
         ERROR: 'red',
@@ -39,4 +41,5 @@ const logger = winston.createLogger({
     ],
     level: 'FILE_REQUEST'
 });
+logger.settings = {level: Settings.logger.level};
 module.exports = logger;

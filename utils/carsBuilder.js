@@ -4,22 +4,31 @@ const PATTERN_DNS = /http:\/\/(\w*\.\w*\.\w*)\b/g;
 const fs = require('fs');
 const DateTime = require('./dateTime');
 const Strings = require('../templates/strings');
+const logger = require('../logger/logger');
 const getCars = platform => new Promise((resolve, reject) => {
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. getCars. Enter. platform: ${platform}`);
     fs.readFile(`responses/android${platform}.json`, 'UTF8', (err, data) => {
         if (err) {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. getCars. Error. platform: ${platform}`);
             reject(err)
-        } else resolve(JSON.parse(data))
+        } else {
+            if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. getCars. Resolve. platform: ${platform}`);
+            resolve(JSON.parse(data))
+        }
     })
 });
 
 module.exports = async (user, sys) => {
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. User: ${JSON.stringify(user)}, sys: ${sys}`);
     try {
         let Cars = await getCars(sys);
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. After getCars. User: ${JSON.stringify(user)}, sys: ${sys}`);
         let validDate = user.data ? user.data.validDate.split(' ')[0] : '';
         if (user.state === Strings.UserState.notAllowed || user.state === Strings.UserState.notExist) {
             validDate = '';
         }
         Cars.curDate = DateTime.getCurrentDateTime();
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. Constructing minSaleUnit. User: ${JSON.stringify(user)}, sys: ${sys}`);
         Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
             car['sn'] = user.data ? user.data.serialNo : '';
             if (!user.data) {
@@ -47,9 +56,11 @@ module.exports = async (user, sys) => {
             });
             return car;
         });
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. All cars complete. User: ${JSON.stringify(user)}, sys: ${sys}`);
         return Cars;
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. Cars building error. User: ${JSON.stringify(user)}, sys: ${sys}`);
+        logger.ERROR(error||error.message);
         return null;
     }
 };
