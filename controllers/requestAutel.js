@@ -1,7 +1,8 @@
 const carsController = require('./cars');
 const usersController = require('./users');
-
+const logger = require('../logger/logger');
 module.exports = async (req, res) => {
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`Request controller. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
     switch (+req.query['cmd']) {
         case 12101:     //request validation code
             usersController.reqValidCode(req, res);
@@ -19,7 +20,7 @@ module.exports = async (req, res) => {
             // await usersController.bindSerialNumber(req, res);
             break;
         case 2502:
-            await usersController.softwareCheck(req, res);
+            usersController.softwareCheck(req, res);
             break;
         case 2504:
             await carsController.all(req, res);

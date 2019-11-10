@@ -1,4 +1,5 @@
 module.exports = {
+    banned: false,
     actCode: "",
     actState: 1,
     address: "",

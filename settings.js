@@ -1,4 +1,4 @@
-module.exports.passwords = {registerUser: '456321'};
+module.exports.passwords = {registerUser: '456321', banUser: '987123'};
 module.exports.ip = {
     soft: 'download1.auteltech.net',
     logos: '87.247.99.156:8080',
@@ -18,4 +18,7 @@ module.exports.firewall = {
     filterWidth: 5,
     ruleName: 'AutelBan',
     outDateTime: 1 * 60 * 60 * 1000
+};
+module.exports.logger = {
+    level: 'DEBUG'
 };
