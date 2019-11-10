@@ -5,7 +5,7 @@ const dbCleaner = require('./utils/dbcleaner');
 const AutelStoreRouter = require('./routes/AutelStore');
 const logger = require('./logger/logger');
 mainServer.use((req,res,next)=>{
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`mainServer new request. IP: ${ req.connection.remoteAddress.split(':')[3]}`);
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`mainServer new request. IP: ${ req.headers['x-forwarded-for']}`);
     next();
 });
 mainServer.use(bodyParser.urlencoded(({extended: true})));

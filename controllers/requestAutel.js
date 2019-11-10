@@ -2,7 +2,7 @@ const carsController = require('./cars');
 const usersController = require('./users');
 const logger = require('../logger/logger');
 module.exports = async (req, res) => {
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`Request controller. IP:${req.connection.remoteAddress.split(':')[3]}, REQUEST: ${JSON.stringify(req.query)}`);
+    if (logger.settings.level === 'DEBUG') logger.DEBUG(`Request controller. IP:${req.headers['x-forwarded-for']}, REQUEST: ${JSON.stringify(req.query)}`);
     switch (+req.query['cmd']) {
         case 12101:     //request validation code
             usersController.reqValidCode(req, res);
