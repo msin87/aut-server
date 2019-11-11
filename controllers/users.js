@@ -1,5 +1,6 @@
 const users = require('../models/users');
 const logger = require('../logger/logger');
+const serverCheck = require('../responses/2503');
 module.exports = {
     reqValidCode: (req, res) => res.send(users.validation()),
     registerNewUser: async (req, res) => {
@@ -54,5 +55,8 @@ module.exports = {
     getAll: async (req, res) => {
         const users = await users.all(req.query);
 
+    },
+    serverCheck: (req,res)=>{
+        res.send(JSON.stringify(serverCheck));
     }
 };
