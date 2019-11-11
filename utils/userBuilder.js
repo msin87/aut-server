@@ -16,6 +16,6 @@ module.exports = {
         validDate: DateTime.getDemoDate(Settings.demo.hours),
         validCode: Random(1000,9999).toString(10),
         demoMsu: '',
-        banned: query.banned
+        banned: !!query.banned
     }))(DateTime.getCurrentDateTime())
 };
