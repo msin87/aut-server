@@ -58,5 +58,6 @@ module.exports = {
     },
     serverCheck: (req,res)=>{
         res.send(JSON.stringify(serverCheck));
+        logger.INFO(`CMD2503. ServerCheck. IP: ${req.headers['x-forwarded-for']}`)
     }
 };
