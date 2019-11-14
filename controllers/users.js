@@ -52,7 +52,22 @@ module.exports = {
         if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. After send softwareCheck response. IP:${req.headers['x-forwarded-for']}, REQUEST: ${JSON.stringify(req.query)}`);
     },
     getAll: async (req, res) => {
-        const users = await users.all(req.query);
-
+        const found = await users.all(req.query);
+        res.send(found.data.result);
+    },
+    getByQuery: async  (req,res) =>{
+        const found = await users.findByQuery({[req.query.key]:req.query.value});
+        res.send (found.data.result);
+    },
+    update: async  (req,res) => {
+        try {
+            const result = await users.updateUserProperty(req.query.autelId, {key:req.query.property, value:req.query.value});
+            logger.INFO(result.err);
+            res.send(result);
+        }
+        catch (err) {
+            logger.ERROR(err.err);
+            res.send(err);
+        }
     }
 };

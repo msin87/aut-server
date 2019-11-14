@@ -102,38 +102,13 @@ module.exports.all = query => new Promise((resolve, reject) =>
 
 module.exports.getUser = getUser;
 
-module.exports.findById = query => new Promise((resolve, reject) =>
-    db.findOne({_id: query.id}, (err, docs) => {
+module.exports.findByQuery = query => new Promise((resolve, reject) =>
+    db.findOne({...query}, (err, docs) => {
         if (err) {
             reject(err);
             return;
         }
-        resolve({err: `Telegram request: find user by _id. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
-    }));
-
-module.exports.findByAutelId = query => new Promise((resolve, reject) =>
-    db.findOne({_id: query.autelId}, (err, docs) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
-    }));
-module.exports.findExpired = query => new Promise((resolve, reject) =>
-    db.find({}, (err, docs) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user => Date.parse(user.validDate + ' 23:59:59') < Date.now()), Strings.Errors.noError, Strings.Success.success)});
-    }));
-module.exports.findNotAllowed = query => new Promise((resolve, reject) =>
-    db.find({}, (err, docs) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        resolve({err: `Telegram request: find user by autelId. From: ${query['username']}`, ...ResponseBuilder(docs.filter(user => !user.allowed), Strings.Errors.noError, Strings.Success.success)});
+        resolve({err: `Telegram request: find user by query: ${JSON.stringify(query)}. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
     }));
 module.exports.create = async query => {
     if (logger.settings.level === 'DEBUG') if (logger.settings.level === 'DEBUG') logger.DEBUG;
@@ -186,9 +161,16 @@ module.exports.create = async query => {
 };
 
 
-module.exports.updateUser = (userToUpdate, newUser) => new Promise((resolve, reject) =>
-    db.update({autelId: userToUpdate}, newUser, {}, (err, docs) =>
-        dbCb(resolve, reject, err, docs, `SerialNumber creating error: ${userToUpdate}`)));
+module.exports.updateUserProperty = (autelId, property) => new Promise((resolve, reject) =>
+    db.update({autelId: autelId}, {$set:{[property.key]: property.value}}, {}, (err, docs) => {
+        if (err) {
+            reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
+            return;
+        } else {
+            db.persistence.compactDatafile();
+            resolve({err: `User ${autelId} updated. Property: ${property.key} = ${property.value}`, ...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
+        }
+    }));
 
 module.exports.deleteUser = user => new Promise((resolve, reject) =>
     db.remove({autelId: user}, {}, (err, docs) =>
