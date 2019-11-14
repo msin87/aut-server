@@ -1,5 +1,6 @@
 const users = require('../models/users');
 const logger = require('../logger/logger');
+const serverCheck = require('../responses/2503');
 module.exports = {
     reqValidCode: (req, res) => res.send(users.validation()),
     registerNewUser: async (req, res) => {
@@ -52,6 +53,12 @@ module.exports = {
         if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. After send softwareCheck response. IP:${req.headers['x-forwarded-for']}, REQUEST: ${JSON.stringify(req.query)}`);
     },
     getAll: async (req, res) => {
+        const users = await users.all(req.query);
+
+    },
+    serverCheck: (req,res)=>{
+        res.send(JSON.stringify(serverCheck));
+        logger.INFO(`CMD2503. ServerCheck. IP: ${req.headers['x-forwarded-for']}`)
         const found = await users.all(req.query);
         res.send(found.data.result);
     },
