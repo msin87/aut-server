@@ -17,14 +17,8 @@ module.exports = async (req, res) => {
         case 19004:     //update user
             await usersController.update(req, res);
             break;
-        case 12203:
-            // await usersController.bindSerialNumber(req, res);
-            break;
-        case 2502:
-            await usersController.softwareCheck(req, res);
-            break;
-        case 2504:
-            await carsController.all(req, res);
+        case 19005:
+            await usersController.setNewValidDate(req, res);
             break;
     }
 };

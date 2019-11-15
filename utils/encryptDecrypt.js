@@ -79,7 +79,7 @@ const decoderMiddleWare = (req, res, next) => {
         if (logger.settings.level === 'DEBUG') logger.DEBUG(`decoderMiddleWare. rqbody is decoded. Request: ${req.body['rqbody']}`);
         req.url = req.url + '?' + decoded;
         req.query = null;
-        logger.COMMAND(`IP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]}\r\n${decoded}`);
+        logger.COMMAND(`IP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]} ${decoded}`);
         next();
     } else {
         if (logger.settings.level === 'DEBUG') logger.DEBUG(`decoderMiddleWare. Enter. Request req.body['rqbody'] is empty`);
