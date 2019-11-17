@@ -93,5 +93,25 @@ module.exports = {
             logger.ERROR(err.err);
             res.send(err);
         }
+    },
+    deleteUser: async (req, res) => {
+        try {
+            const result = await users.deleteUser(req.query);
+            logger.INFO(result.err);
+            res.send(result);
+        } catch (err) {
+            logger.ERROR(err.err);
+            res.send(err);
+        }
+    },
+    addUser: async (req, res) => {
+        try {
+            const result = await users.addUser(req.query);
+            logger.INFO(result.err);
+            res.send(result);
+        } catch (err) {
+            logger.ERROR(err.err);
+            res.send(err);
+        }
     }
 };

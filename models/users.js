@@ -6,18 +6,7 @@ const db = (require('../db.js')).db;
 const backupDb = (require('../db.js')).backupDb;
 const Random = require('../utils/random');
 const logger = require('../logger/logger');
-const strToBool = str => {
-    if (typeof (str) === 'boolean') return str;
-    switch (str.toLowerCase()) {
-        case "false":
-        case "no":
-        case "0":
-        case "":
-            return false;
-        default:
-            return true;
-    }
-};
+const strToBool = require('../utils/strToBool');
 const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
     if (err) {
         reject({error: err})
@@ -204,16 +193,26 @@ module.exports.create = async query => {
 };
 
 
-module.exports.updateUserProperty = (autelId, property) => new Promise((resolve, reject) =>
-    db.update({autelId: autelId}, {$set: {[property.key]: property.value}}, {}, (err, docs) => {
-        if (err) {
-            reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
-            return;
-        } else {
-            db.persistence.compactDatafile();
-            resolve({err: `User ${autelId} updated. Property: ${property.key} = ${property.value}`, ...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
-        }
-    }));
+module.exports.updateUserProperty = (autelId, property) => new Promise(async (resolve, reject) => {
+    try {
+        const expiredUser = (await getUser({autelId}, backupDb)).data;
+        const notExpiredUser = (await getUser({autelId})).data;
+        let dataBase;
+        if (expiredUser) dataBase = backupDb;
+        if (notExpiredUser) dataBase = db;
+        dataBase.update({autelId: autelId}, {$set: {[property.key]: property.value}}, {}, (err, docs) => {
+            if (err) {
+                reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
+                return;
+            } else {
+                dataBase.persistence.compactDatafile();
+                resolve({err: `User ${autelId} updated. Property: ${property.key} = ${property.value}`, ...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
+            }
+        })
+    } catch (err) {
+        return {err}
+    }
+});
 module.exports.setNewValidDate = async query => {
     try {
         const expiredUser = (await getUser(query, backupDb)).data;
@@ -221,10 +220,12 @@ module.exports.setNewValidDate = async query => {
         let user;
         if (expiredUser) {
             await removeByAutelIdAsync(query.autelId, backupDb);
+            backupDb.persistence.compactDatafile();
             user = expiredUser;
         }
         if (notExpiredUser) {
             await removeByAutelIdAsync(query.autelId);
+            db.persistence.compactDatafile();
             user = notExpiredUser;
         }
         user.validDate = query.validDate;
@@ -238,33 +239,43 @@ module.exports.setNewValidDate = async query => {
         return {err}
     }
 };
-module.exports.deleteUser = user => new Promise((resolve, reject) =>
-    db.remove({autelId: user}, {}, (err, docs) =>
-        dbCb(resolve, reject, err, docs, `SerialNumber delete error: ${user}`)));
-
+module.exports.deleteUser = query => new Promise(async (resolve, reject) => {
+    const expiredUser = (await getUser({autelId: query.autelId}, backupDb)).data;
+    const notExpiredUser = (await getUser({autelId: query.autelId})).data;
+    let dataBase;
+    if (expiredUser) dataBase = backupDb;
+    if (notExpiredUser) dataBase = db;
+    if (!dataBase) {
+        reject({err: `User delete error. User ${query.autelId} not found`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
+        return
+    }
+    dataBase.remove({autelId: query.autelId}, {}, (err, docs) => {
+        if (err) {
+            reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
+        } else {
+            db.persistence.compactDatafile();
+            resolve({err: `User ${query.autelId} deleted`, ...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
+        }
+    })
+})
 module.exports.validation = () => {
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. validation.`);
     return ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)
 };
-
-
 module.exports.resetPassword = userReq => new Promise((resolve, reject) => {
     db.findOne({autelId: userReq.autelId}, (err, user) => {
         if (err) {
             reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
-            return;
         } else if (!user) {
             reject({
                 err: `User ${userReq.autelId} does not exist!`,
                 ...ResponseBuilder(null, Strings.Errors.emailDoesNotExist, Strings.Success.notSuccess)
             });
-            return;
         } else if (+user.validCode !== (+userReq.validCode)) {
             reject({
                 err: `User ${userReq.autelId}. Incorrect verification code: ${userReq.validCode}! Expected: ${user.validCode}`,
                 ...ResponseBuilder(null, Strings.Errors.wrongConfirmCode, Strings.Success.notSuccess)
             });
-            return;
         } else {
             user.pwd = userReq['newPwd'];
             user.validCode = Random(1000, 9999).toString(10);
@@ -279,4 +290,14 @@ module.exports.resetPassword = userReq => new Promise((resolve, reject) => {
         }
     })
 });
+module.exports.addUser = async (query) => {
+    try {
+        const result = await insertUserAsync(UserBuilder.newUser(query));
+        return {err:`Telegram request. New user ${query.autelId} created`,result}
+    }
+    catch (err) {
+        return {err}
+    }
+};
 module.exports.loginCheck = loginCheck;
+
