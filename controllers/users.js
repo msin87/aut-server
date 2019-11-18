@@ -53,11 +53,65 @@ module.exports = {
         if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. After send softwareCheck response. IP:${req.headers['x-forwarded-for']}, REQUEST: ${JSON.stringify(req.query)}`);
     },
     getAll: async (req, res) => {
-        const users = await users.all(req.query);
-
+        const found = await users.all(req.query);
+        logger.INFO(found.err);
+        res.send(found.data.result);
     },
-    serverCheck: (req,res)=>{
+    serverCheck: async (req, res) => {
         res.send(JSON.stringify(serverCheck));
-        logger.INFO(`CMD2503. ServerCheck. IP: ${req.headers['x-forwarded-for']}`)
+        logger.INFO(`CMD2503. ServerCheck. IP: ${req.headers['x-forwarded-for']}`);
+        const found = await users.all(req.query);
+        res.send(found.data.result);
+    },
+    getByQuery: async (req, res) => {
+        const found = await users.findByQuery({[req.query.key]: req.query.value});
+        if (found.data) {
+            res.send(found.data.result)
+        } else {
+            res.send(null)
+        }
+    },
+    update: async (req, res) => {
+        try {
+            const result = await users.updateUserProperty(req.query.autelId, {
+                key: req.query.property,
+                value: req.query.value
+            });
+            logger.INFO(result.err);
+            res.send(result);
+        } catch (err) {
+            logger.ERROR(err.err);
+            res.send(err);
+        }
+    },
+    setNewValidDate: async (req, res) => {
+        try {
+            const result = await users.setNewValidDate(req.query);
+            logger.INFO(result.err);
+            res.send(result);
+        } catch (err) {
+            logger.ERROR(err.err);
+            res.send(err);
+        }
+    },
+    deleteUser: async (req, res) => {
+        try {
+            const result = await users.deleteUser(req.query);
+            logger.INFO(result.err);
+            res.send(result);
+        } catch (err) {
+            logger.ERROR(err.err);
+            res.send(err);
+        }
+    },
+    addUser: async (req, res) => {
+        try {
+            const result = await users.addUser(req.query);
+            logger.INFO(result.err);
+            res.send(result);
+        } catch (err) {
+            logger.ERROR(err.err);
+            res.send(err);
+        }
     }
 };

@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
             await carsController.all(req, res);
             break;
         case 2503:
-            usersController.serverCheck(req,res);
+            await usersController.serverCheck(req,res);
             break;
         default: res.sendStatus(444);
     }
