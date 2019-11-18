@@ -33,6 +33,16 @@ const insertUserAsync = user => new Promise((resolve, reject) => {
         resolve({data: null, errcode: Strings.Errors.noError, success: Strings.Success.success})
     })
 });
+const updateUserAsync = (autelId, property, dataBase) => new Promise((resolve, reject) => {
+    dataBase.update({autelId: autelId}, {$set: {[property.key]: property.value}}, {}, (err, docs) => {
+        if (err) {
+            reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
+        } else {
+            db.persistence.compactDatafile();
+            resolve({err: `User ${autelId} updated. Property: ${property.key} = ${property.value}`, ...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
+        }
+    })
+});
 const removeByAutelIdAsync = (autelId, dataBase = db) => new Promise((resolve, reject) => {
     dataBase.remove({autelId}, {}, err => {
         if (err) {
@@ -200,19 +210,13 @@ module.exports.updateUserProperty = (autelId, property) => new Promise(async (re
         let dataBase;
         if (expiredUser) dataBase = backupDb;
         if (notExpiredUser) dataBase = db;
-        dataBase.update({autelId: autelId}, {$set: {[property.key]: property.value}}, {}, (err, docs) => {
-            if (err) {
-                reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
-                return;
-            } else {
-                dataBase.persistence.compactDatafile();
-                resolve({err: `User ${autelId} updated. Property: ${property.key} = ${property.value}`, ...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
-            }
-        })
+        const result = await updateUserAsync(autelId, property, dataBase);
+        resolve(result);
     } catch (err) {
-        return {err}
+        reject(err)
     }
-});
+})
+;
 module.exports.setNewValidDate = async query => {
     try {
         const expiredUser = (await getUser(query, backupDb)).data;

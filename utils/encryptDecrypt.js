@@ -79,7 +79,9 @@ const decoderMiddleWare = (req, res, next) => {
         if (logger.settings.level === 'DEBUG') logger.DEBUG(`decoderMiddleWare. rqbody is decoded. Request: ${req.body['rqbody']}`);
         req.url = req.url + '?' + decoded;
         req.query = null;
-        logger.COMMAND(`IP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]} ${decoded}`);
+        let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3];
+        if (ip==='127.0.0.1') ip='Telegram'
+        logger.COMMAND(`IP: ${ip} ${decoded}`);
         next();
     } else {
         if (logger.settings.level === 'DEBUG') logger.DEBUG(`decoderMiddleWare. Enter. Request req.body['rqbody'] is empty`);
