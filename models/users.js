@@ -2,19 +2,11 @@ const Strings = require('../templates/strings');
 const Settings = require('../settings');
 const ResponseBuilder = require('../utils/responseBuilder');
 const UserBuilder = require('../utils/userBuilder');
-const db = (require('../db.js')).db;
-const backupDb = (require('../db.js')).backupDb;
+const db = (require('../db.js'));
 const Random = require('../utils/random');
 const logger = require('../logger/logger');
 const strToBool = require('../utils/strToBool');
-const dbCb = (resolve, reject, err, docs, msgNotFound, doCleanData = false) => {
-    if (err) {
-        reject({error: err})
-    } else if (!docs) {
-        reject({error: msgNotFound})
-    } else
-        resolve(ResponseBuilder(doCleanData ? null : {result: docs}, Strings.Errors.noError, Strings.Success.success));
-};
+const isBanned = user => user.hasOwnProperty('banned')?strToBool(user['banned']):false;
 const insertNewUser = (query, dataBase = db) => new Promise((resolve, reject) => {
     dataBase.insert(UserBuilder.newUser(query), (err) => {
         if (err) {
@@ -43,15 +35,19 @@ const updateUserAsync = (autelId, property, dataBase) => new Promise((resolve, r
         }
     })
 });
-const removeByAutelIdAsync = (autelId, dataBase = db) => new Promise((resolve, reject) => {
-    dataBase.remove({autelId}, {}, err => {
-        if (err) {
-            reject(err)
-        } else {
-            resolve();
-        }
-    })
-});
+
+const findOne = async query => {
+    try {
+        const result = await db.findOneAsync(query);
+        if (!result) return {data: null, state: Strings.UserState.notExist};
+        if (isBanned()) return {data: doc, state: Strings.UserState.banned};
+        if (!result['validDate'] || !strToBool(result['allowed'])) return {data: result, state: Strings.UserState.notAllowed};
+        if (user.pwd && (doc.pwd !== user.pwd))
+    }
+    catch (err) {
+
+    }
+}
 const getUser = (user, dataBase = db) => new Promise((resolve, reject) => {
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. getUser: enter. User: ${JSON.stringify(user)}`);
     if (!user.hasOwnProperty('autelId')) {
@@ -120,52 +116,32 @@ const loginCheck = async user => {
 };
 
 module.exports.all = query => new Promise((resolve, reject) =>
-    db.find({}, (err, notExpiredDocs) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        backupDb.find({}, (err, expiredDocs) => {
+    db.find({}, (err, docs) => {
             if (err) {
                 reject(err);
                 return;
             }
-            notExpiredDocs = notExpiredDocs || [];
-            resolve({err: `Telegram request: get all users. From: ${query['username']}`, ...ResponseBuilder(notExpiredDocs.concat(expiredDocs), Strings.Errors.noError, Strings.Success.success)});
-        })
-
-    }));
+            resolve({err: `Telegram request: get all users. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
+        }
+    )
+);
 
 module.exports.getUser = getUser;
 
 module.exports.findByQuery = query => new Promise((resolve, reject) =>
-    db.findOne({...query}, (err, notExpiredDocs) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        backupDb.findOne({...query}, (err, expiredDocs) => {
+    db.findOne({...query}, (err, docs) => {
             if (err) {
                 reject(err);
                 return;
             }
-            resolve({err: `Telegram request: find user by query: ${JSON.stringify(query)}. From: ${query['username']}`, ...ResponseBuilder(notExpiredDocs || expiredDocs, Strings.Errors.noError, Strings.Success.success)});
-        })
-    }));
+            resolve({err: `Telegram request: find user by query: ${JSON.stringify(query)}. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
+        }
+    )
+);
 module.exports.create = async query => {
     if (logger.settings.level === 'DEBUG') if (logger.settings.level === 'DEBUG') logger.DEBUG;
     const foundUser = await getUser(query);
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. User found. Query: ${JSON.stringify(query)}`);
-    const oldUser = await getUser(query, backupDb);
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. Old user found. Query: ${JSON.stringify(query)}`);
-    if (oldUser.state !== Strings.UserState.notExist) {
-        return {
-            err: `User ${query.autelId} registration failed. User already exists in the old_users.db!`,
-            data: null,
-            errcode: Strings.Errors.accountHasExist,
-            success: Strings.Success.notSuccess
-        }
-    }
     if (foundUser.state === Strings.UserState.notExist) {
         switch (+query.validCode) {
             case +Settings.passwords.registerUser:
@@ -203,57 +179,10 @@ module.exports.create = async query => {
 };
 
 
-module.exports.updateUserProperty = (autelId, property) => new Promise(async (resolve, reject) => {
-    try {
-        const expiredUser = (await getUser({autelId}, backupDb)).data;
-        const notExpiredUser = (await getUser({autelId})).data;
-        let dataBase;
-        if (expiredUser) dataBase = backupDb;
-        if (notExpiredUser) dataBase = db;
-        const result = await updateUserAsync(autelId, property, dataBase);
-        resolve(result);
-    } catch (err) {
-        reject(err)
-    }
-})
-;
-module.exports.setNewValidDate = async query => {
-    try {
-        const expiredUser = (await getUser(query, backupDb)).data;
-        const notExpiredUser = (await getUser(query)).data;
-        let user;
-        if (expiredUser) {
-            await removeByAutelIdAsync(query.autelId, backupDb);
-            backupDb.persistence.compactDatafile();
-            user = expiredUser;
-        }
-        if (notExpiredUser) {
-            await removeByAutelIdAsync(query.autelId);
-            db.persistence.compactDatafile();
-            user = notExpiredUser;
-        }
-        user.validDate = query.validDate;
-        if (Date.parse(query.validDate + 'T23:59:59') <= Date.now()) {
-            await insertUserAsync(user, backupDb);
-        } else {
-            await insertUserAsync(user, db);
-        }
-        return ({err: `User ${user.autelId} validDate updated. New validDate: ${user.validDate}`, ...ResponseBuilder(user, Strings.Errors.noError, Strings.Success.success)})
-    } catch (err) {
-        return {err}
-    }
-};
+module.exports.updateUserProperty = async (autelId, property) => await updateUserAsync(autelId, property, db);
+
 module.exports.deleteUser = query => new Promise(async (resolve, reject) => {
-    const expiredUser = (await getUser({autelId: query.autelId}, backupDb)).data;
-    const notExpiredUser = (await getUser({autelId: query.autelId})).data;
-    let dataBase;
-    if (expiredUser) dataBase = backupDb;
-    if (notExpiredUser) dataBase = db;
-    if (!dataBase) {
-        reject({err: `User delete error. User ${query.autelId} not found`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
-        return
-    }
-    dataBase.remove({autelId: query.autelId}, {}, (err, docs) => {
+    db.remove({autelId: query.autelId}, {}, (err, docs) => {
         if (err) {
             reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
         } else {
@@ -297,9 +226,8 @@ module.exports.resetPassword = userReq => new Promise((resolve, reject) => {
 module.exports.addUser = async (query) => {
     try {
         const result = await insertUserAsync(UserBuilder.newUser(query));
-        return {err:`Telegram request. New user ${query.autelId} created`,result}
-    }
-    catch (err) {
+        return {err: `Telegram request. New user ${query.autelId} created`, result}
+    } catch (err) {
         return {err}
     }
 };
