@@ -6,96 +6,37 @@ const db = (require('../db.js'));
 const Random = require('../utils/random');
 const logger = require('../logger/logger');
 const strToBool = require('../utils/strToBool');
-const isBanned = user => user.hasOwnProperty('banned')?strToBool(user['banned']):false;
-const insertNewUser = (query, dataBase = db) => new Promise((resolve, reject) => {
-    dataBase.insert(UserBuilder.newUser(query), (err) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        resolve({data: null, errcode: Strings.Errors.noError, success: Strings.Success.success})
-    })
-});
-const insertUserAsync = user => new Promise((resolve, reject) => {
-    db.insert(user, (err) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        resolve({data: null, errcode: Strings.Errors.noError, success: Strings.Success.success})
-    })
-});
-const updateUserAsync = (autelId, property, dataBase) => new Promise((resolve, reject) => {
-    dataBase.update({autelId: autelId}, {$set: {[property.key]: property.value}}, {}, (err, docs) => {
-        if (err) {
-            reject({err, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
-        } else {
-            db.persistence.compactDatafile();
-            resolve({err: `User ${autelId} updated. Property: ${property.key} = ${property.value}`, ...ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success)})
-        }
-    })
-});
-
+const getUserState = (user, pwd = -1) => {
+    if (!user) return Strings.UserState.notExist;
+    if (strToBool(user['banned'])) return Strings.UserState.banned;
+    if (strToBool(user['allowed'])) return Strings.UserState.notAllowed;
+    if (Date.parse(user['validDate']) <= Date.now()) return Strings.UserState.expired;
+    if (pwd !== user.pwd) return Strings.UserState.wrongPassword;
+};
 const findOne = async query => {
     try {
-        const result = await db.findOneAsync(query);
-        if (!result) return {data: null, state: Strings.UserState.notExist};
-        if (isBanned()) return {data: doc, state: Strings.UserState.banned};
-        if (!result['validDate'] || !strToBool(result['allowed'])) return {data: result, state: Strings.UserState.notAllowed};
-        if (user.pwd && (doc.pwd !== user.pwd))
+        const user = await db.findOneAsync(query);
+        const userState = getUserState(user, query['pwd']);
+        switch (userState) {
+            case Strings.UserState.notExist:
+                return {data: null, state: Strings.UserState.notExist};
+            case Strings.UserState.banned:
+                return {data: user, state: Strings.UserState.banned};
+            case Strings.UserState.expired:
+                return {data: user, state: Strings.UserState.expired};
+            case Strings.UserState.notAllowed:
+                return {data: user, state: Strings.UserState.notAllowed};
+            case Strings.UserState.wrongPassword:
+                return {data: user, state: Strings.UserState.wrongPassword};
+            default:
+                return {data: user, state: Strings.UserState.ok};
+        }
+    } catch (err) {
+        return err;
     }
-    catch (err) {
-
-    }
-}
-const getUser = (user, dataBase = db) => new Promise((resolve, reject) => {
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. getUser: enter. User: ${JSON.stringify(user)}`);
-    if (!user.hasOwnProperty('autelId')) {
-        resolve({data: null, state: Strings.UserState.notExist});
-        return;
-    }
-    dataBase.findOne({autelId: user.autelId}, (err, doc) => {
-        if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback enter. User: ${JSON.stringify(user)}`);
-        if (err) {
-            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback error. User: ${JSON.stringify(user)}`);
-            reject(err);
-            return;
-        }
-        if (!doc) {
-            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback. Not found. User: ${JSON.stringify(user)}`);
-            resolve({data: null, state: Strings.UserState.notExist});
-            return;
-        }
-        if (doc.hasOwnProperty('banned')) {
-            if (strToBool(doc['banned'])) {
-                if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User banned. User: ${JSON.stringify(user)}`);
-                resolve({data: doc, state: Strings.UserState.banned});
-                return;
-            }
-        }
-        if (!doc['validDate'] || !strToBool(doc['allowed'])) {
-            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User not allowed or wrong validDate. User: ${JSON.stringify(user)}`);
-            resolve({data: doc, state: Strings.UserState.notAllowed});
-            return;
-        }
-        if (user.pwd && (doc.pwd !== user.pwd)) {
-            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User wrong password. User: ${JSON.stringify(user)}`);
-            resolve({data: doc, state: Strings.UserState.wrongPassword});
-            return;
-        }
-        if (Date.parse(doc['validDate']) < Date.now()) {
-            if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User expired. User: ${JSON.stringify(user)}`);
-            resolve({data: doc, state: Strings.UserState.expired});
-            return;
-        }
-        if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback.User ok. User: ${JSON.stringify(user)}`);
-        resolve({data: doc, state: Strings.UserState.ok});
-    })
-});
+};
 const loginCheck = async user => {
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. loginCheck enter. User: ${JSON.stringify(user)}`);
-    const foundUser = await getUser(user);
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. loginCheck. User found. User: ${JSON.stringify(user)}`);
+    const foundUser = await findOne(user);
     switch (foundUser.state) {
         case Strings.UserState.ok:
             return {err: `User ${user.autelId} logged in!, firstName: ${foundUser.data.firstName} `, ...ResponseBuilder(foundUser.data, Strings.Errors.noError, Strings.Success.success)};
@@ -114,17 +55,38 @@ const loginCheck = async user => {
             }
     }
 };
-
-module.exports.all = query => new Promise((resolve, reject) =>
-    db.find({}, (err, docs) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            resolve({err: `Telegram request: get all users. From: ${query['username']}`, ...ResponseBuilder(docs, Strings.Errors.noError, Strings.Success.success)});
+const model = {
+    all: async query => ({
+        err: `Telegram request: get all users. From: ${query['username']}`,
+        ...ResponseBuilder(await db.findAsync(), Strings.Errors.noError, Strings.Success.success)
+    }),
+    findByQuery: async query => ({
+        err: `Telegram request: find user by query: ${JSON.stringify(query)}. From: ${query['username']}`,
+        ...ResponseBuilder(await db.findAsync(...query), Strings.Errors.noError, Strings.Success.success)
+    }),
+    create: async query => {
+        if ((await db.findOneAsync({autelId: query.autelId})).state !== Strings.UserState.notExist)
+            return {
+                err: `User ${query.autelId} registration failed. User already exists!`,
+                ...ResponseBuilder(null, Strings.Errors.accountHasExist, Strings.Success.success)
+            };
+        switch (+query.validCode) {
+            case +Settings.passwords.registerUser:
+                return await db.insertAsync(query);
+            case +Settings.passwords.banUser:
+                await db.insertAsync({
+                    ...query,
+                    data: null,
+                    banned: true,
+                    err: `User ${query.autelId} registered as BANNED!`,
+                    errcode: Strings.Errors.dataError,
+                    success: Strings.Success.notSuccess
+                });
+                throw {err: `User ${query.autelId} registered as BANNED!`};
         }
-    )
-);
+    }
+};
+
 
 module.exports.getUser = getUser;
 
@@ -139,16 +101,12 @@ module.exports.findByQuery = query => new Promise((resolve, reject) =>
     )
 );
 module.exports.create = async query => {
-    if (logger.settings.level === 'DEBUG') if (logger.settings.level === 'DEBUG') logger.DEBUG;
     const foundUser = await getUser(query);
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. User found. Query: ${JSON.stringify(query)}`);
     if (foundUser.state === Strings.UserState.notExist) {
         switch (+query.validCode) {
             case +Settings.passwords.registerUser:
-                if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. Inserting user. Query: ${JSON.stringify(query)}`);
                 return await insertNewUser(query);
             case +Settings.passwords.banUser:
-                if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. Create. Inserting banned user. Query: ${JSON.stringify(query)}`);
                 await insertNewUser({
                     ...query,
                     data: null,

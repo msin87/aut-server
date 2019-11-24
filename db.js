@@ -32,7 +32,7 @@ const findOneAsync = query => new Promise((resolve, reject) =>
         }
     )
 );
-const updateAsync = (query, update, options) => new Promise((resolve, reject) => {
+const updateAsync = (query, update, options={}) => new Promise((resolve, reject) => {
     db.update(query, update, options, (err, docs) => {
         if (err) {
             reject(err);
