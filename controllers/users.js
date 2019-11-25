@@ -1,54 +1,20 @@
-const users = require('../models/users');
-const logger = require('../logger/logger');
-const serverCheck = require('../responses/2503');
+const model = require('../models/users');
+
 module.exports = {
-    reqValidCode: (req, res) => res.send(users.validation()),
-    registerNewUser: async (req, res) => {
-        try {
-            const result = await users.create(req.query);
-            logger.INFO(result.err);
-            res.send(result);
-        } catch (err) {
-            if (err.err.indexOf('BANNED') >= 0) {
-                logger.INFO(err.err);
-            } else {
-                logger.ERROR(err.err);
-            }
-            res.send({data: null, errcode: 'S0001', success: 0});
-        }
+    getList: async (req, res) => {
+        let list = await model.getList({
+            sort: [req.query._sort,req.query._order],
+            range: [req.query._start,req.query._end],
+            filter: ''
+        });
+        list.docs = list.docs.map(one=>({...one,id:one._id}));
+        res.set('X-Total-Count',list.total);
+        res.set('Access-Control-Expose-Headers', 'X-Total-Count');
+        res.json(list.docs);
     },
-    login: async (req, res) => {
-        try {
-            const result = await users.loginCheck(req.query);
-            logger.INFO(result.err);
-            if (result.banned) {
-                res.setHeader('banned', req.query.autelId);
-            }
-            res.send(result);
-        } catch (err) {
-            logger.ERROR(err.err || err);
-            res.send({data: null, errcode: 'S0001', success: 0});
-        }
-    },
-    resetPassword: async (req, res) => {
-        try {
-            const result = await users.resetPassword(req.query);
-            logger.INFO(result.err);
-            res.send(result);
-        } catch (err) {
-            logger.ERROR(err.err);
-            res.send(err);
-        }
-    },
-    softwareCheck: (req, res) => {
-        if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. Before send softwareCheck response. IP:${req.headers['x-forwarded-for']}, REQUEST: ${JSON.stringify(req.query)}`);
-        res.send({data: null, errcode: '24', success: '0'});
-        if (logger.settings.level === 'DEBUG') logger.DEBUG(`Users controller. After send softwareCheck response. IP:${req.headers['x-forwarded-for']}, REQUEST: ${JSON.stringify(req.query)}`);
-    },
-    serverCheck: async (req, res) => {
-        res.send(JSON.stringify(serverCheck));
-        logger.INFO(`CMD2503. ServerCheck. IP: ${req.headers['x-forwarded-for']}`);
-        const found = await users.all(req.query);
-        res.send(found.data.result);
-    },
+    getOne: async (req,res) => {
+        let one = await model.getOne(req.params);
+        one['id']=one['_id'];
+        res.json(one);
+    }
 };

@@ -13,12 +13,22 @@ const insertAsync = query => new Promise((resolve, reject) => {
     })
 });
 const findAsync = query => new Promise((resolve, reject) =>
-    db.find(query, (err, docs) => {
+    db.find(query['filter']).sort(query['sort']).skip(query['skip']).limit(query['limit']).exec((err, docs) => {
             if (err) {
                 reject(err);
                 return;
             }
             resolve(docs);
+        }
+    )
+);
+const countAsync = (query={}) => new Promise((resolve, reject) =>
+    db.count(query,(err, count) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(count);
         }
     )
 );
@@ -53,4 +63,4 @@ const deleteAsync = (query,options) => new Promise(async (resolve, reject) => {
     })
 });
 
-module.exports = {insertAsync,findAsync,findOneAsync,updateAsync,deleteAsync};
+module.exports = {insertAsync,findAsync,findOneAsync,updateAsync,deleteAsync,countAsync};
