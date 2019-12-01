@@ -1,7 +1,7 @@
 const ResponseBuilder = require('../utils/responseBuilder');
 const Strings = require('../templates/strings');
 const CarsBuilder = require('../utils/carsBuilder');
-const Users = require('./users');
+const Users = require('./clients');
 const logger = require('../logger/logger');
 const getAppPlatform = query => {
     if (+query.sys===2)

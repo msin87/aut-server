@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mainServer = express();
 const AutelStoreRouter = require('./routes/AutelStore');
-const UsersRouter = require('./routes/users');
+const ClientsRouter = require('./routes/clients');
 const logger = require('./logger/logger');
 mainServer.use((req,res,next)=>{
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`mainServer new request. IP: ${ req.headers['x-forwarded-for']}`);
@@ -16,5 +16,5 @@ mainServer.use(function (req, res, next) {
 });
 
 mainServer.use(AutelStoreRouter);
-mainServer.use(UsersRouter);
+mainServer.use(ClientsRouter);
 mainServer.listen(8083, () => logger.INFO('MaxiAP server started'));

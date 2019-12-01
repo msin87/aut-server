@@ -1,7 +1,7 @@
 const Strings = require('../templates/strings');
 const Settings = require('../settings');
 const ResponseBuilder = require('../utils/responseBuilder');
-const db = require('../db.js');
+const db = require('../nedb/clients');
 const Random = require('../utils/random');
 const strToBool = require('../utils/strToBool');
 const getUserState = (user) => {
