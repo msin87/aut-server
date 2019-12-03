@@ -1,5 +1,6 @@
 module.exports = model => ({
     getList: async (req, res) => {
+
         let list = await model.getList({
             sort: [req.query._sort, req.query._order],
             range: [req.query._start, req.query._end],
@@ -14,5 +15,8 @@ module.exports = model => ({
         let one = await model.getOne(req.params);
         one['id'] = one['_id'];
         res.json(one);
-    }
+    },
+    create: async (req, res) => await model.create(req.body),
+    update: async (req, res) => await model.update({key: req.params, body:req.body}),
+    delete: async (req, res) => await model.delete(req.params),
 });
