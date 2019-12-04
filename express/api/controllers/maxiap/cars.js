@@ -1,5 +1,5 @@
-const carsModel = require('../models/cars');
-const logger = require('../logger/logger');
+const carsModel = require('../../models/maxi-ap/cars');
+const logger = require('../../../../logger/logger');
 module.exports = {
     all: async (req, res) => {
         try {

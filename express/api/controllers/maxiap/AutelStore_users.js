@@ -1,6 +1,6 @@
-const users = require('../models/AutelStore_users');
-const logger = require('../logger/logger');
-const serverCheck = require('../responses/2503');
+const users = require('../../models/maxi-ap/AutelStore_users');
+const logger = require('../../../../logger/logger');
+const serverCheck = require('../../../../responses/2503');
 module.exports = {
     reqValidCode: (req, res) => res.send(users.validCode()),
     login: async (req, res) => {

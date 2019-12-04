@@ -1,8 +1,8 @@
-const ResponseBuilder = require('../utils/responseBuilder');
-const Strings = require('../templates/strings');
-const CarsBuilder = require('../utils/carsBuilder');
-const Users = require('./clients');
-const logger = require('../logger/logger');
+const ResponseBuilder = require('../../../../utils/responseBuilder');
+const Strings = require('../../../../templates/strings');
+const CarsBuilder = require('../../../../utils/carsBuilder');
+const Users = require('../react-admin/clients');
+const logger = require('../../../../logger/logger');
 const getAppPlatform = query => {
     if (+query.sys===2)
         return Strings.AppPlatform.android32;

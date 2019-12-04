@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mainServer = express();
-const AutelStoreRouter = require('./routes/AutelStore');
-const ClientsRouter = require('./routes/clients');
+const AutelStoreRouter = require('./express/api/routes/maxiap/AutelStore');
+const ClientsRouter = require('./express/api/routes/react-admin/clients');
 const logger = require('./logger/logger');
 mainServer.use((req,res,next)=>{
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`mainServer new request. IP: ${ req.headers['x-forwarded-for']}`);

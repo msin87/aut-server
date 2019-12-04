@@ -1,7 +1,7 @@
 const express = require('express');
-const DecoderMiddleWare = require('../utils/encryptDecrypt').decoder;
-const carsController = require('../controllers/cars');
-const usersController = require('../controllers/AutelStore_users');
+const DecoderMiddleWare = require('../../../../utils/encryptDecrypt').decoder;
+const carsController = require('../../controllers/maxiap/cars');
+const usersController = require('../../controllers/maxiap/AutelStore_users');
 const router = express.Router();
 const routeParser = async (req, res) => {
     switch (+req.query['cmd']) {
