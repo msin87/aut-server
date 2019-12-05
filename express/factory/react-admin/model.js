@@ -20,7 +20,7 @@ module.exports = dbPath => {
             return await db.findOneAsync(query)
         },
         create: async query => await db.insertAsync(query),
-        update: async query => await db.updateAsync(query['key'], query['body'],{}),
-        delete: async query => await db.deleteAsync(query,{})
+        update: async query => await db.updateAsync({id:query['id']},query),
+        delete: async query => await db.deleteAsync({id:query['id']},{})
     }
 };
