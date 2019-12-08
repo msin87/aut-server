@@ -16,7 +16,7 @@ module.exports = dbPath => {
         },
         getOne: async query => {
             if (query.hasOwnProperty('id'))
-                return await db.findOneAsync({_id: query.id});
+                return await db.findOneAsync({id: query.id});
             return await db.findOneAsync(query)
         },
         create: async query => await db.insertAsync(query),

@@ -11,8 +11,8 @@ module.exports = model => ({
         res.json(list.docs);
     },
     getOne: async (req, res) => {
-        let one = await model.getOne(req.params);
-        res.json(one);
+        let result = await model.getOne(req.params);
+        res.json(result);
     },
     create: async (req, res) => {
         try{
@@ -25,8 +25,8 @@ module.exports = model => ({
     },
     update: async (req, res) => {
         try {
-            await model.update({...req.body, ...req.params});
-            res.sendStatus(200);
+            const result = await model.update({...req.body, ...req.params});
+            res.json(result);
         }
         catch {
             res.sendStatus(500);

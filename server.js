@@ -8,6 +8,7 @@ mainServer.use(function (req, res, next) {
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`mainServer new request. IP: ${ req.headers['x-forwarded-for']}`);
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "PUT");
     next();
 });
 
