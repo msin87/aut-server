@@ -56,7 +56,7 @@ module.exports = settings => {
                 reject(err);
             } else {
                 db.persistence.compactDatafile();
-                resolve(numRemoved)
+                resolve({data: null})
             }
         })
     });
