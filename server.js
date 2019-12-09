@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mainServer = express();
-const Router = require('./express/api/routes')(['admins','cars','clients','companies']);
+const Router = require('./express/api/routes');
 const logger = require('./logger/logger');
 mainServer.use(bodyParser.urlencoded(({extended: true})));
 mainServer.use(function (req, res, next) {

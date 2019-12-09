@@ -22,3 +22,7 @@ module.exports.firewall = {
 module.exports.logger = {
     level: 'DEBUG'
 };
+
+module.exports.express = {
+    routes: {reactAdmin: ['admins', 'cars', 'clients', 'companies']}
+};
