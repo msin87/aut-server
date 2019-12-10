@@ -1,7 +1,6 @@
 const ResponseBuilder = require('../../../../utils/responseBuilder');
 const Strings = require('../../../../templates/strings');
 const CarsBuilder = require('../../../../utils/carsBuilder');
-const Users = require('../react-admin/clients');
 const logger = require('../../../../logger/logger');
 const getAppPlatform = query => {
     if (+query.sys===2)
@@ -9,11 +8,10 @@ const getAppPlatform = query => {
     if (+query.sys===0)
         return Strings.AppPlatform.android64;
 };
-module.exports.all = async query => {
+module.exports.all = async (query,user) => {
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`Cars controller enter. Query: ${JSON.stringify(query)}`);
     if (!query.sn) return ({err: `Missing serial number in request`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
     const regExp = new RegExp(`${query.sn}@.*`);
-    const user = await Users.getUser({autelId: {$regex: regExp}});
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`Cars controller after getUser. Query: ${JSON.stringify(query)}`);
     const appPlatfrom = getAppPlatform(query);
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`Cars controller after getAppPlatform. Query: ${JSON.stringify(query)}`);

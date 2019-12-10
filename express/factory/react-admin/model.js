@@ -1,4 +1,18 @@
-module.exports = dbPath => {
+const argKey = x => x.toString() + ':' + typeof x;
+const generateKey = args => args.map(argKey).join('|');
+const memoize = fn => {
+    const cache = Object.create(null);
+    return (...args) => {
+        const key = generateKey(args);
+        const val = cache[key];
+        if (val) return val;
+        const res = fn(...args);
+        cache[key] = res;
+        return res;
+    };
+};
+
+const model = dbPath => {
     if (process.platform === "win32")
         dbPath = dbPath.replace(/\//g, '\\');
     const db = require(dbPath);
@@ -20,7 +34,9 @@ module.exports = dbPath => {
             return await db.findOneAsync(query)
         },
         create: async query => await db.insertAsync(query),
-        update: async query => await db.updateAsync({id:query['id']},query),
-        delete: async query => await db.deleteAsync({id:query['id']},{})
+        update: async query => await db.updateAsync({id: query['id']}, query),
+        delete: async query => await db.deleteAsync({id: query['id']}, {})
     }
 };
+
+module.exports = memoize(model);
