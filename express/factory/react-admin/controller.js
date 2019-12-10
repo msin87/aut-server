@@ -1,7 +1,7 @@
 const strToBool = require('../../../utils/strToBool');
 const buildFilter = query => {
     Object.keys(query).forEach(key => query[key] === undefined && delete query[key]);
-    let result = Object.keys(query).map(key => {
+    return Object.keys(query).map(key => {
         switch (key) {
             case 'autelId':
                 return {autelId: RegExp(query[key] || '')};
@@ -15,8 +15,7 @@ const buildFilter = query => {
     }).reduce((acc, val) => {
         return Object.assign(acc, val);
     }, {});
-    return result;
-}
+};
 module.exports = model => ({
     getList: async (req, res) => {
 

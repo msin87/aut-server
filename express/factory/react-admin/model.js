@@ -1,21 +1,4 @@
-const argKey = x => x.toString() + ':' + typeof x;
-const generateKey = args => args.map(argKey).join('|');
-const memoize = fn => {
-    const cache = Object.create(null);
-    return (...args) => {
-        const key = generateKey(args);
-        const val = cache[key];
-        if (val) return val;
-        const res = fn(...args);
-        cache[key] = res;
-        return res;
-    };
-};
-
-const model = dbPath => {
-    if (process.platform === "win32")
-        dbPath = dbPath.replace(/\//g, '\\');
-    const db = require(dbPath);
+const model = db => {
     return {
         getList: async ({sort = ['id', 1], range = [], filter = {}}) => {
             if (sort[0] === 'id') sort[0] = '_id';
@@ -39,4 +22,4 @@ const model = dbPath => {
     }
 };
 
-module.exports = memoize(model);
+module.exports = model;

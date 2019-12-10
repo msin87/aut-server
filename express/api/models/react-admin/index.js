@@ -1,6 +1,8 @@
-const DB_WRAPPER_PATH = process.cwd() + '/nedb/';
 const Factory = require('../../../factory/react-admin/model');
-const models = dbNames =>
-    dbNames.reduce((acc, dbName) =>
-        Object.assign(acc, {[dbName]: Factory(DB_WRAPPER_PATH + dbName)}, {}), {});
+const dbFactory = require('../../../../nedb/index');
+const models = dbNames => {
+    const db = dbFactory(dbNames);
+    return dbNames.reduce((acc, dbName) =>
+        Object.assign(acc, {[dbName]: Factory(db[dbName])}), Object.create(null));
+};
 module.exports = models;
