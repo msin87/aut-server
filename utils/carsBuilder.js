@@ -18,18 +18,14 @@ const getCars = platform => new Promise((resolve, reject) => {
     })
 });
 
-module.exports = async (user, sys) => {
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. User: ${JSON.stringify(user)}, sys: ${sys}`);
+module.exports =  (user, cars) => {
     try {
-        let Cars = await getCars(sys);
-        if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. After getCars. User: ${JSON.stringify(user)}, sys: ${sys}`);
         let validDate = user.data ? user.data.validDate.split(' ')[0] : '';
         if (user.state === Strings.UserState.notAllowed || user.state === Strings.UserState.notExist) {
             validDate = '';
         }
-        Cars.curDate = DateTime.getCurrentDateTime();
-        if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. Constructing minSaleUnit. User: ${JSON.stringify(user)}, sys: ${sys}`);
-        Cars.minSaleUnit = Cars.minSaleUnit.map(car => {
+        cars.curDate = DateTime.getCurrentDateTime();
+        cars.minSaleUnit = cars.minSaleUnit.map(car => {
             car['sn'] = user.data ? user.data.serialNo : '';
             if (!user.data) {
                 car['validDate'] = '';
@@ -56,10 +52,8 @@ module.exports = async (user, sys) => {
             });
             return car;
         });
-        if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. All cars complete. User: ${JSON.stringify(user)}, sys: ${sys}`);
-        return Cars;
+        return cars;
     } catch (error) {
-        if (logger.settings.level === 'DEBUG') logger.DEBUG(`CarsBuilder. Enter. Cars building error. User: ${JSON.stringify(user)}, sys: ${sys}`);
         logger.ERROR(error||error.message);
         return null;
     }

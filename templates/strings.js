@@ -31,5 +31,9 @@ module.exports = {
         notExist: 'notExist',
         wrongPassword: 'wrongPassword',
         banned: 'banned',
+    },
+    Messages:{
+        missingSerial: 'Missing serial number in request',
+        sendingCars: 'Sending %bit bit cars to user %email, firstName: %firstName'
     }
 };

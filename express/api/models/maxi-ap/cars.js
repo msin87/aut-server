@@ -1,22 +1,32 @@
 const ResponseBuilder = require('../../../../utils/responseBuilder');
+const raModel = require('../react-admin')(['cars'])['cars'];
 const Strings = require('../../../../templates/strings');
 const CarsBuilder = require('../../../../utils/carsBuilder');
-const logger = require('../../../../logger/logger');
 const getAppPlatform = query => {
     if (+query.sys===2)
         return Strings.AppPlatform.android32;
     if (+query.sys===0)
         return Strings.AppPlatform.android64;
 };
+const Cars = ()
+const all = async sys => {
+    let Cars;
+    try {
+        Cars = await raModel.getList({});
+        return Cars.docs.filter(val=>val['id']==='android'+sys)[0][`android${sys}`];
+    }
+    catch (err) {
+        throw err
+    }
+};
+const modifyCars = ({cars}) => {
+
+};
+all({sn:'123123312',sys: 32},{});
 module.exports.all = async (query,user) => {
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`Cars controller enter. Query: ${JSON.stringify(query)}`);
     if (!query.sn) return ({err: `Missing serial number in request`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)});
-    const regExp = new RegExp(`${query.sn}@.*`);
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`Cars controller after getUser. Query: ${JSON.stringify(query)}`);
     const appPlatfrom = getAppPlatform(query);
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`Cars controller after getAppPlatform. Query: ${JSON.stringify(query)}`);
     const Cars = await CarsBuilder(user,appPlatfrom);
-    if (logger.settings.level === 'DEBUG') logger.DEBUG(`Cars controller after CarsBuilder. Query: ${JSON.stringify(query)}`);
     switch (user.state) {
         case Strings.UserState.ok:
             return {err:`Sending ${appPlatfrom}bit cars to user ${user.data.autelId}, firstName: ${user.data.firstName}`,...ResponseBuilder(Cars, Strings.Errors.noError, Strings.Success.success)};
