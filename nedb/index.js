@@ -1,14 +1,17 @@
 const nedbAsync = require('../nedb/asyncWrapper');
-const db = dbNames => {
-    this.dbNames = dbNames.filter(name => !(this.dbNames ? this.dbNames.includes(name) : false));
-    this.result = Object.assign(this.result || Object.create(null),
-        dbNames.reduce((acc, val) => {
-            const res = Object.assign(acc, {[val]: nedbAsync({filename: `db/${val}.db`})})
-            return res;
-        }, Object.create(null)));
-    return this.result;
+const argKey = x => x.toString() + ':' + typeof x;
+const generateKey = args => args.map(argKey).join('|');
+const memoize = fn => {
+    const cache = Object.create(null);
+    return (...args) => {
+        const key = generateKey(args);
+        const val = cache[key];
+        if (val) return val;
+        const res = fn(...args);
+        cache[key] = res;
+        return res;
+    };
 };
-
-
-module.exports = db;
+const memoized = memoize(nedbAsync);
+module.exports = memoized;
 

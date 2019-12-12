@@ -1,6 +1,6 @@
 const DataStore = require('nedb');
-module.exports = settings => {
-    const db = new DataStore({autoload: true, filename: settings['filename']});
+module.exports = dbNames => {
+    const db = new DataStore({autoload: true, filename: dbName});
     const insertAsync = query => new Promise((resolve, reject) => {
         db.insert(query, (err, newDoc) => {
             if (err) {
@@ -60,5 +60,5 @@ module.exports = settings => {
             }
         })
     });
-        return {insertAsync, findAsync, findOneAsync, updateAsync, deleteAsync, countAsync}
+        return {name:dbName,methods:{insertAsync, findAsync, findOneAsync, updateAsync, deleteAsync, countAsync}}
 };
