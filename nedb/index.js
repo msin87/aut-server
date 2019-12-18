@@ -13,5 +13,11 @@ const memoize = fn => {
     };
 };
 const memoized = memoize(nedbAsync);
-module.exports = memoized;
+module.exports = dbNames => {
+    let db = Object.create(null);
+    for (let dbName of dbNames) {
+          Object.assign(db,memoized(dbName)) ;
+    }
+    return db;
+};
 

@@ -1,4 +1,4 @@
-const users = require('../../models/maxi-ap/AutelStore_users');
+const users = require('../../models/maxi-ap/clients');
 const logger = require('../../../../logger/logger');
 const serverCheck = require('../../../../responses/2503');
 module.exports = {

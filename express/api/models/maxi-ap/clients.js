@@ -1,7 +1,7 @@
 const Strings = require('../../../../templates/strings');
 const Settings = require('../../../../settings');
 const ResponseBuilder = require('../../../../utils/responseBuilder');
-const db = require('../../../../nedb/index')(['clients']);
+const db = require('../../../../nedb/index')(['clients'])['clients'];
 const Random = require('../../../../utils/random');
 const strToBool = require('../../../../utils/strToBool');
 const getUserState = (user) => {
@@ -37,7 +37,7 @@ const model = {
         }
     },
     loginCheck: async user => {
-        const foundUser = await db.findOneAsync(user);
+        const foundUser = await db.findOneAsync({autelId:user.autelId});
         switch (getUserState(foundUser)) {
             case Strings.UserState.expired:
                 return {err: `User ${user.autelId}. Expired date! firstName: ${foundUser.data.firstName}`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)};
@@ -50,8 +50,8 @@ const model = {
                 };
             default:
                 if (foundUser['pwd'] !== user['pwd'])
-                    return {err: `User ${user.autelId}. Wrong password! firstName: ${foundUser.data.firstName}`, ...ResponseBuilder(null, Strings.Errors.wrongPassword, Strings.Success.notSuccess)};
-                return {err: `User ${user.autelId} logged in!, firstName: ${foundUser.data.firstName} `, ...ResponseBuilder(foundUser.data, Strings.Errors.noError, Strings.Success.success)};
+                    return {err: `User ${user.autelId}. Wrong password! firstName: ${foundUser.firstName}`, ...ResponseBuilder(null, Strings.Errors.wrongPassword, Strings.Success.notSuccess)};
+                return {err: `User ${user.autelId} logged in!, firstName: ${foundUser.firstName} `, ...ResponseBuilder(foundUser, Strings.Errors.noError, Strings.Success.success)};
         }
     },
     validCode: () => ResponseBuilder(null, Strings.Errors.noError, Strings.Success.success),
