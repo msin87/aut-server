@@ -13,9 +13,10 @@ module.exports = {
                     req.query.sys=32;
                     break;
             }
-            const result = await carsModel.all(req.query);
-            logger.INFO(result.err);
-            res.send(result);
+            let Cars = await carsModel(req.query);
+            Cars = Cars.all().insertUserData().result();
+            logger.INFO(Cars.err);
+            res.send(Cars);
         } catch (err) {
             logger.ERROR(err.message || err);
             res.send({data: null, errcode: 'S0001', success: 0});

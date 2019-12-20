@@ -24,8 +24,7 @@ module.exports =  (user, cars) => {
         if (user.state === Strings.UserState.notAllowed || user.state === Strings.UserState.notExist) {
             validDate = '';
         }
-        cars.curDate = DateTime.getCurrentDateTime();
-        cars.minSaleUnit = cars.minSaleUnit.map(car => {
+        cars = cars.map(car => {
             car['sn'] = user.data ? user.data.serialNo : '';
             if (!user.data) {
                 car['validDate'] = '';
@@ -52,6 +51,7 @@ module.exports =  (user, cars) => {
             });
             return car;
         });
+        cars.curDate = DateTime.getCurrentDateTime();
         return cars;
     } catch (error) {
         logger.ERROR(error||error.message);
