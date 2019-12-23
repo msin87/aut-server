@@ -58,7 +58,7 @@ const getUser = (user, dataBase = db) => new Promise((resolve, reject) => {
         resolve({data: null, state: Strings.UserState.notExist});
         return;
     }
-    dataBase.findOne({autelId: {$regex: new RegExp(user.autelId,'i')}}, (err, doc) => {
+    dataBase.findOne({autelId: user.autelId}, (err, doc) => {
         if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback enter. User: ${JSON.stringify(user)}`);
         if (err) {
             if (logger.settings.level === 'DEBUG') logger.DEBUG(`User model. dataBase.findOne callback error. User: ${JSON.stringify(user)}`);
