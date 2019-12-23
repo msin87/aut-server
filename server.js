@@ -4,6 +4,7 @@ const mainServer = express();
 const dbCleaner = require('./utils/dbcleaner');
 const AutelStoreRouter = require('./routes/AutelStore');
 const logger = require('./logger/logger');
+logger.INFO('start')
 mainServer.use((req,res,next)=>{
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`mainServer new request. IP: ${ req.headers['x-forwarded-for']}`);
     next();
@@ -17,6 +18,6 @@ mainServer.use(function (req, res, next) {
 
 mainServer.use(AutelStoreRouter);
 
-mainServer.listen(8082, () => logger.INFO('MaxiAP server started'));
+mainServer.listen(8083, () => logger.INFO('MaxiAP server started'));
 
 dbCleaner.start();
