@@ -1,8 +1,8 @@
 module.exports.passwords = {registerUser: '456321', banUser: '987123'};
 module.exports.ip = {
-    soft: 'download1.auteltech.net',
+    soft: '92.119.113.136:8080',
     logos: '92.119.113.136:8080',
-    lgPack: 'download1.auteltech.net',
+    lgPack: '92.119.113.136:8080',
     store: 'http://store.auteltech.net:8082/AutelStore.fcgi'
 };
 module.exports.demo = {
