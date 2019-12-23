@@ -4,6 +4,7 @@ const mainServer = express();
 const dbCleaner = require('./utils/dbcleaner');
 const AutelStoreRouter = require('./routes/AutelStore');
 const logger = require('./logger/logger');
+logger.INFO('start')
 mainServer.use((req,res,next)=>{
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`mainServer new request. IP: ${ req.headers['x-forwarded-for']}`);
     next();
