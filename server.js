@@ -17,6 +17,6 @@ mainServer.use(function (req, res, next) {
 
 mainServer.use(AutelStoreRouter);
 
-mainServer.listen(8083, () => logger.INFO('MaxiAP server started'));
+mainServer.listen(8082, () => logger.INFO('MaxiAP server started'));
 
 dbCleaner.start();

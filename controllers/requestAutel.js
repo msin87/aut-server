@@ -3,6 +3,7 @@ const usersController = require('./users');
 const logger = require('../logger/logger');
 module.exports = async (req, res) => {
     if (logger.settings.level === 'DEBUG') logger.DEBUG(`Request controller. IP:${req.headers['x-forwarded-for']}, REQUEST: ${JSON.stringify(req.query)}`);
+    if (req.query.autelId) req.query.autelId = req.query.autelId.toUpperCase();
     switch (+req.query['cmd']) {
         case 12101:     //request validation code
             usersController.reqValidCode(req, res);
