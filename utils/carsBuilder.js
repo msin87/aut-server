@@ -51,7 +51,7 @@ module.exports =  (user, cars) => {
             });
             return car;
         });
-        cars.curDate = DateTime.getCurrentDateTime();
+
         return cars;
     } catch (error) {
         logger.ERROR(error||error.message);

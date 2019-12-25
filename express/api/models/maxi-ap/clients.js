@@ -37,7 +37,7 @@ const model = {
         }
     },
     loginCheck: async user => {
-        const foundUser = await db.findOneAsync({autelId:user.autelId});
+        const foundUser = await db.findOneAsync({autelId: {$regex: new RegExp(user.autelId, 'i')}});
         switch (getUserState(foundUser)) {
             case Strings.UserState.expired:
                 return {err: `User ${user.autelId}. Expired date! firstName: ${foundUser.data.firstName}`, ...ResponseBuilder(null, Strings.Errors.dataError, Strings.Success.notSuccess)};

@@ -80,7 +80,7 @@ const decoderMiddleWare = (req, res, next) => {
         req.url = req.url + '?' + decoded;
         req.query = null;
         let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3];
-        if (ip==='127.0.0.1') ip='Telegram'
+        if (ip==='127.0.0.1') ip='Telegram';
         logger.COMMAND(`IP: ${ip} ${decoded}`);
         next();
     } else {
