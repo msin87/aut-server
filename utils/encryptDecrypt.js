@@ -44,7 +44,7 @@ const Random = () => {
 const ReqEncoder = bArr => {
     let output = [];
     const i = bArr.length;
-    const bArr2 = [i + 3 + 1]
+    const bArr2 = [i + 3 + 1];
     for (let i2 = 0; i2 < i; i2++) {
         bArr2[i2 + 1] = MixBits(bArr[i2].charCodeAt(0));
     }

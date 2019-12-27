@@ -47,7 +47,7 @@ const getSize = url => new Promise((resolve, reject) => {
     }, (err, response, body) => {
         if (err){
             console.log(`error with ${url}: ${err} \r\n retry: ${retry}`);
-            pause_ms(1000).then(getSize(url))
+            pause_ms(1000).then(getSize(url));
             reject(err);
             this.retry++;
         }
@@ -100,4 +100,4 @@ const Updater = () => {
 
         }, time)
     }
-}
+};
