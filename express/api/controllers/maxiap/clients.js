@@ -34,7 +34,5 @@ module.exports = {
     serverCheck: async (req, res) => {
         res.send(JSON.stringify(serverCheck));
         logger.INFO(`CMD2503. ServerCheck. IP: ${req.headers['x-forwarded-for']}`);
-        const found = await users.all(req.query);
-        res.send(found.data.result);
     },
 };

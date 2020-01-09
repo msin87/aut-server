@@ -4,6 +4,7 @@ const Users = require('../react-admin')(['clients'])['clients'];
 const Strings = require('../../../../templates/strings');
 const CarsBuilder = require('../../../../utils/carsBuilder');
 const strToBool = require('../../../../utils/strToBool');
+const DateTime = require('../../../../utils/dateTime');
 const getAppPlatform = query => {
     if (+query.sys === 2)
         return Strings.AppPlatform.android32;
@@ -50,7 +51,7 @@ module.exports = async query => {
         insertUserData() {
             if (!this.cars) throw new Error('Please, run all() before');
             try {
-                this.cars = CarsBuilder(user, this.cars);
+                this.cars = {minSaleUnit: CarsBuilder(user, this.cars), curDate:DateTime.getCurrentDateTime()};
                 switch (getUserState(user.data)) {
                     case Strings.UserState.ok:
                         result = {err: `Sending ${query.sys}bit cars to user ${user.data.autelId}, firstName: ${user.data.firstName}`, ...ResponseBuilder(this.cars, Strings.Errors.noError, Strings.Success.success)};

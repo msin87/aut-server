@@ -44,7 +44,7 @@ const Random = () => {
 const ReqEncoder = bArr => {
     let output = [];
     const i = bArr.length;
-    const bArr2 = [i + 3 + 1]
+    const bArr2 = [i + 3 + 1];
     for (let i2 = 0; i2 < i; i2++) {
         bArr2[i2 + 1] = MixBits(bArr[i2].charCodeAt(0));
     }
@@ -80,7 +80,7 @@ const decoderMiddleWare = (req, res, next) => {
         req.url = req.url + '?' + decoded;
         req.query = null;
         let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3];
-        if (ip==='127.0.0.1') ip='Telegram'
+        if (ip==='127.0.0.1') ip='Telegram';
         logger.COMMAND(`IP: ${ip} ${decoded}`);
         next();
     } else {
