@@ -17,7 +17,7 @@ module.exports = {
         serialNo: query.autelId.split('@')[0],
         appPlatform: query.appPlatform||'',
         validDate: query.validDate||DateTime.getDemoDate(Settings.demo.hours),
-        validCode: query.validCode||Random(1000,9999).toString(10),
+        validCode: Random(1000,9999).toString(10),
         demoMsu: query.demoMsu||'',
         banned: strToBool(query.banned)
     }))(DateTime.getCurrentDateTime())
