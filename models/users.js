@@ -36,7 +36,7 @@ const insertUserAsync = user => new Promise((resolve, reject) => {
            })
        }
        else{
-           reject({data: null, errcode: Strings.Errors.accountHasExist, success: Strings.Success.notSuccess})
+           reject({err:'Can\'t add new client. AutelId or serialNo has exist',data: null, errcode: Strings.Errors.accountHasExist, success: Strings.Success.notSuccess})
        }
     })
 
@@ -308,7 +308,7 @@ module.exports.addUser = async (query) => {
         return {err:`Telegram request. New user ${query.autelId} created`,result}
     }
     catch (err) {
-        return {err}
+        return err
     }
 };
 module.exports.loginCheck = loginCheck;
