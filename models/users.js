@@ -25,13 +25,21 @@ const insertNewUser = (query, dataBase = db) => new Promise((resolve, reject) =>
     })
 });
 const insertUserAsync = user => new Promise((resolve, reject) => {
-    db.insert(user, (err) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        resolve({data: null, errcode: Strings.Errors.noError, success: Strings.Success.success})
+    db.find({$or:[{autelId: user.autelId},{serialNo: user.serialNo}]},(err,docs)=>{
+       if (!docs.length){
+           db.insert(user, (err) => {
+               if (err) {
+                   reject(err);
+                   return;
+               }
+               resolve({data: null, errcode: Strings.Errors.noError, success: Strings.Success.success})
+           })
+       }
+       else{
+           reject({data: null, errcode: Strings.Errors.accountHasExist, success: Strings.Success.notSuccess})
+       }
     })
+
 });
 const updateUserAsync = (autelId, property, dataBase) => new Promise((resolve, reject) => {
     dataBase.update({autelId: autelId}, {$set: {[property.key]: property.value}}, {}, (err, docs) => {
