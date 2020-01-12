@@ -8,6 +8,8 @@ const decorateList =
     };
 const wrapper = (dbName,methods) => {
     const originMethods = Object.assign(methods,null);
+    if (decorateList.hasOwnProperty(dbName)){
 
+    }
 }
 module.exports = wrapper;
