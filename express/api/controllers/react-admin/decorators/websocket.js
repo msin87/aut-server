@@ -1,15 +1,10 @@
-const ws = require(__dirname + '/websocket');
-const decorateList =
-    {
-        clients: ['create', 'update', 'delete'],
-        admins: ['create', 'update', 'delete'],
-        companies: ['create', 'update', 'delete'],
-        cars: ['create', 'update', 'delete']
-    };
-const wrapper = (dbName,methods) => {
-    const originMethods = Object.assign(methods,null);
-    if (decorateList.hasOwnProperty(dbName)){
+const ws = require('../../../../../websocket');
+const webSocketSend = req =>
+    ws.send(JSON.stringify({
+        method: req.method,
+        url: req.url,
+        body: req.body,
+        ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':')[3]
+    }));
 
-    }
-}
-module.exports = wrapper;
+module.exports = webSocketSend;
